@@ -9,7 +9,7 @@
     <div class="row mt-3">
       <div class="col-lg-4 col-sm-6 m-3 mx-auto">
         <div class="card">
-          <img class="card-img-top" :src="currentCustomer.image" />
+          <image class="card-img-top" :src="currentCustomer.image" />
           <div class="card-header">
             <div class="float-left">{{ currentCustomer.name }}</div>
             <button
