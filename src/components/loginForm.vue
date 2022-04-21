@@ -60,6 +60,14 @@
 </template>
 
 <script>
+// import { 
+//   getAuth,
+//   signInwithEmailAndPassword,
+//   onAuthStateChanged,
+//   } from "firebase/auth";
+  
+// import AddProductFormVue from './AddProductForm.vue';
+
 export default {
   name: "loginForm",
   data() {
@@ -90,6 +98,15 @@ export default {
       formValid: false
     };
   },
+  // created() { 
+  //   const auth = getAuth();
+  //   onAuthStateChanged(auth, (user) => {
+  //     if(user) {
+  //       this.$router.push("/loginForm").catch(() => {});
+  //     }
+  //   });
+  // },
+
   methods: {
     onFormChange(event) {
       const name = event.target.name;
@@ -158,7 +175,23 @@ export default {
   onForgotPassword(){
     this.$router.replace("/ForgotPassword");
   }
-  }
+
+  // async onSubmit(event) {
+  //   event.preventDefault();
+  //   const auth = getAuth();
+  //   await signInwithEmailAndPassword(
+  //     auth,
+  //     this.form.username,
+  //     this.form.password
+  //   )
+  //   .then(() => {
+  //     this.$router.push("./AddProductForm").catch(() => {});
+  //   })
+  //   .catch((error) => {
+  //     alert(error.massage);
+  //   });
+  // },
+  },
 };
 </script>
 <style>

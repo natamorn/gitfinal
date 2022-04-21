@@ -64,6 +64,13 @@
 </template>
 
 <script>
+import { 
+  getAuth,
+  createUserWithemailAndpassword,
+  onAuthStateChanged,
+  updateProfile,
+} from "firebase/auth";
+
 export default {
   name: "SingupForm",
   data() {
@@ -104,6 +111,15 @@ export default {
       formValid: false,
     };
   },
+  created() { 
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if(user) {
+        this.$router.push("/loginForm").catch(() => {});
+      }
+    });
+  },
+
   methods: {
     onFormChange(event) {
       const name = event.target.name;
@@ -164,12 +180,25 @@ export default {
     getErrorMessage(name) {
       return this.formElements[name].error.message;
     },
-    onFormSubmit() {
-      const formData = {};
-      for (let name in this.formElements) {
-        formData[name] = this.formElements[name].value;
-      }
-      console.log(formData);
+    // onFormSubmit() {
+    //   const formData = {};
+    //   for (let name in this.formElements) {
+    //     formData[name] = this.formElements[name].value;
+    //   }
+    //   console.log(formData);
+    // },
+
+    onsubmit(event) {
+      event.preventDefault();
+      const auth = getAuth();
+      createUserWithemailAndpassword(auth, this.form.email, this.form.password)
+        .then(async (userCredential) => {
+          await updateProfile(userCredential.user, { displayName: this.form.name});
+          this.$router.push("/loginForm").catch(() => {});
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
     },
   },
 };
