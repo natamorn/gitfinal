@@ -32,8 +32,10 @@
 
 
 <script>
+
+
 export default {
-    name:'TableOrder'
+    name:'TableOrder',
 };
 
 </script>

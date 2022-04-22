@@ -2,10 +2,10 @@
   <div class="row">
     <div class="col-sm-8 mx-auto">
       <div class="card-body">
-        <form @submit.prevent="onFormSubmit">
+        <form @submit.prevent="onFormSubmit" @click="onReset">
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="OrderFormNo">Order Form NO.</label>
+              <label htmlFor="OrderFormNo">Order Form NO. *</label>
               <input
                 type="text"
                 :class="getInputClass('OrderFormNo')"
@@ -14,6 +14,7 @@
                 v-model="formElements.OrderFormNo.value"
                 @keyup="onFormChange($event)"
                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("OrderFormNo") }}
@@ -21,7 +22,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="Sale">เขตการขาย</label>
+              <label htmlFor="Sale">เขตการขาย *</label>
               <input
                 type="text"
                 :class="getInputClass('Sale')"
@@ -29,6 +30,7 @@
                 name="Sale"
                 v-model="formElements.Sale.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("Sale") }}
@@ -38,7 +40,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="TanderNo">Tander No.</label>
+              <label htmlFor="TanderNo">Tander No. *</label>
               <input
                 type="text"
                 :class="getInputClass('TanderNo')"
@@ -46,6 +48,7 @@
                 name="TanderNo"
                 v-model="formElements.TanderNo.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("TanderNo") }}
@@ -53,7 +56,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="ProductLine">Product Line</label>
+              <label htmlFor="ProductLine">Product Line *</label>
               <input
                 type="text"
                 :class="getInputClass('ProductLine')"
@@ -61,6 +64,7 @@
                 name="ProductLine"
                 v-model="formElements.ProductLine.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("ProductLine") }}
@@ -70,7 +74,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="HospitalName">Hospital Name</label>
+              <label htmlFor="HospitalName">Hospital Name *</label>
               <input
                 type="text"
                 :class="getInputClass('HospitalName')"
@@ -78,6 +82,7 @@
                 name="HospitalName"
                 v-model="formElements.HospitalName.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("HospitalName") }}
@@ -98,7 +103,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="HospitalID">Hospital ID</label>
+              <label htmlFor="HospitalID">Hospital ID *</label>
               <input
                 type="text"
                 :class="getInputClass('HospitalID')"
@@ -106,6 +111,7 @@
                 name="HospitalID"
                 v-model="formElements.HospitalID.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("HospitalID") }}
@@ -113,7 +119,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="Department">Department</label>
+              <label htmlFor="Department">Department *</label>
               <input
                 type="text"
                 :class="getInputClass('Department')"
@@ -121,6 +127,7 @@
                 name="Department"
                 v-model="formElements.Department.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("Department") }}
@@ -130,7 +137,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="Address">Address</label>
+              <label htmlFor="Address">Address *</label>
               <input
                 type="text"
                 :class="getInputClass('Address')"
@@ -138,6 +145,7 @@
                 name="Address"
                 v-model="formElements.Address.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("Address") }}
@@ -147,7 +155,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label for="DateOpen">วันที่เปิดซอง</label>
+              <label for="DateOpen">วันที่เปิดซอง *</label>
               <input
                 class="form-control"
                 type="Date"
@@ -158,7 +166,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="WarrantyM">Warranty(M)</label>
+              <label htmlFor="WarrantyM">Warranty(M) *</label>
               <input
                 type="text"
                 :class="getInputClass('WarrantyM')"
@@ -166,6 +174,7 @@
                 name="WarrantyM"
                 v-model="formElements.WarrantyM.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("WarrantyM") }}
@@ -175,7 +184,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="OutNo">เลขที่หมดสัญญา/ใบสั่งซื้อ</label>
+              <label htmlFor="OutNo">เลขที่หมดสัญญา/ใบสั่งซื้อ *</label>
               <input
                 type="text"
                 :class="getInputClass('OutNo')"
@@ -183,6 +192,7 @@
                 name="OutNo"
                 v-model="formElements.OutNo.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("OutNo") }}
@@ -190,7 +200,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="MaintenanceM">Maintenance(M)</label>
+              <label htmlFor="MaintenanceM">Maintenance(M) *</label>
               <input
                 type="text"
                 :class="getInputClass('MaintenanceM')"
@@ -198,6 +208,7 @@
                 name="MaintenanceM"
                 v-model="formElements.MaintenanceM.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("MaintenanceM") }}
@@ -207,7 +218,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label for="DateOpen">วันที่หมดสัญญา</label>
+              <label for="DateOpen">วันที่หมดสัญญา *</label>
               <input
                 class="form-control"
                 type="Date"
@@ -218,7 +229,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="Installation">Installation</label>
+              <label htmlFor="Installation">Installation *</label>
               <input
                 type="text"
                 :class="getInputClass('Installation')"
@@ -226,6 +237,7 @@
                 name="Installation"
                 v-model="formElements.Installation.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("Installation") }}
@@ -235,7 +247,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="DateDeliver">กำหนดส่งมอบ</label>
+              <label htmlFor="DateDeliver">กำหนดส่งมอบ *</label>
               <input
               class="form-control"
                 type="date"
@@ -246,7 +258,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="Calibrate">Calibrate</label>
+              <label htmlFor="Calibrate">Calibrate *</label>
               <input
                 type="text"
                 :class="getInputClass('Calibrate')"
@@ -254,6 +266,7 @@
                 name="Calibrate"
                 v-model="formElements.Calibrate.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("Calibrate") }}
@@ -263,7 +276,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="InOrder">ใบสั่งซื้อในประเทศ</label>
+              <label htmlFor="InOrder">ใบสั่งซื้อในประเทศ *</label>
               <input
                 type="text"
                 :class="getInputClass('InOrder')"
@@ -271,6 +284,7 @@
                 name="InOrder"
                 v-model="formElements.InOrder.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("InOrder") }}
@@ -278,7 +292,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="Refer">อ้างอิงใบเสนอราคา</label>
+              <label htmlFor="Refer">อ้างอิงใบเสนอราคา *</label>
               <input
                 type="text"
                 :class="getInputClass('Refer')"
@@ -286,6 +300,7 @@
                 name="Refer"
                 v-model="formElements.Refer.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("Refer") }}
@@ -396,13 +411,13 @@
             <button
               type="submit"
               class="btn btn-primary"
-              :disabled="!formValid"
+              
             >
               Submit
             </button>
 
             &nbsp;
-            <button type="reset" class="btn btn-outline-danger" value="reset">
+            <button  type="reset" class="btn btn-outline-danger" value="reset">
               Clear
             </button>
           </div>
@@ -423,7 +438,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
             minLength: 5,
             maxLength: 15,
           },
@@ -434,7 +448,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
             maxLength: 15,
           },
@@ -445,7 +459,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
             maxLength: 15,
           },
@@ -456,7 +470,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
             maxLength: 15,
           },
@@ -467,7 +481,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: false,
+            
             minLength: 5,
           },
           touched: false,
@@ -478,7 +492,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
             maxLength: 15,
           },
@@ -489,7 +503,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
             maxLength: 15,
           },
@@ -500,7 +514,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
           },
           touched: false,
@@ -510,7 +524,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
           },
           touched: false,
@@ -520,7 +534,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
           },
           touched: false,
@@ -530,7 +544,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
           },
           touched: false,
@@ -540,7 +554,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
           },
           touched: false,
@@ -550,7 +564,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
           },
           touched: false,
@@ -560,7 +574,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
           },
           touched: false,
@@ -570,7 +584,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
           },
           touched: false,
@@ -580,7 +594,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: false,
+            
             minLength: 5,
           },
           touched: false,
@@ -618,10 +632,7 @@ export default {
     checkValidator(value, rule) {
       let valid = true;
       let message = "";
-      if (value.trim().length === 0 && rule.required) {
-        valid = false;
-        message = "จำเป็นต้องกรอก";
-      }
+      
       if (value.length < rule.minLength && valid) {
         valid = false;
         message = `น้อยกว่า ${rule.minLength} ตัวอักษร`;
@@ -640,7 +651,7 @@ export default {
       } else {
         return elementErrorStatus && this.formElements[name].touched
           ? ["form-control", "is-invalid"]
-          : ["form-control", "is-valid"];
+          : ["form-control", ""];
       }
     },
     getErrorMessage(name) {
@@ -652,6 +663,10 @@ export default {
         formData[name] = this.formElements[name].value;
       }
       console.log(formData);
+    },
+    onReset() {
+       this.formElements.Agreement = "";
+
     },
   },
 };

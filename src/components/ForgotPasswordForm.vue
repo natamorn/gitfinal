@@ -5,7 +5,7 @@
         <form @submit.prevent="onFormSubmit">
           
           <div class="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email *</label>
             <input
               type="email"
               :class="getInputClass('email')"
@@ -21,7 +21,7 @@
          
 
           <div class="form-group">
-            <label htmlFor="EmployeeID">Employee ID</label>
+            <label htmlFor="EmployeeID">Employee ID *</label>
             <input
               type="text"
               :class="getInputClass('EmployeeID')"
@@ -111,10 +111,7 @@ export default {
     checkValidator(value, rule) {
       let valid = true;
       let message = "";
-      if (value.trim().length === 0 && rule.required) {
-        valid = false;
-        message = "จำเป็นต้องกรอก";
-      }
+      
       if (value.length < rule.minLength && valid) {
         valid = false;
         message = `น้อยกว่า ${rule.minLength} ตัวอักษร`;
@@ -140,7 +137,7 @@ export default {
       } else {
         return elementErrorStatus && this.formElements[name].touched
           ? ["form-control", "is-invalid"]
-          : ["form-control", "is-valid"];
+          : ["form-control", ""];
       }
     },
     getErrorMessage(name) {
@@ -152,6 +149,7 @@ export default {
         formData[name] = this.formElements[name].value;
       }
       console.log(formData);
+      this.$router.push("/login");
     },
   },
 };

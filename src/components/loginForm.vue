@@ -4,7 +4,7 @@
       <div class="card-body">
         <form @submit.prevent="onFormSubmit">
           <div class="form-group">
-            <label htmlFor="username">User Name</label>
+            <label htmlFor="username">User Name *</label>
             <input
               type="text"
               :class="getInputClass('username')"
@@ -19,7 +19,7 @@
           </div>
 
           <div class="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password *</label>
             <input
               type="password"
               :class="getInputClass('password')"
@@ -43,15 +43,15 @@
               Login
             </button>
 &nbsp;
-            <button
+            <b-button
             class="btn btn-outline" @click="onSingup" >
               Singup
-            </button>
+            </b-button>
 <div>
-           <button
+           <b-button
             class="btn -outline" @click="onForgotPassword" >
               Forgot Password?
-            </button></div>
+            </b-button></div>
           </div>
         </form>
       </div>
@@ -134,10 +134,7 @@ export default {
     checkValidator(value, rule) {
       let valid = true;
       let message = "";
-      if (value.trim().length === 0 && rule.required) {
-        valid = false;
-        message = "จำเป็นต้องกรอก";
-      }
+      
       if (value.length < rule.minLength && valid) {
         valid = false;
         message = `น้อยกว่า ${rule.minLength} ตัวอักษร`;
@@ -156,7 +153,7 @@ export default {
       } else {
         return elementErrorStatus && this.formElements[name].touched
           ? ["form-control", "is-invalid"]
-          : ["form-control", "is-valid"];
+          : ["form-control", ""];
       }
     },
     getErrorMessage(name) {
@@ -168,6 +165,7 @@ export default {
         formData[name] = this.formElements[name].value;
       }
       console.log(formData);
+      this.$router.push("/Home");
     },
     onSingup() {
       this.$router.replace("/Singup");

@@ -2,9 +2,10 @@
   <div class="row">
     <div class="col-sm-6 mt-5 card mx-auto">
       <div class="card-body">
-        <form @submit.prevent="onFormSubmit">
+
+        <form @submit.prevent="onSubmit">
           <div class="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email *</label>
             <input
               type="email"
               :class="getInputClass('email')"
@@ -18,7 +19,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Password *</label>
             <input
               type="password"
               :class="getInputClass('password')"
@@ -33,7 +34,7 @@
           </div>
 
           <div class="form-group">
-            <label htmlFor="EmployeeID">Employee ID</label>
+            <label htmlFor="EmployeeID">Employee ID *</label>
             <input
               type="text"
               :class="getInputClass('EmployeeID')"
@@ -64,12 +65,6 @@
 </template>
 
 <script>
-import { 
-  getAuth,
-  createUserWithemailAndpassword,
-  onAuthStateChanged,
-  updateProfile,
-} from "firebase/auth";
 
 export default {
   name: "SingupForm",
@@ -111,14 +106,7 @@ export default {
       formValid: false,
     };
   },
-  created() { 
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if(user) {
-        this.$router.push("/loginForm").catch(() => {});
-      }
-    });
-  },
+  
 
   methods: {
     onFormChange(event) {
@@ -147,10 +135,7 @@ export default {
     checkValidator(value, rule) {
       let valid = true;
       let message = "";
-      if (value.trim().length === 0 && rule.required) {
-        valid = false;
-        message = "จำเป็นต้องกรอก";
-      }
+      
       if (value.length < rule.minLength && valid) {
         valid = false;
         message = `น้อยกว่า ${rule.minLength} ตัวอักษร`;
@@ -174,32 +159,22 @@ export default {
       } else {
         return elementErrorStatus && this.formElements[name].touched
           ? ["form-control", "is-invalid"]
-          : ["form-control", "is-valid"];
+          : ["form-control", ""];
       }
     },
     getErrorMessage(name) {
       return this.formElements[name].error.message;
     },
-    // onFormSubmit() {
-    //   const formData = {};
-    //   for (let name in this.formElements) {
-    //     formData[name] = this.formElements[name].value;
-    //   }
-    //   console.log(formData);
-    // },
-
-    onsubmit(event) {
-      event.preventDefault();
-      const auth = getAuth();
-      createUserWithemailAndpassword(auth, this.form.email, this.form.password)
-        .then(async (userCredential) => {
-          await updateProfile(userCredential.user, { displayName: this.form.name});
-          this.$router.push("/loginForm").catch(() => {});
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
+    onSubmit() {
+      const formData = {};
+      for (let name in this.formElements) {
+        formData[name] = this.formElements[name].value;
+      }
+      console.log(formData);
+      this.$router.push("/login");
     },
-  },
-};
+
+    
+    },
+  }
 </script>

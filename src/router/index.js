@@ -45,6 +45,12 @@ const routes = [
     name: 'ForgotPassword',
     component:() => import('../views/ForgotPassword.vue')
   }
+  ,
+  {
+    path: '/viewOrder',
+    name: 'viewOrder',
+    component:() => import('../views/viewOrder.vue')
+  }
 ]
 
 const router = createRouter({
