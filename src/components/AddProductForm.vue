@@ -2,10 +2,10 @@
   <div class="row">
     <div class="col-sm-8 mx-auto">
       <div class="card-body">
-        <form @submit.prevent="onFormSubmit">
+        <form @submit.prevent="onFormSubmit" @click="onReset">
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="RequestInventoryNO">Request Inventory NO.</label>
+              <label htmlFor="RequestInventoryNO">Request Inventory NO. *</label>
               <input
                 type="text"
                 :class="getInputClass('RequestInventoryNO')"
@@ -14,6 +14,7 @@
                 v-model="formElements.RequestInventoryNO.value"
                 @keyup="onFormChange($event)"
                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("RequestInventoryNO") }}
@@ -36,7 +37,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="division">แผนก</label>
+              <label htmlFor="division">แผนก *</label>
               <input
                 type="text"
                 :class="getInputClass('division')"
@@ -44,6 +45,7 @@
                 name="division"
                 v-model="formElements.division.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("division") }}
@@ -51,7 +53,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="name">ผู้ขอเบิก</label>
+              <label htmlFor="name">ผู้ขอเบิก *</label>
               <input
                 type="text"
                 :class="getInputClass('name')"
@@ -59,6 +61,7 @@
                 name="name"
                 v-model="formElements.name.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("name") }}
@@ -68,7 +71,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="note">หมายเหตุ</label>
+              <label htmlFor="note">หมายเหตุ </label>
               <input
                 type="text"
                 :class="getInputClass('note')"
@@ -83,7 +86,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="ReferTo">อ้างถึง</label>
+              <label htmlFor="ReferTo">อ้างถึง *</label>
               <input
                 type="text"
                 :class="getInputClass('ReferTo')"
@@ -91,6 +94,7 @@
                 name="ReferTo"
                 v-model="formElements.ReferTo.value"
                 @keyup="onFormChange($event)"
+                required
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("ReferTo") }}
@@ -155,7 +159,7 @@
             <button
               type="submit"
               class="btn btn-primary"
-              :disabled="!formValid"
+              
             >
               Submit
             </button>
@@ -181,7 +185,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
             maxLength: 15,
           },
@@ -192,7 +196,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
             maxLength: 15,
           },
@@ -203,7 +207,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
             maxLength: 15,
           },
@@ -214,7 +218,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: false,
+            
             minLength: 5,
           },
           touched: false,
@@ -224,7 +228,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 5,
             maxLength: 15,
           },
@@ -262,10 +266,6 @@ export default {
     checkValidator(value, rule) {
       let valid = true;
       let message = "";
-      if (value.trim().length === 0 && rule.required) {
-        valid = false;
-        message = "จำเป็นต้องกรอก";
-      }
       if (value.length < rule.minLength && valid) {
         valid = false;
         message = `น้อยกว่า ${rule.minLength} ตัวอักษร`;
@@ -284,7 +284,7 @@ export default {
       } else {
         return elementErrorStatus && this.formElements[name].touched
           ? ["form-control", "is-invalid"]
-          : ["form-control", "is-valid"];
+          : ["form-control", ""];
       }
     },
     getErrorMessage(name) {
@@ -296,6 +296,11 @@ export default {
         formData[name] = this.formElements[name].value;
       }
       console.log(formData);
+      this.$router.replace("/AddProduct");
+    },
+    onReset() {
+       this.formElements = "";
+
     },
   },
 };

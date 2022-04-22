@@ -171,7 +171,7 @@ export default {
         formData[name] = this.formElements[name].value;
       }
       console.log(formData);
-      this.$router.push("/login");
+      this.$router.replace("/login");
     },
 
     

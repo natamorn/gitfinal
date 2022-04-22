@@ -77,7 +77,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            required: true,
+         
             minLength: 5,
             maxLength: 15
           },
@@ -88,7 +88,7 @@ export default {
           type: "password",
           value: null,
           validator: {
-            required: true,
+            
             minLength: 8
           },
           touched: false,
@@ -165,7 +165,7 @@ export default {
         formData[name] = this.formElements[name].value;
       }
       console.log(formData);
-      this.$router.push("/Home");
+      this.$router.replace("/Home");
     },
     onSingup() {
       this.$router.replace("/Singup");

@@ -665,7 +665,7 @@ export default {
       console.log(formData);
     },
     onReset() {
-       this.formElements.Agreement = "";
+       this.formElements = "";
 
     },
   },
