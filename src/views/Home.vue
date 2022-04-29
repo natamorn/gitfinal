@@ -1,22 +1,26 @@
 <template>
-<div class="card-body">
-  <div class="home">
+  <Navbar />
 
-      <input
-        value="Add Order"
-        @click="onLogIn"
-        class="btn btn-outline-success"
-      />
-<br>
-<br>
-    <TableOrder />
-    <br />
+  <div class="container">
+    <div class="card-body">
+      <div class="home">
+        <input
+          value="Add Order"
+          @click="onLogIn"
+          class="btn btn-outline-success"
+        />
+        <br />
+        <br />
+        <TableOrder />
+        <br />
+      </div>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
 import TableOrder from "../components/TableOrder.vue";
+import Navbar from "../components/Navbar.vue";
 
 export default {
   name: "Home",
@@ -30,13 +34,13 @@ export default {
   },
   components: {
     TableOrder,
+    Navbar,
   },
 };
 </script>
 
 <style scoped>
-.home{
+.home {
   text-align: right;
-
 }
 </style>

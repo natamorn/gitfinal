@@ -1,5 +1,6 @@
 <template>
-  <div id="main-content">
+<Navbar/>
+  <div class="container">
         <div class="buttonProduct">
       <input
         value="Requst"
@@ -13,12 +14,14 @@
 
 <script>
 import TableProduct from '../components/TableProduct.vue'
+import Navbar from '../components/Navbar.vue'
 
 
 export default {
   name:"Product",
   components:{
     TableProduct,
+    Navbar
   },
   data() {
     return {};

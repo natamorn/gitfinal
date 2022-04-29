@@ -1,61 +1,63 @@
 <template>
-  <div class="row">
-    <div class="col-sm-6 mt-5 card mx-auto">
-      <div class="card-body">
-        <form @submit.prevent="onFormSubmit">
-          
-          <div class="form-group">
-            <label htmlFor="email">Email *</label>
-            <input
-              type="email"
-              :class="getInputClass('email')"
-              id="email"
-              name="email"
-              v-model="formElements.email.value"
-              @keyup="onFormChange($event)"
-            />
-            <div class="invalid-feedback">
-              {{ getErrorMessage("email") }}
+  <div class="row mt-5">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="mb-4">Reset Your Password</h4>
+
+          <form @submit.prevent="onFormSubmit">
+            <div class="mb-3">
+              <label class="mb-2" htmlFor="email">Email Address</label>
+              <input
+                type="email"
+                :class="getInputClass('email')"
+                id="email"
+                name="email"
+                v-model="formElements.email.value"
+                @keyup="onFormChange($event)"
+              />
+              <div class="invalid-feedback">
+                {{ getErrorMessage("email") }}
+              </div>
             </div>
-          </div>
-         
-
-          <div class="form-group">
-            <label htmlFor="EmployeeID">Employee ID *</label>
-            <input
-              type="text"
-              :class="getInputClass('EmployeeID')"
-              id="EmployeeID"
-              name="EmployeeID"
-              v-model="formElements.EmployeeID.value"
-              @keyup="onFormChange($event)"
-              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" 
-            />
-            <div class="invalid-feedback">
-              {{ getErrorMessage("EmployeeID") }}
+            <div class="mb-3">
+              <label class="mb-2" htmlFor="EmployeeID">Employee ID</label>
+              <input
+                type="text"
+                :class="getInputClass('EmployeeID')"
+                id="EmployeeID"
+                name="EmployeeID"
+                v-model="formElements.EmployeeID.value"
+                @keyup="onFormChange($event)"
+                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+              />
+              <div class="invalid-feedback">
+                {{ getErrorMessage("EmployeeID") }}
+              </div>
             </div>
-          </div>
 
+            <div class="row">
+              <div class="col-lg-12 mb-2">
+                <button type="submit" class="btn btn-primary w-100">
+                  Confirm
+                </button>
+              </div>
+            </div>
 
-          <div class="text-center">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              :disabled="!formValid"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
+    <div class="col-lg-4"></div>
   </div>
 </template>
 
+
 <script>
 export default {
-    name:"ForgotPasswordForm",
-    data() {
+  name: "ForgotPasswordForm",
+  data() {
     return {
       formElements: {
         EmployeeID: {
@@ -79,7 +81,6 @@ export default {
           touched: false,
           error: { status: true, message: "" },
         },
-        
       },
       formValid: false,
     };
@@ -111,7 +112,7 @@ export default {
     checkValidator(value, rule) {
       let valid = true;
       let message = "";
-      
+
       if (value.length < rule.minLength && valid) {
         valid = false;
         message = `น้อยกว่า ${rule.minLength} ตัวอักษร`;
@@ -126,8 +127,7 @@ export default {
           message = "กรอกอีเมล์ไม่ถูกต้อง";
         }
       }
-       
-      
+
       return { status: !valid, message: message };
     },
     getInputClass(name) {
@@ -156,5 +156,4 @@ export default {
 </script>
 
 <style>
-
 </style>
