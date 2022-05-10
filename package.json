@@ -13,6 +13,7 @@
     "firebase": "^9.6.4",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
+    "vue-sweetalert2": "^5.0.5",
     "vue.js": "^0.3.2",
     "vuefire": "^2.2.5"
   },

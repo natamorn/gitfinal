@@ -22,11 +22,13 @@ html, body {
 
 .btn {
     min-height: 45px;
-    border-radius: 15px;
 }
 
 .btn-outline {
     border-color: #933232 !important;
+}
+.text-primary {
+    color: #933232!important;
 }
 
 .btn-primary {

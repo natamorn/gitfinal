@@ -2,10 +2,12 @@
   <div class="row">
     <div class="col-sm-8 mx-auto">
       <div class="card-body">
-        <form @submit.prevent="onFormSubmit" @click="onReset">
+        <form @submit.prevent="onFormSubmit">
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="RequestInventoryNO">Request Inventory NO. *</label>
+              <label htmlFor="RequestInventoryNO"
+                >Request Inventory NO. *</label
+              >
               <input
                 type="text"
                 :class="getInputClass('RequestInventoryNO')"
@@ -23,12 +25,13 @@
 
             <div class="form-group col">
               <!-- <div class="col"> -->
-              <label for="Datee">Date</label>
+              <label for="Date">Date</label>
               <input
                 class="form-control"
                 type="Date"
-                id="Datee"
-                name="Datee"
+                id="Date"
+                v-model="formElements.date.value"
+                name="Date"
                 required
               />
               <!-- </div> -->
@@ -106,7 +109,7 @@
             <table class="table table-hover">
               <thead>
                 <tr class="table-active">
-                  <td>Items</td>
+                  <td>ลำดับ</td>
                   <td>P/N</td>
                   <td>รายการ</td>
                   <td>จำนวนเบิก</td>
@@ -156,16 +159,15 @@
           </div>
 
           <div class="text-center">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              
-            >
-              Submit
-            </button>
+            <button type="submit" class="btn btn-primary">Submit</button>
 
             &nbsp;
-            <button type="reset" class="btn btn-outline-danger" value="reset">
+            <button
+              type="reset"
+              class="btn btn-outline-danger"
+              value="reset"
+              @click="onReset()"
+            >
               Clear
             </button>
           </div>
@@ -176,8 +178,9 @@
 </template>
 
 <script>
+import RequestInventoryService from "../services/RequestInventoryService";
 export default {
-  name: "ForgotPasswordForm",
+  name: "AddProductForm",
   data() {
     return {
       formElements: {
@@ -185,7 +188,16 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
+            minLength: 5,
+            maxLength: 15,
+          },
+          touched: false,
+          error: { status: true, message: "" },
+        },
+        date: {
+          type: "date",
+          value: null,
+          validator: {
             minLength: 5,
             maxLength: 15,
           },
@@ -196,7 +208,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
             maxLength: 15,
           },
@@ -207,7 +218,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
             maxLength: 15,
           },
@@ -218,7 +228,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
           },
           touched: false,
@@ -228,7 +237,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
             maxLength: 15,
           },
@@ -239,6 +247,8 @@ export default {
       formValid: false,
     };
   },
+mounted () {
+},
   methods: {
     onFormChange(event) {
       const name = event.target.name;
@@ -266,6 +276,7 @@ export default {
     checkValidator(value, rule) {
       let valid = true;
       let message = "";
+
       if (value.length < rule.minLength && valid) {
         valid = false;
         message = `น้อยกว่า ${rule.minLength} ตัวอักษร`;
@@ -274,7 +285,12 @@ export default {
         valid = false;
         message = `มากกว่า ${rule.maxLength} ตัวอักษร`;
       }
-
+      if (rule.pattern === "email" && valid) {
+        if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) === false) {
+          valid = false;
+          message = "กรอกอีเมล์ไม่ถูกต้อง";
+        }
+      }
       return { status: !valid, message: message };
     },
     getInputClass(name) {
@@ -296,15 +312,20 @@ export default {
         formData[name] = this.formElements[name].value;
       }
       console.log(formData);
+      RequestInventoryService.add(formData)
+        .then(() => {
+          this.$swal.fire("success!", "Created new item successfully!", "success");
+        })
+        .catch((e) => {
+          this.$swal.fire("Oops...", e, "error");
+        });
       this.$router.replace("/AddProduct");
     },
     onReset() {
-       this.formElements = "";
-
+      this.formElements = "";
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

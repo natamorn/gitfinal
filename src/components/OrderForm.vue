@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-8 mx-auto">
       <div class="card-body">
-        <form @submit.prevent="onFormSubmit" @click="onReset">
+        <form @submit.prevent="onFormSubmit">
           <div class="row mt-4">
             <div class="form-group col">
               <label htmlFor="OrderFormNo">Order Form NO. *</label>
@@ -90,12 +90,13 @@
             </div>
 
             <div class="form-group col">
-              <label for="Datee">Date</label>
+              <label for="HospitalDate">Date</label>
               <input
                 class="form-control"
                 type="Date"
-                id="Datee"
-                name="Datee"
+                v-model="formElements.HospitalDate.value"
+                id="HospitalDate"
+                name="HospitalDate"
                 required
               />
             </div>
@@ -159,6 +160,7 @@
               <input
                 class="form-control"
                 type="Date"
+                v-model="formElements.DateOpen.value"
                 id="DateOpen"
                 name="DateOpen"
                 required
@@ -218,12 +220,13 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label for="DateOpen">วันที่หมดสัญญา *</label>
+              <label for="DateExpire">วันที่หมดสัญญา *</label>
               <input
                 class="form-control"
                 type="Date"
-                id="DateOpen"
-                name="DateOpen"
+                v-model="formElements.DateExpire.value"
+                id="DateExpire"
+                name="DateExpire"
                 required
               />
             </div>
@@ -249,8 +252,9 @@
             <div class="form-group col">
               <label htmlFor="DateDeliver">กำหนดส่งมอบ *</label>
               <input
-              class="form-control"
+                class="form-control"
                 type="date"
+                v-model="formElements.DateDeliver.value"
                 id="DateDeliver"
                 name="DateDeliver"
                 required
@@ -327,97 +331,96 @@
 
           <div class="container text-center">
             <table class="table table-hover">
-                <thead>
-                  <tr class="table-active">
-                    <td>Items</td>
-                    <td>P/N</td>
-                    <td>C</td>
-                    <td>Option</td>
-                    <td>QTY</td>
-                    <td>Price</td>
-                    <td>Total</td>
-                    <td>Description</td>
-                    <td>Remark</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="table">
-                    <td>1</td>
-                    <td>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="P/N"
-                        name="P/N"
-                      />
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" id="C" name="C" />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="Option"
-                        name="Option"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="QTY"
-                        name="QTY"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="Price"
-                        name="Price"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="Total"
-                        name="Total"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="Desription"
-                        name="Desription"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="Remark"
-                        name="Remark"
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <thead>
+                <tr class="table-active">
+                  <td>Items</td>
+                  <td>P/N</td>
+                  <td>C</td>
+                  <td>Option</td>
+                  <td>QTY</td>
+                  <td>Price</td>
+                  <td>Total</td>
+                  <td>Description</td>
+                  <td>Remark</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table">
+                  <td>1</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="P/N"
+                      name="P/N"
+                    />
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" id="C" name="C" />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="Option"
+                      name="Option"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="QTY"
+                      name="QTY"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="Price"
+                      name="Price"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="Total"
+                      name="Total"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="Desription"
+                      name="Desription"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="Remark"
+                      name="Remark"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <div class="text-center">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              
-            >
-              Submit
-            </button>
+            <button type="submit" class="btn btn-primary">Submit</button>
 
             &nbsp;
-            <button  type="reset" class="btn btn-outline-danger" value="reset">
+            <button
+              type="reset"
+              class="btn btn-outline-danger"
+              value="reset"
+              @click="onReset()"
+            >
               Clear
             </button>
           </div>
@@ -427,10 +430,10 @@
   </div>
 </template>
 
-
 <script>
+import OrderService from "../services/OrderService";
 export default {
-  name: "ForgotPasswordForm",
+  name: "OrderForm",
   data() {
     return {
       formElements: {
@@ -448,7 +451,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
             maxLength: 15,
           },
@@ -459,7 +461,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
             maxLength: 15,
           },
@@ -470,7 +471,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
             maxLength: 15,
           },
@@ -481,7 +481,15 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
+            minLength: 5,
+          },
+          touched: false,
+          error: { status: true, message: "" },
+        },
+        HospitalDate: {
+          type: "date",
+          value: null,
+          validator: {
             minLength: 5,
           },
           touched: false,
@@ -492,7 +500,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
             maxLength: 15,
           },
@@ -503,7 +510,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
             maxLength: 15,
           },
@@ -514,7 +520,15 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
+            minLength: 5,
+          },
+          touched: false,
+          error: { status: true, message: "" },
+        },
+        DateOpen: {
+          type: "date",
+          value: null,
+          validator: {
             minLength: 5,
           },
           touched: false,
@@ -524,7 +538,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
           },
           touched: false,
@@ -534,7 +547,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
           },
           touched: false,
@@ -544,7 +556,15 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
+            minLength: 5,
+          },
+          touched: false,
+          error: { status: true, message: "" },
+        },
+        DateExpire: {
+          type: "date",
+          value: null,
+          validator: {
             minLength: 5,
           },
           touched: false,
@@ -554,7 +574,15 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
+            minLength: 5,
+          },
+          touched: false,
+          error: { status: true, message: "" },
+        },
+        DateDeliver: {
+          type: "date",
+          value: null,
+          validator: {
             minLength: 5,
           },
           touched: false,
@@ -564,7 +592,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
           },
           touched: false,
@@ -574,7 +601,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
           },
           touched: false,
@@ -584,7 +610,6 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
           },
           touched: false,
@@ -594,13 +619,11 @@ export default {
           type: "text",
           value: null,
           validator: {
-            
             minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
         },
-        
       },
       formValid: false,
     };
@@ -632,7 +655,7 @@ export default {
     checkValidator(value, rule) {
       let valid = true;
       let message = "";
-      
+
       if (value.length < rule.minLength && valid) {
         valid = false;
         message = `น้อยกว่า ${rule.minLength} ตัวอักษร`;
@@ -663,14 +686,19 @@ export default {
         formData[name] = this.formElements[name].value;
       }
       console.log(formData);
+        OrderService.add(formData)
+        .then(() => {
+          this.$swal.fire("success!", "Created new item successfully!", "success");
+        })
+        .catch((e) => {
+          this.$swal.fire("Oops...", e, "error");
+        });
     },
     onReset() {
-       this.formElements = "";
-
+      this.formElements = "";
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
