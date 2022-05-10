@@ -2,18 +2,19 @@
   <Navbar />
 
   <div class="container">
-    <div class="card-body">
-      <div class="home">
-        <input
-          value="Add Order"
-          @click="onLogIn"
-          class="btn btn-outline-success"
-        />
-        <br />
-        <br />
-        <TableOrder />
-        <br />
+    <div class="row justify-content-end">
+      <div class="col col-2 d-grid gap-2">
+        <button
+          type="button"
+          class="btn btn-primary"
+          @click="$router.push('/OrderPage')"
+        >
+          ADD ORDER
+        </button>
       </div>
+    </div>
+    <div class="row mt-4">
+      <TableOrder />
     </div>
   </div>
 </template>
