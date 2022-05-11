@@ -11,12 +11,11 @@
       <tbody>
         <tr  v-for="(it, index) in listProduct" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>{{ it.name }}</td>
-          <td></td>
+          <td>{{ it.products[it.products.length -1].Insert_Product_Name }}</td>
+          <td>{{ it.products[it.products.length -1].Total_RI.toLocaleString('en-US') }}</td>
         </tr>
       </tbody>
     </table>
-    <code>{{listProduct}}</code>
   </div>
 </template>
 
@@ -37,7 +36,7 @@ export default {
    
   },
   mounted() {
-     RequestInventoryService.onSnapshot((snapshotChange) => {
+     RequestInventoryService.get().then((snapshotChange) => {
       this.listProduct = [];
       snapshotChange.forEach((doc) => {
         this.listProduct.push({

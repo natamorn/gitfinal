@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-sm-8 mx-auto">
+    <div class="col-sm-10 mx-auto">
       <div class="card-body">
         <form @submit.prevent="onFormSubmit">
           <div class="row mt-4">
@@ -105,41 +105,48 @@
             </div>
           </div>
 
-          <div class="container text-center">
+          <div class="row m-4 text-center">
             <table class="table table-hover">
               <thead>
                 <tr class="table-active">
                   <td>ลำดับ</td>
                   <td>P/N</td>
-                  <td>รายการ</td>
+                  <td>ชื่อสินค้า</td>
+                  <td>PRICE</td>
                   <td>จำนวนเบิก</td>
-                  <td>จำนวนที่ได้รับ</td>
+                  <td>TOTAL</td>
                   <td>หมายเหตุ</td>
                 </tr>
               </thead>
               <tbody>
-                <td>1</td>
+                <td><label for="">1</label></td>
                 <td>
-                  <input type="text" class="form-control" id="P/N" name="P/N" />
+                  <!-- <input type="text" class="form-control" id="P/N" name="P/N" /> -->
+                  <div class="form-group col">
+                    <select
+                      v-model="selectedProduct"
+                      class="form-select"
+                      aria-label="Default select example"
+                    >
+                      <template v-for="(it, index) in listProduct" :key="index">
+                        <option :value="it">{{ it["p/n"] }}</option>
+                      </template>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <label for="">{{
+                    selectedProduct && selectedProduct.Name
+                  }}</label>
+                </td>
+                <td>
+                  <label for="">{{
+                    selectedProduct && selectedProduct.Price.toLocaleString('en-US')
+                  }}</label>
                 </td>
                 <td>
                   <input
-                    type="text"
-                    class="form-control"
-                    id="list"
-                    name="list"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="NumberOfRequests"
-                    name="NumberOfRequests"
-                  />
-                </td>
-                <td>
-                  <input
+                    v-model="payCount"
                     type="number"
                     class="form-control"
                     id="AmountReceived"
@@ -147,7 +154,11 @@
                   />
                 </td>
                 <td>
+                  <label for="">{{ Total_RI.toLocaleString('en-US') }}</label>
+                </td>
+                <td>
                   <input
+                   v-model="remark"
                     type="text"
                     class="form-control"
                     id="NoteTable"
@@ -179,6 +190,7 @@
 
 <script>
 import RequestInventoryService from "../services/RequestInventoryService";
+import ProductService from "../services/ProductService";
 export default {
   name: "AddProductForm",
   data() {
@@ -245,10 +257,46 @@ export default {
         },
       },
       formValid: false,
+      selectedProduct: null,
+      payCount: 1,
+      Total_RI: 1,
+      remark: '',
+      listProduct: [],
     };
   },
-mounted () {
-},
+  watch: {
+    // selectedProduct(v) {
+    //   if (v) {
+    //     this.Total_RI = this.selectedProduct.Price * this.payCount;
+    //   }
+    // },
+    payCount(v) {
+      if(v) {
+        this.Total_RI =  this.payCount;
+      }
+    }
+  },
+  mounted() {
+    // ProductService.add({'p/n': 1, Name: 'productA', Price: 100000})
+    // ProductService.add({'p/n': 2, Name: 'productB', Price: 200000})
+
+    ProductService.get().then((snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        var id = childSnapshot.id;
+        var data = childSnapshot.data();
+        this.listProduct.push({ id: id, ...data });
+
+      });
+    });
+
+    RequestInventoryService.get().then((snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        var id = childSnapshot.id;
+        console.log("🚀 ~ file: AddProductForm.vue ~ line 293 ~ snapshot.forEach ~ id", id)
+// RequestInventoryService.doc(id).delete()
+      });
+    });
+  },
   methods: {
     onFormChange(event) {
       const name = event.target.name;
@@ -311,10 +359,14 @@ mounted () {
       for (let name in this.formElements) {
         formData[name] = this.formElements[name].value;
       }
-      console.log(formData);
+      formData.products = [{'Insert_Product_P/N': this.selectedProduct['p/n'],Total_RI: this.Total_RI, Insert_Product_Name: this.selectedProduct.Name, Insert_Product_Price: this.selectedProduct.Price}]
       RequestInventoryService.add(formData)
         .then(() => {
-          this.$swal.fire("success!", "Created new item successfully!", "success");
+          this.$swal.fire(
+            "success!",
+            "Created new item successfully!",
+            "success"
+          );
         })
         .catch((e) => {
           this.$swal.fire("Oops...", e, "error");
