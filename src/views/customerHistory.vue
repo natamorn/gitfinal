@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row mt-4">
       <div class="col">
-        <ProfileCustomer :keyCustomer="keyCustomer"/>
+        <ProfileCustomer :keyCustomer="keyCustomer" />
       </div>
 
       <div class="col-8 d-flex justify-content-center">
@@ -14,45 +14,31 @@
               <h5 class="text-primary">ประวัติการซื้อ</h5></label
             >
             <div class="col-sm-6">
-              <input type="text" class="form-control" id="search" />
+              <input v-model="txtSearch" type="text" class="form-control" id="search" />
             </div>
           </div>
-
           <div class="mb-3 row">
-            <div class="card py-2  border-success ">
+            <div
+              class="card py-2 border-success"
+              v-for="(it, index) in listOrder"
+              :key="index"
+            >
               <div class="d-flex justify-content-between">
                 <div class="p-2">
-                  <h5>หมายเลข 1</h5>
+                  <h5>หมายเลข {{ it.OrderFormNo }}</h5>
                 </div>
                 <div class="p-2">
                   <div class="d-flex justify-content-between">
-                    <div>วันที่สั่งซืื้อ</div>&nbsp;&nbsp;&nbsp;
-                    <div>1 กก 56</div>
+                    <div>วันที่สั่งซืื้อ</div>
+                    &nbsp;&nbsp;&nbsp;
+                    <div>{{ dataFormat(it.HospitalDate) }}</div>
                   </div>
                   <div class="d-flex justify-content-between">
                     <div>ยอด</div>
-                    <div>1000</div>
+                    <div>  {{ it.products[it.products.length -1].total.toLocaleString('en-US') }} บาท</div>
                   </div>
                 </div>
               </div>
-              <!-- <div class="row g-0 justify-content-between" >
-                <div class="col-3">
-                  <div class="align-items-center justify-content-center">
-                    <img
-                      src="https://picsum.photos/400/400/?image=20"
-                      alt="Image"
-                      class="rounded-circle"
-                      height="60"
-                    />
-                  </div>
-                </div>
-                <div class="col align-items-center justify-content-center">
-                  <div class="d-flex flex-column justify-content-center">
-                    <span> 111</span>
-                    <span class="f-20 font-weight-bold">22</span>
-                  </div>
-                </div>
-              </div> -->
             </div>
           </div>
         </div>
@@ -64,6 +50,7 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import ProfileCustomer from "../components/profileCustomer.vue";
+import OrderService from "../services/OrderService";
 export default {
   name: "customer",
   components: {
@@ -72,13 +59,48 @@ export default {
   },
   data() {
     return {
-      keyCustomer: null
+      keyCustomer: null,
+      listOrder: [],
+      originList: [],
+      txtSearch: null
+    };
+  },
+  watch: {
+    txtSearch(v) {
+      if(v) {
+           console.log("🚀 ~ file: customerHistory.vue ~ line 70 ~ txtSearch ~ v", v)
+           this.listOrder = this.originList.filter(it=> `${it.OrderFormNo}`.indexOf(v) > -1)
+      } else {
+        this.listOrder = this.originList
+      }
     }
   },
-  mounted () {
-   if(this.$route.query.key){
-     this.keyCustomer = this.$route.query.key
-   }
+  mounted() {
+    if (this.$route.query.key) {
+      this.keyCustomer = this.$route.query.key;
+
+      OrderService.where("HospitalID", "==", this.keyCustomer)
+        .get()
+        .then((snapshotChange) => {
+          snapshotChange.forEach((doc) => {
+            this.listOrder.push(doc.data());
+            this.originList.push(doc.data());
+            
+          });
+        });
+
+    }
+  },
+  methods: {
+    dataFormat(tmp) {
+      const date = new Date(tmp);
+
+      return date.toLocaleDateString("th-TH", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    },
   },
 };
 </script>

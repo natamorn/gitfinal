@@ -727,11 +727,10 @@ export default {
       if (v) {
         const found = this.customerList.find((it) => it.Name === v);
         if (found) {
-          console.log("🚀 ~ file: OrderForm.vue ~ line 731 ~ found", found)
+          console.log("🚀 ~ file: OrderForm.vue ~ line 731 ~ found", found);
           this.formElements.HospitalID.value = found.key;
           this.formElements.Address.value = found.Address;
           this.formElements.HospitalEmail.value = found.Email;
-          
         }
       }
     },
@@ -753,19 +752,23 @@ export default {
     },
     orderId(key) {
       if (key) {
-        OrderService.get(key).then((snapshotChange) => {
-          snapshotChange.forEach((doc) => {
-            for (let name in this.formElements) {
-              this.formElements[name].value = doc.data()[name];
+        OrderService.doc(key)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              for (let name in this.formElements) {
+                this.formElements[name].value = doc.data()[name];
+              }
+              this.productHistory = doc.data().products;
+            } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document!");
             }
-            this.productHistory = doc.data().products;
           });
-        });
       }
     },
   },
   mounted() {
-
     // OrderService.get().then((snapshotChange) => {
     //       snapshotChange.forEach((doc) => {
     //        OrderService.doc(doc.id).delete()
@@ -896,15 +899,12 @@ export default {
             this.$swal.fire("Oops...", e, "error");
           });
       } else {
-        OrderService.doc(this.orderId).update(formData)
+        OrderService.doc(this.orderId)
+          .update(formData)
           .then(() => {
             this.reduceStock();
-            
-            this.$swal.fire(
-              "success!",
-              "Update item successfully!",
-              "success"
-            );
+
+            this.$swal.fire("success!", "Update item successfully!", "success");
           })
           .catch((e) => {
             this.$swal.fire("Oops...", e, "error");
@@ -929,9 +929,7 @@ export default {
 
             RequestInventoryService.doc(doc.id)
               .update(tempData)
-              .then(() => {
-                
-              });
+              .then(() => {});
           });
         });
     },

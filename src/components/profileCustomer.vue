@@ -81,11 +81,9 @@ export default {
       }
     },
     keyCustomer(v) {
-      console.log("🚀 ~ file: profileCustomer.vue ~ line 84 ~ key ~ v", v)
       if(v) {
            let dbRef = CustomerService.doc(v);
             dbRef.get().then((doc) => {
-                console.log("🚀 ~ file: profileCustomer.vue ~ line 87 ~ dbRef.get ~ doc", doc)
                 this.formData = doc.data();
             }).catch((error) => {
                 console.log(error)
