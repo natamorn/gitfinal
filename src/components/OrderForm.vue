@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-sm-10 mx-auto">
+    <div class="col-sm-10 mx-auto" id="printableArea">
       <div class="card-body">
         <form @submit.prevent="onFormSubmit">
           <div class="row mt-4">
@@ -15,6 +15,7 @@
                 @keyup="onFormChange($event)"
                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 required
+                :readonly="orderId"
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("OrderFormNo") }}
@@ -23,7 +24,7 @@
 
             <div class="form-group col">
               <label htmlFor="Sale">Sale *</label>
-              <input
+              <!-- <input
                 type="text"
                 :class="getInputClass('Sale')"
                 id="Sale"
@@ -31,7 +32,20 @@
                 v-model="formElements.Sale.value"
                 @keyup="onFormChange($event)"
                 required
-              />
+              /> -->
+
+              <select
+                v-model="formElements.Sale.value"
+                :class="`form-select ${getInputClass('Sale')}`"
+                aria-label="Default select example"
+                id="Sale"
+                :readonly="orderId"
+                name="Sale"
+              >
+                <template v-for="(it, index) in listEmployee" :key="index">
+                  <option :value="it.Emp_ID">{{ it.Email }}</option>
+                </template>
+              </select>
               <div class="invalid-feedback">
                 {{ getErrorMessage("Sale") }}
               </div>
@@ -76,6 +90,7 @@
               <label htmlFor="HospitalName">Hospital Name *</label>
               <div class="form-group col">
                 <select
+                  :readonly="orderId"
                   v-model="formElements.HospitalName.value"
                   :class="`form-select ${getInputClass('HospitalName')}`"
                   aria-label="Default select example"
@@ -104,6 +119,7 @@
             <div class="form-group col">
               <label for="HospitalDate">Date</label>
               <input
+                :readonly="orderId"
                 class="form-control"
                 type="Date"
                 v-model="formElements.HospitalDate.value"
@@ -118,6 +134,7 @@
             <div class="form-group col">
               <label htmlFor="HospitalID">Hospital ID *</label>
               <input
+                :readonly="orderId"
                 type="text"
                 :class="getInputClass('HospitalID')"
                 id="HospitalID"
@@ -134,6 +151,7 @@
             <div class="form-group col">
               <label htmlFor="Department">Department *</label>
               <input
+                :readonly="orderId"
                 type="text"
                 :class="getInputClass('Department')"
                 id="Department"
@@ -152,6 +170,7 @@
             <div class="form-group col">
               <label htmlFor="Address">Address *</label>
               <input
+                :readonly="orderId"
                 type="text"
                 :class="getInputClass('Address')"
                 id="Address"
@@ -170,6 +189,7 @@
             <div class="form-group col">
               <label for="DateOpen">วันที่เปิดซอง/สรุป : *</label>
               <input
+                :readonly="orderId"
                 class="form-control"
                 type="Date"
                 v-model="formElements.DateOpen.value"
@@ -191,6 +211,7 @@
                 required
               /> -->
               <select
+                :readonly="orderId"
                 v-model="formElements.WarrantyY.value"
                 :class="`form-select ${getInputClass('WarrantyY')}`"
                 aria-label="Default select example"
@@ -209,6 +230,7 @@
             <div class="form-group col">
               <label htmlFor="OutNo">เลขที่หมดสัญญา/ใบสั่งซื้อ *</label>
               <input
+                :readonly="orderId"
                 type="text"
                 :class="getInputClass('OutNo')"
                 id="OutNo"
@@ -234,6 +256,7 @@
                 required
               /> -->
               <select
+                :readonly="orderId"
                 v-model="formElements.MaintenanceM.value"
                 :class="`form-select ${getInputClass('MaintenanceM')}`"
                 aria-label="Default select example"
@@ -261,6 +284,7 @@
                 required
               /> -->
               <select
+                :readonly="orderId"
                 v-model="formElements.InOrder.value"
                 :class="`form-select ${getInputClass('InOrder')}`"
                 aria-label="Default select example"
@@ -285,6 +309,7 @@
                 required
               /> -->
               <select
+                :readonly="orderId"
                 v-model="formElements.Installation.value"
                 :class="`form-select ${getInputClass('Installation')}`"
                 aria-label="Default select example"
@@ -302,6 +327,7 @@
             <div class="form-group col">
               <label htmlFor="DateDeliver">กำหนดส่งมอบ *</label>
               <input
+                :readonly="orderId"
                 class="form-control"
                 type="date"
                 v-model="formElements.DateDeliver.value"
@@ -314,6 +340,7 @@
             <div class="form-group col">
               <label for="DateExpire">วันที่หมดสัญญา *</label>
               <input
+                :readonly="orderId"
                 class="form-control"
                 type="Date"
                 v-model="formElements.DateExpire.value"
@@ -343,6 +370,7 @@
             <div class="form-group col">
               <label htmlFor="Refer">อ้างอิงใบเสนอราคา *</label>
               <input
+                :readonly="orderId"
                 type="text"
                 :class="getInputClass('Refer')"
                 id="Refer"
@@ -361,6 +389,7 @@
             <div class="form-group col">
               <label htmlFor="Agreement">ข้อตกลงเพิ่มเติม</label>
               <input
+                :readonly="orderId"
                 type="text"
                 :class="getInputClass('Agreement')"
                 id="Agreement"
@@ -400,12 +429,16 @@
                   <td>{{ it.remark }}</td>
                 </tr>
 
-                <tr>
-                  <td>{{ productHistory.length + 1 }}</td>
+                <tr
+                  v-show="flag === 'addOrder'"
+                  v-for="(it, index) in formProducts"
+                  :key="index"
+                >
+                  <td>{{ productHistory.length + index + 1 }}</td>
                   <td>
                     <div class="col-12">
                       <select
-                        v-model="selectedProduct"
+                        v-model="it.selectedProduct"
                         class="form-select"
                         aria-label="Default select example"
                       >
@@ -422,7 +455,7 @@
                   </td>
                   <td>
                     <input
-                      v-model="c"
+                      v-model="it.c"
                       type="text"
                       class="form-control"
                       id="C"
@@ -431,7 +464,7 @@
                   </td>
                   <td>
                     <input
-                      v-model="qty"
+                      v-model="it.qty"
                       type="text"
                       class="form-control"
                       id="Option"
@@ -440,17 +473,20 @@
                   </td>
                   <td>
                     <label for="">{{
-                      price && price.toLocaleString("en-US")
+                      it.selectedProduct &&
+                      it.selectedProduct.Insert_Product_Price.toLocaleString(
+                        "en-US"
+                      )
                     }}</label>
                   </td>
                   <td>
                     <label for="">{{
-                      total && total.toLocaleString("en-US")
+                      it.total && it.total.toLocaleString("en-US")
                     }}</label>
                   </td>
                   <td>
                     <input
-                      v-model="desription"
+                      v-model="it.desription"
                       type="text"
                       class="form-control"
                       id="Desription"
@@ -459,7 +495,7 @@
                   </td>
                   <td>
                     <input
-                      v-model="remark"
+                      v-model="it.remark"
                       type="text"
                       class="form-control"
                       id="Remark"
@@ -471,18 +507,33 @@
             </table>
           </div>
 
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
+          <div class="text-center" v-show="flag === 'addOrder'">
+            <button
+              type="button"
+              @click="addFieldProduct()"
+              class="btn btn-primary"
+            >
+              เพิ่ม
+            </button>
 
             &nbsp;
             <button
               type="reset"
               class="btn btn-outline-danger"
               value="reset"
-              @click="onReset()"
+              @click="removeFieldProduct()"
             >
-              Clear
+              ลบ
             </button>
+          </div>
+
+          <div class="row justify-content-end">
+            <div class="col col-2 d-grid gap-2">
+              <button @click="printDiv" type="button" class="btn btn-primary">พิมพ์</button>
+            </div>
+            <div class="col col-2 d-grid gap-2">
+              <button type="submit" class="btn btn-primary">บันทึก</button>
+            </div>
           </div>
         </form>
       </div>
@@ -491,10 +542,11 @@
 </template>
 
 <script>
-import firebase from "../database/firebase";
+// import firebase from "../database/firebase";
 import OrderService from "../services/OrderService";
 import CustomerService from "../services/CustomerService";
 import RequestInventoryService from "../services/RequestInventoryService";
+import SignupService from "../services/SignupService";
 export default {
   name: "OrderForm",
   props: {
@@ -514,7 +566,7 @@ export default {
           type: "text",
           value: 1,
           validator: {
-            minLength: 5,
+            minLength: 1,
             maxLength: 15,
           },
           touched: false,
@@ -711,18 +763,44 @@ export default {
       uid: null,
       customerList: [],
       listProduct: [],
-      c: "HW",
-      qty: 1,
+
       productHistory: [],
 
-      price: null,
-      total: null,
-      desription: null,
-      remark: null,
-      selectedProduct: null,
+      formProducts: [
+        {
+          c: "HW",
+          qty: 1,
+          price: null,
+          total: null,
+          desription: null,
+          remark: null,
+          selectedProduct: null,
+        },
+      ],
+      defaultFormProducts: {
+        c: "HW",
+        qty: 1,
+        price: null,
+        total: null,
+        desription: null,
+        remark: null,
+        selectedProduct: null,
+      },
+      listEmployee: [],
     };
   },
   watch: {
+    formProducts: {
+      handler(item) {
+        item.forEach((it) => {
+          if (it.selectedProduct) {
+            it.total = +it.qty * it.selectedProduct.Insert_Product_Price;
+            it.price = it.selectedProduct.Insert_Product_Price;
+          }
+        });
+      },
+      deep: true,
+    },
     "formElements.HospitalName.value"(v) {
       if (v) {
         const found = this.customerList.find((it) => it.Name === v);
@@ -731,6 +809,14 @@ export default {
           this.formElements.HospitalID.value = found.key;
           this.formElements.Address.value = found.Address;
           this.formElements.HospitalEmail.value = found.Email;
+        }
+      }
+    },
+    "formElements.DateExpire.value"(v) {
+      if (v) {
+        console.log("v :>> ", v);
+        if (this.formElements.InOrder.value === "No") {
+          this.formElements.DateDeliver.value = this.addDays(v, 90);
         }
       }
     },
@@ -746,10 +832,10 @@ export default {
         this.total = 0;
       }
     },
-    selectedProduct(v) {
-      this.price = v.Insert_Product_Price;
-      // this.total = v.Total_RI;
-    },
+    // selectedProduct(v) {
+    //   this.price = v.Insert_Product_Price;
+    //   // this.total = v.Total_RI;
+    // },
     orderId(key) {
       if (key) {
         OrderService.doc(key)
@@ -775,22 +861,32 @@ export default {
     //       });
     //     });
     if (this.flag === "addOrder") {
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          // User logged in already or has just logged in.
-          this.formElements.Sale.value = user.uid;
-        } else {
-          // User not logged in or has just logged out.
-        }
+      // firebase.auth().onAuthStateChanged((user) => {
+      //   if (user) {
+      //     // User logged in already or has just logged in.
+      //     this.formElements.Sale.value = user.uid;
+      //   } else {
+      //     // User not logged in or has just logged out.
+      //   }
+      // });
+
+      // SignupService.add({ Emp_ID: 'ME1111', Email: 'Employee@text.com', Pass: '123456'})
+
+      SignupService.get().then((snapshotChange) => {
+        snapshotChange.forEach((doc) => {
+          this.listEmployee.push(doc.data());
+        });
       });
 
       OrderService.get().then((snapshotChange) => {
-        snapshotChange.forEach((doc) => {
-          this.formElements.OrderFormNo.value =
-            Number(doc.data().OrderFormNo) + 1;
-        });
+        this.formElements.OrderFormNo.value = snapshotChange.docs.length + 1;
       });
     }
+    SignupService.get().then((snapshotChange) => {
+      snapshotChange.forEach((doc) => {
+        this.listEmployee.push(doc.data());
+      });
+    });
     CustomerService.get().then((snapshotChange) => {
       this.customerList = [];
       snapshotChange.forEach((doc) => {
@@ -873,18 +969,22 @@ export default {
 
       formData.products = [
         ...this.productHistory,
-        {
-          "P/N": this.selectedProduct["Insert_Product_P/N"],
-          c: this.c,
-          qty: this.qty,
-          price: this.price,
-          total: this.total,
-          desription: this.desription,
-          remark: this.remark,
-        },
+
+        ...this.formProducts.map((it) => ({
+          "P/N": it.selectedProduct["Insert_Product_P/N"],
+          c: it.c,
+          qty: it.qty,
+          price: it.selectedProduct.Insert_Product_Price,
+          total: it.total,
+          desription: it.desription,
+          remark: it.remark,
+        })),
       ];
 
+      console.log("formData :>> ", formData);
+
       if (this.flag === "addOrder") {
+        console.log("1 :>> ", 1);
         OrderService.add(formData)
           .then(() => {
             this.reduceStock();
@@ -894,6 +994,7 @@ export default {
               "Created new item successfully!",
               "success"
             );
+            this.$router.push("/");
           })
           .catch((e) => {
             this.$swal.fire("Oops...", e, "error");
@@ -905,6 +1006,7 @@ export default {
             this.reduceStock();
 
             this.$swal.fire("success!", "Update item successfully!", "success");
+            this.$router.push("/");
           })
           .catch((e) => {
             this.$swal.fire("Oops...", e, "error");
@@ -912,29 +1014,63 @@ export default {
       }
     },
     reduceStock() {
-      RequestInventoryService.where(
-        "RequestInventoryNO",
-        "==",
-        this.selectedProduct.RequestInventoryNO
-      )
-        .get()
-        .then((snapshotChange) => {
-          let tempData = null;
-          snapshotChange.forEach((doc) => {
-            tempData = doc.data();
-            tempData.products[tempData.products.length - 1].Total_RI =
-              tempData.products[tempData.products.length - 1].Total_RI -
-              this.qty;
-            console.log("tempData :>> ", tempData);
+      this.formProducts.forEach((it) => {
+        RequestInventoryService.where(
+          "RequestInventoryNO",
+          "==",
+          it.selectedProduct.RequestInventoryNO
+        )
+          .get()
+          .then((snapshotChange) => {
+            let tempData = null;
+            snapshotChange.forEach((doc) => {
+              tempData = doc.data();
 
-            RequestInventoryService.doc(doc.id)
-              .update(tempData)
-              .then(() => {});
+              const found = tempData.products.findIndex(
+                (itF) =>
+                  itF["Insert_Product_P/N"] ===
+                  it.selectedProduct["Insert_Product_P/N"]
+              );
+              console.log("found :>> ", found);
+              if (found > -1) {
+                tempData.products[found].Total_RI =
+                  tempData.products[found].Total_RI - it.qty;
+                RequestInventoryService.doc(doc.id)
+                  .update(tempData)
+                  .then(() => {});
+              }
+            });
           });
-        });
+      });
     },
     onReset() {
       this.formElements = "";
+    },
+    addDays(v, days) {
+      const today = new Date(v);
+      const tomorrow = new Date();
+
+      // Add 1 Day
+      tomorrow.setDate(today.getDate() + days);
+      return tomorrow.toISOString().split("T")[0];
+    },
+    addFieldProduct() {
+      this.formProducts.push(
+        JSON.parse(JSON.stringify(this.defaultFormProducts))
+      );
+    },
+    removeFieldProduct() {
+      this.formProducts.splice(this.formProducts.length - 1, 1);
+    },
+    printDiv() {
+      var printContents = document.getElementById("printableArea").innerHTML;
+      var originalContents = document.body.innerHTML;
+
+      document.body.innerHTML = printContents;
+
+      window.print();
+
+      document.body.innerHTML = originalContents;
     },
   },
 };

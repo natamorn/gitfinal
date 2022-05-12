@@ -104,7 +104,6 @@
               </div>
             </div>
           </div>
-
           <div class="row m-4 text-center">
             <table class="table table-hover">
               <thead>
@@ -119,68 +118,98 @@
                 </tr>
               </thead>
               <tbody>
-                <td><label for="">1</label></td>
-                <td>
-                  <!-- <input type="text" class="form-control" id="P/N" name="P/N" /> -->
-                  <div class="form-group col">
-                    <select
-                      v-model="selectedProduct"
-                      class="form-select"
-                      aria-label="Default select example"
-                    >
-                      <template v-for="(it, index) in listProduct" :key="index">
-                        <option :value="it">{{ it["p/n"] }}</option>
-                      </template>
-                    </select>
-                  </div>
-                </td>
-                <td>
-                  <label for="">{{
-                    selectedProduct && selectedProduct.Name
-                  }}</label>
-                </td>
-                <td>
-                  <label for="">{{
-                    selectedProduct && selectedProduct.Price.toLocaleString('en-US')
-                  }}</label>
-                </td>
-                <td>
-                  <input
-                    v-model="payCount"
-                    type="number"
-                    class="form-control"
-                    id="AmountReceived"
-                    name="AmountReceived"
-                  />
-                </td>
-                <td>
-                  <label for="">{{ Total_RI.toLocaleString('en-US') }}</label>
-                </td>
-                <td>
-                  <input
-                   v-model="remark"
-                    type="text"
-                    class="form-control"
-                    id="NoteTable"
-                    name="NoteTable"
-                  />
-                </td>
+                <tr v-for="(it, index) in productHistory" :key="index">
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ it["Insert_Product_P/N"] }}</td>
+                  <td>{{ it.Insert_Product_Name }}</td>
+                  <td>{{ it.Insert_Product_Price }}</td>
+                  <td>{{ it.payCount.toLocaleString("en-US") }}</td>
+                  <td>{{ it.Total_RI.toLocaleString("en-US") }}</td>
+                  <td>{{ it.remark }}</td>
+                </tr>
+                <tr v-for="(it, index) in formProducts" :key="index">
+                  <td>
+                    <label for="">{{ productHistory.length + 1 }}</label>
+                  </td>
+                  <td>
+                    <div class="form-group col">
+                      <select
+                        v-model="it.selectedProduct"
+                        class="form-select"
+                        aria-label="Default select example"
+                      >
+                        <template
+                          v-for="(it, index) in listProduct"
+                          :key="index"
+                        >
+                          <option :value="it">{{ it["p/n"] }}</option>
+                        </template>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <label for="">{{
+                      it.selectedProduct && it.selectedProduct.Name
+                    }}</label>
+                  </td>
+                  <td>
+                    <label for="">{{
+                      it.selectedProduct &&
+                      it.selectedProduct.Price.toLocaleString("en-US")
+                    }}</label>
+                  </td>
+                  <td>
+                    <input
+                      v-model="it.payCount"
+                      type="number"
+                      class="form-control"
+                      id="AmountReceived"
+                      name="AmountReceived"
+                    />
+                  </td>
+                  <td>
+                    <label for="">{{
+                      it.Total_RI.toLocaleString("en-US")
+                    }}</label>
+                  </td>
+                  <td>
+                    <input
+                      v-model="it.remark"
+                      type="text"
+                      class="form-control"
+                      id="NoteTable"
+                      name="NoteTable"
+                    />
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
 
           <div class="text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button
+              type="button"
+              @click="addFieldProduct()"
+              class="btn btn-primary"
+            >
+              เพิ่ม
+            </button>
 
             &nbsp;
             <button
               type="reset"
               class="btn btn-outline-danger"
               value="reset"
-              @click="onReset()"
+              @click="removeFieldProduct()"
             >
-              Clear
+              ลบ
             </button>
+          </div>
+
+          <div class="row justify-content-end">
+            <div class="col col-2 d-grid gap-2">
+              <button type="submit" class="btn btn-primary">บันทึก</button>
+            </div>
           </div>
         </form>
       </div>
@@ -257,43 +286,81 @@ export default {
         },
       },
       formValid: false,
-      selectedProduct: null,
-      payCount: 1,
-      Total_RI: 1,
-      remark: '',
+
       listProduct: [],
+      defaultFormProducts: {
+        selectedProduct: null,
+        payCount: 1,
+        Total_RI: 1,
+        remark: "",
+      },
+      formProducts: [
+        {
+          selectedProduct: null,
+          payCount: 1,
+          Total_RI: 1,
+          remark: "",
+        },
+      ],
+      rid: null,
+      productHistory: [],
     };
   },
   watch: {
+    formProducts: {
+      handler(item) {
+        item.forEach((it) => {
+          if (it.selectedProduct) {
+            it.Total_RI = it.payCount;
+          }
+        });
+      },
+      deep: true,
+    },
     // selectedProduct(v) {
     //   if (v) {
     //     this.Total_RI = this.selectedProduct.Price * this.payCount;
     //   }
     // },
     payCount(v) {
-      if(v) {
-        this.Total_RI =  this.payCount;
+      if (v) {
+        this.Total_RI = this.payCount;
       }
-    }
+    },
   },
   mounted() {
     // ProductService.add({'p/n': 1, Name: 'productA', Price: 100000})
     // ProductService.add({'p/n': 2, Name: 'productB', Price: 200000})
+    //  RequestInventoryService.get().then((snapshot) => {
+    //         snapshot.forEach((doc) => {
 
+    //           RequestInventoryService.doc(doc.id).delete()
+    //         });
+    //       });
+
+    if (this.$route.query.key) {
+      this.rid = this.$route.query.key;
+
+      RequestInventoryService.doc(this.rid)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            for (let name in this.formElements) {
+              this.formElements[name].value = doc.data()[name];
+            }
+
+            this.productHistory = doc.data().products;
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+        });
+    }
     ProductService.get().then((snapshot) => {
       snapshot.forEach((childSnapshot) => {
         var id = childSnapshot.id;
         var data = childSnapshot.data();
         this.listProduct.push({ id: id, ...data });
-
-      });
-    });
-
-    RequestInventoryService.get().then((snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        var id = childSnapshot.id;
-        console.log("🚀 ~ file: AddProductForm.vue ~ line 293 ~ snapshot.forEach ~ id", id)
-// RequestInventoryService.doc(id).delete()
       });
     });
   },
@@ -359,22 +426,97 @@ export default {
       for (let name in this.formElements) {
         formData[name] = this.formElements[name].value;
       }
-      formData.products = [{'Insert_Product_P/N': this.selectedProduct['p/n'],Total_RI: this.Total_RI, Insert_Product_Name: this.selectedProduct.Name, Insert_Product_Price: this.selectedProduct.Price}]
-      RequestInventoryService.add(formData)
-        .then(() => {
-          this.$swal.fire(
-            "success!",
-            "Created new item successfully!",
-            "success"
+      const groupBy = (array) => {
+        // Return the end result
+        return array.reduce((result, currentValue) => {
+          if (currentValue.selectedProduct) {
+            (result[currentValue.selectedProduct["p/n"]] =
+              result[currentValue.selectedProduct["p/n"]] || []).push(
+              currentValue
+            );
+            return result;
+          }
+        }, {}); // empty object is the initial value for result object
+      };
+
+      let tempData = [...this.formProducts.filter((it) => it.selectedProduct)];
+      if (this.rid) {
+        let tempForm = this.productHistory.map((it) => {
+          let found = this.listProduct.find(
+            (itR) => itR["p/n"] === it["Insert_Product_P/N"]
           );
-        })
-        .catch((e) => {
-          this.$swal.fire("Oops...", e, "error");
+          return {
+            selectedProduct: found,
+            payCount: it.payCount,
+            Total_RI: it.Total_RI,
+            remark: it.remark,
+          };
         });
-      this.$router.replace("/AddProduct");
+        tempData.push(...tempForm);
+      }
+
+      const groupProduct = groupBy(tempData);
+      console.log(
+        "🚀 ~ file: AddProductForm.vue ~ line 446 ~ onFormSubmit ~ groupProduct",
+        groupProduct
+      );
+
+      if (groupProduct) {
+        formData.products = Object.keys(groupProduct).map((key) => {
+          let Total_RI = groupProduct[key].reduce(
+            (total, num) => (total += num.Total_RI),
+            0
+          );
+          let payCount = groupProduct[key].reduce(
+            (total, num) => (total += num.payCount),
+            0
+          );
+          console.log("groupProduct[key] :>> ", groupProduct[key]);
+          return {
+            "Insert_Product_P/N": groupProduct[key][0].selectedProduct["p/n"],
+            Total_RI,
+            payCount,
+            Insert_Product_Name: groupProduct[key][0].selectedProduct.Name,
+            Insert_Product_Price: groupProduct[key][0].selectedProduct.Price,
+            remark: groupProduct[key][0].remark,
+          };
+        });
+      }
+      if (this.rid) {
+        RequestInventoryService.doc(this.rid)
+          .update(formData)
+          .then(() => {
+            this.$swal.fire("success!", "Update item successfully!", "success");
+            this.$router.replace("/Product");
+          })
+          .catch((e) => {
+            this.$swal.fire("Oops...", e, "error");
+          });
+      } else {
+        RequestInventoryService.add(formData)
+          .then(() => {
+            this.$swal.fire(
+              "success!",
+              "Created new item successfully!",
+              "success"
+            );
+            this.$router.replace("/Product");
+          })
+          .catch((e) => {
+            this.$swal.fire("Oops...", e, "error");
+          });
+      }
     },
     onReset() {
       this.formElements = "";
+    },
+    addFieldProduct() {
+      this.formProducts.push(
+        JSON.parse(JSON.stringify(this.defaultFormProducts))
+      );
+    },
+    removeFieldProduct() {
+      this.formProducts.splice(this.formProducts.length - 1, 1);
     },
   },
 };

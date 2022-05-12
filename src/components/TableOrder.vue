@@ -18,7 +18,7 @@
           <td>{{ it.HospitalName }}</td>
           <td>{{ it.HospitalEmail }}</td>
           <td>{{ it.HospitalDate }}</td>
-          <td>{{ it.products[it.products.length -1].total.toLocaleString('en-US') }} บาท</td>
+          <td>{{ it.products ? it.products[it.products.length -1].total.toLocaleString('en-US') : '' }} บาท</td>
           <td><a :href="`/viewOrder?key=${it.key}`"> viewmore</a></td>
         </tr>
       </tbody>

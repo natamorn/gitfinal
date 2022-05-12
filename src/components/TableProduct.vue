@@ -4,15 +4,19 @@
       <thead>
         <tr class="table-danger">
           <td>NO</td>
+          <td>RI_NO</td>
           <td>NAME</td>
           <td>จำนวนสินค้าที่เหลือ</td>
+          <td></td>
         </tr>
       </thead>
       <tbody>
         <tr  v-for="(it, index) in listProduct" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>{{ it.products[it.products.length -1].Insert_Product_Name }}</td>
-          <td>{{ it.products[it.products.length -1].Total_RI.toLocaleString('en-US') }}</td>
+          <td>{{ it.RequestInventoryNO }}</td>
+          <td>{{ it.Insert_Product_Name }}</td>
+          <td>{{ it.Total_RI.toLocaleString('en-US') }}</td>
+          <td><a :href="`/AddProduct?key=${it.key}`"> viewmore</a></td>
         </tr>
       </tbody>
     </table>
@@ -46,10 +50,17 @@ export default {
      RequestInventoryService.get().then((snapshotChange) => {
       this.listProduct = [];
       snapshotChange.forEach((doc) => {
-        this.listProduct.push({
+        let res = doc.data().products.map(it => ({
           key: doc.id,
-          ...doc.data()
-        });
+          ...it,
+          RequestInventoryNO: doc.data().RequestInventoryNO
+        }))
+        this.listProduct.push(...res)
+        console.log("🚀 ~ file: TableProduct.vue ~ line 59 ~ snapshotChange.forEach ~ this.listProduct", this.listProduct)
+        // this.listProduct.push({
+        //   key: doc.id,
+        //   ...doc.data()
+        // });
       });
     });
   },
