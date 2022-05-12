@@ -14,7 +14,12 @@
               <h5 class="text-primary">ประวัติการซื้อ</h5></label
             >
             <div class="col-sm-6">
-              <input v-model="txtSearch" type="text" class="form-control" id="search" />
+              <input
+                v-model="txtSearch"
+                type="text"
+                class="form-control"
+                id="search"
+              />
             </div>
           </div>
           <div class="mb-3 row">
@@ -23,22 +28,31 @@
               v-for="(it, index) in listOrder"
               :key="index"
             >
-              <div class="d-flex justify-content-between">
-                <div class="p-2">
-                  <h5>หมายเลข {{ it.OrderFormNo }}</h5>
-                </div>
-                <div class="p-2">
-                  <div class="d-flex justify-content-between">
-                    <div>วันที่สั่งซืื้อ</div>
-                    &nbsp;&nbsp;&nbsp;
-                    <div>{{ dataFormat(it.HospitalDate) }}</div>
+              <a :href="`/viewOrder?key=${it.key}`">
+                <div class="d-flex justify-content-between">
+                  <div class="p-2">
+                    <h5>หมายเลข {{ it.OrderFormNo }}</h5>
                   </div>
-                  <div class="d-flex justify-content-between">
-                    <div>ยอด</div>
-                    <div>  {{ it.products[it.products.length -1].total.toLocaleString('en-US') }} บาท</div>
+                  <div class="p-2">
+                    <div class="d-flex justify-content-between">
+                      <div>วันที่สั่งซืื้อ</div>
+                      &nbsp;&nbsp;&nbsp;
+                      <div>{{ dataFormat(it.HospitalDate) }}</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <div>ยอด</div>
+                      <div>
+                        {{
+                          it.products[
+                            it.products.length - 1
+                          ].total.toLocaleString("en-US")
+                        }}
+                        บาท
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -62,18 +76,23 @@ export default {
       keyCustomer: null,
       listOrder: [],
       originList: [],
-      txtSearch: null
+      txtSearch: null,
     };
   },
   watch: {
     txtSearch(v) {
-      if(v) {
-           console.log("🚀 ~ file: customerHistory.vue ~ line 70 ~ txtSearch ~ v", v)
-           this.listOrder = this.originList.filter(it=> `${it.OrderFormNo}`.indexOf(v) > -1)
+      if (v) {
+        console.log(
+          "🚀 ~ file: customerHistory.vue ~ line 70 ~ txtSearch ~ v",
+          v
+        );
+        this.listOrder = this.originList.filter(
+          (it) => `${it.OrderFormNo}`.indexOf(v) > -1
+        );
       } else {
-        this.listOrder = this.originList
+        this.listOrder = this.originList;
       }
-    }
+    },
   },
   mounted() {
     if (this.$route.query.key) {
@@ -83,12 +102,10 @@ export default {
         .get()
         .then((snapshotChange) => {
           snapshotChange.forEach((doc) => {
-            this.listOrder.push(doc.data());
-            this.originList.push(doc.data());
-            
+            this.listOrder.push({ key: doc.id, ...doc.data() });
+            this.originList.push({ key: doc.id, ...doc.data() });
           });
         });
-
     }
   },
   methods: {

@@ -112,11 +112,11 @@ export default {
         Address: null,
       },
       formWarning: {
-        Name: false,
-        WorkPhone: false,
-        Email: false,
-        Picture: false,
-        Address: false,
+        Name: true,
+        WorkPhone: true,
+        Email: true,
+        Picture: true,
+        Address: true,
       },
       imgBase64: null,
     };
