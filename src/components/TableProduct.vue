@@ -36,6 +36,13 @@ export default {
    
   },
   mounted() {
+    //  RequestInventoryService.get().then((snapshotChange) => {
+
+    //   snapshotChange.forEach((doc) => {
+    //     RequestInventoryService.doc(doc.id).delete()
+    //   });
+    // });
+    
      RequestInventoryService.get().then((snapshotChange) => {
       this.listProduct = [];
       snapshotChange.forEach((doc) => {

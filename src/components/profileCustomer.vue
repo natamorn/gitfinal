@@ -1,8 +1,8 @@
 <template>
   <div class="card-body">
-    <div class="text-center">
+    <div class="text-center col-12">
       <img
-        src="https://picsum.photos/400/400/?image=20"
+        :src="formData.Picture"
         alt="Image"
         class="rounded-circle"
         height="150"

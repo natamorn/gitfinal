@@ -83,7 +83,7 @@
                   name="HospitalName"
                 >
                   <template v-for="(it, index) in customerList" :key="index">
-                    <option :value="it">{{ it.Name }}</option>
+                    <option>{{ it.Name }}</option>
                   </template>
                 </select>
               </div>
@@ -374,7 +374,7 @@
             </div>
           </div>
 
-          <div class="row text-center">
+          <div class="row text-center mt-4">
             <table class="table table-hover">
               <thead>
                 <tr class="table-active">
@@ -389,10 +389,21 @@
                 </tr>
               </thead>
               <tbody>
+                <tr v-for="(it, index) in productHistory" :key="index">
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ it["P/N"] }}</td>
+                  <td>{{ it.c }}</td>
+                  <td>{{ it.qty }}</td>
+                  <td>{{ it.price.toLocaleString("en-US") }}</td>
+                  <td>{{ it.total.toLocaleString("en-US") }}</td>
+                  <td>{{ it.desription }}</td>
+                  <td>{{ it.remark }}</td>
+                </tr>
+
                 <tr>
-                  <td>1</td>
+                  <td>{{ productHistory.length + 1 }}</td>
                   <td>
-                    <div class="form-group col-12">
+                    <div class="col-12">
                       <select
                         v-model="selectedProduct"
                         class="form-select"
@@ -439,7 +450,8 @@
                   </td>
                   <td>
                     <input
-                      v-model="desription"                      type="text"
+                      v-model="desription"
+                      type="text"
                       class="form-control"
                       id="Desription"
                       name="Desription"
@@ -475,7 +487,6 @@
         </form>
       </div>
     </div>
-    {{ selectedProduct }}
   </div>
 </template>
 
@@ -486,6 +497,16 @@ import CustomerService from "../services/CustomerService";
 import RequestInventoryService from "../services/RequestInventoryService";
 export default {
   name: "OrderForm",
+  props: {
+    orderId: {
+      type: String,
+      default: null,
+    },
+    flag: {
+      type: String,
+      default: "addOrder",
+    },
+  },
   data() {
     return {
       formElements: {
@@ -509,27 +530,36 @@ export default {
           touched: false,
           error: { status: true, message: "" },
         },
-        TanderNo: {
-          type: "text",
-          value: null,
-          validator: {
-            minLength: 5,
-            maxLength: 15,
-          },
-          touched: false,
-          error: { status: true, message: "" },
-        },
-        ProductLine: {
-          type: "text",
-          value: null,
-          validator: {
-            minLength: 5,
-            maxLength: 15,
-          },
-          touched: false,
-          error: { status: true, message: "" },
-        },
+        // TanderNo: {
+        //   type: "text",
+        //   value: null,
+        //   validator: {
+        //     minLength: 5,
+        //     maxLength: 15,
+        //   },
+        //   touched: false,
+        //   error: { status: true, message: "" },
+        // },
+        // ProductLine: {
+        //   type: "text",
+        //   value: null,
+        //   validator: {
+        //     minLength: 5,
+        //     maxLength: 15,
+        //   },
+        //   touched: false,
+        //   error: { status: true, message: "" },
+        // },
         HospitalName: {
+          type: "text",
+          value: null,
+          validator: {
+            minLength: 5,
+          },
+          touched: false,
+          error: { status: true, message: "" },
+        },
+        HospitalEmail: {
           type: "text",
           value: null,
           validator: {
@@ -683,6 +713,7 @@ export default {
       listProduct: [],
       c: "HW",
       qty: 1,
+      productHistory: [],
 
       price: null,
       total: null,
@@ -694,13 +725,14 @@ export default {
   watch: {
     "formElements.HospitalName.value"(v) {
       if (v) {
-        this.formElements.HospitalID.value = v.key;
-        this.formElements.Address.value = v.Address;
-        RequestInventoryService.get(v.key).then((snapshotChange) => {
-          snapshotChange.forEach((doc) => {
-            this.listProduct = doc.data().products;
-          });
-        });
+        const found = this.customerList.find((it) => it.Name === v);
+        if (found) {
+          console.log("🚀 ~ file: OrderForm.vue ~ line 731 ~ found", found)
+          this.formElements.HospitalID.value = found.key;
+          this.formElements.Address.value = found.Address;
+          this.formElements.HospitalEmail.value = found.Email;
+          
+        }
       }
     },
     price(v) {
@@ -719,16 +751,43 @@ export default {
       this.price = v.Insert_Product_Price;
       // this.total = v.Total_RI;
     },
+    orderId(key) {
+      if (key) {
+        OrderService.get(key).then((snapshotChange) => {
+          snapshotChange.forEach((doc) => {
+            for (let name in this.formElements) {
+              this.formElements[name].value = doc.data()[name];
+            }
+            this.productHistory = doc.data().products;
+          });
+        });
+      }
+    },
   },
   mounted() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        // User logged in already or has just logged in.
-        this.formElements.Sale.value = user.uid;
-      } else {
-        // User not logged in or has just logged out.
-      }
-    });
+
+    // OrderService.get().then((snapshotChange) => {
+    //       snapshotChange.forEach((doc) => {
+    //        OrderService.doc(doc.id).delete()
+    //       });
+    //     });
+    if (this.flag === "addOrder") {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          // User logged in already or has just logged in.
+          this.formElements.Sale.value = user.uid;
+        } else {
+          // User not logged in or has just logged out.
+        }
+      });
+
+      OrderService.get().then((snapshotChange) => {
+        snapshotChange.forEach((doc) => {
+          this.formElements.OrderFormNo.value =
+            Number(doc.data().OrderFormNo) + 1;
+        });
+      });
+    }
     CustomerService.get().then((snapshotChange) => {
       this.customerList = [];
       snapshotChange.forEach((doc) => {
@@ -738,11 +797,16 @@ export default {
         });
       });
     });
-
-    OrderService.get().then((snapshotChange) => {
+    RequestInventoryService.get().then((snapshotChange) => {
       snapshotChange.forEach((doc) => {
-        this.formElements.OrderFormNo.value =
-          Number(doc.data().OrderFormNo) + 1;
+        if (doc.data().products) {
+          this.listProduct.push(
+            ...doc.data().products.map((it) => ({
+              ...it,
+              RequestInventoryNO: doc.data().RequestInventoryNO,
+            }))
+          );
+        }
       });
     });
   },
@@ -803,8 +867,9 @@ export default {
       for (let name in this.formElements) {
         formData[name] = this.formElements[name].value;
       }
-      console.log(formData);
+
       formData.products = [
+        ...this.productHistory,
         {
           "P/N": this.selectedProduct["Insert_Product_P/N"],
           c: this.c,
@@ -815,16 +880,59 @@ export default {
           remark: this.remark,
         },
       ];
-      OrderService.add(formData)
-        .then(() => {
-          this.$swal.fire(
-            "success!",
-            "Created new item successfully!",
-            "success"
-          );
-        })
-        .catch((e) => {
-          this.$swal.fire("Oops...", e, "error");
+
+      if (this.flag === "addOrder") {
+        OrderService.add(formData)
+          .then(() => {
+            this.reduceStock();
+
+            this.$swal.fire(
+              "success!",
+              "Created new item successfully!",
+              "success"
+            );
+          })
+          .catch((e) => {
+            this.$swal.fire("Oops...", e, "error");
+          });
+      } else {
+        OrderService.doc(this.orderId).update(formData)
+          .then(() => {
+            this.reduceStock();
+            
+            this.$swal.fire(
+              "success!",
+              "Update item successfully!",
+              "success"
+            );
+          })
+          .catch((e) => {
+            this.$swal.fire("Oops...", e, "error");
+          });
+      }
+    },
+    reduceStock() {
+      RequestInventoryService.where(
+        "RequestInventoryNO",
+        "==",
+        this.selectedProduct.RequestInventoryNO
+      )
+        .get()
+        .then((snapshotChange) => {
+          let tempData = null;
+          snapshotChange.forEach((doc) => {
+            tempData = doc.data();
+            tempData.products[tempData.products.length - 1].Total_RI =
+              tempData.products[tempData.products.length - 1].Total_RI -
+              this.qty;
+            console.log("tempData :>> ", tempData);
+
+            RequestInventoryService.doc(doc.id)
+              .update(tempData)
+              .then(() => {
+                
+              });
+          });
         });
     },
     onReset() {

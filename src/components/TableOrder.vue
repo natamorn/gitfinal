@@ -15,11 +15,11 @@
       <tbody>
         <tr v-for="(it, index) in listOrder" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>{{ it.HospitalName.Name }}</td>
-          <td>{{ it.HospitalName.Email }}</td>
+          <td>{{ it.HospitalName }}</td>
+          <td>{{ it.HospitalEmail }}</td>
           <td>{{ it.HospitalDate }}</td>
           <td>{{ it.products[it.products.length -1].total.toLocaleString('en-US') }} บาท</td>
-          <td>viewmore</td>
+          <td><a :href="`/viewOrder?key=${it.key}`"> viewmore</a></td>
         </tr>
       </tbody>
     </table>
