@@ -566,7 +566,7 @@ export default {
           type: "text",
           value: 1,
           validator: {
-            minLength: 5,
+            minLength: 1,
             maxLength: 15,
           },
           touched: false,
