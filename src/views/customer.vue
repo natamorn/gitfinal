@@ -32,7 +32,7 @@
               <div class="col-3">
                 <div class="align-items-center justify-content-center">
                   <img
-                    src="https://picsum.photos/400/400/?image=20"
+                    :src="it.Picture"
                     alt="Image"
                     class="rounded-circle"
                     height="60"
@@ -86,6 +86,13 @@ export default {
     };
   },
   mounted() {
+    // CustomerService.onSnapshot((snapshotChange) => {
+  
+    //   snapshotChange.forEach((doc) => {
+    //     CustomerService.doc(doc.id).delete()
+    //   });
+    // });
+
     CustomerService.onSnapshot((snapshotChange) => {
       this.listCustomer = [];
       snapshotChange.forEach((doc) => {

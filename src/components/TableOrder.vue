@@ -15,15 +15,14 @@
       <tbody>
         <tr v-for="(it, index) in listOrder" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>{{ it.name }}</td>
-          <td></td>
+          <td>{{ it.HospitalName }}</td>
+          <td>{{ it.HospitalEmail }}</td>
           <td>{{ it.HospitalDate }}</td>
-          <td></td>
-          <td></td>
+          <td>{{ it.products[it.products.length -1].total.toLocaleString('en-US') }} บาท</td>
+          <td><a :href="`/viewOrder?key=${it.key}`"> viewmore</a></td>
         </tr>
       </tbody>
     </table>
-    <code>{{listOrder}}</code>
   </div>
 </template>
 
@@ -38,13 +37,14 @@ export default {
     };
   },
   mounted() {
-     OrderService.onSnapshot((snapshotChange) => {
+     OrderService.get().then((snapshotChange) => {
       this.listOrder = [];
       snapshotChange.forEach((doc) => {
         this.listOrder.push({
           key: doc.id,
           ...doc.data()
         });
+        // OrderService.doc(doc.id).delete()
       });
     });
   },
