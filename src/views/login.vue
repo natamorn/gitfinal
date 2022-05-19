@@ -2,6 +2,7 @@
     <LoginHeader/>
     <div class="container-fluid">
         <loginForm/>
+        <!-- <router-view/> -->
     </div>
 </template>
 

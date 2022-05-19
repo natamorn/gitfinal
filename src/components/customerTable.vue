@@ -14,6 +14,7 @@
             <div class="float-left">{{ currentCustomer.name }}</div>
             <button
               class="btn btn-primaray btn-sm float-right"
+              style="border: 0px gray solid"
               @click="onUserClick"
             >{{ buttonName }}</button>
           </div>

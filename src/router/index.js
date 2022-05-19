@@ -3,6 +3,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
+    name: 'login',
+    component:() => import('../views/login.vue')
+  },
+  {
+    path: '/Home',
     name: 'Home',
     component: () => import('../views/Home.vue')
   },
@@ -12,7 +17,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Product.vue')
+    component: () => import('../views/Product.vue')
   },
   {
     path: '/OrderPage',
@@ -40,11 +45,6 @@ const routes = [
     component:() => import('../views/customerHistory.vue')
   },
   {
-    path: '/login',
-    name: 'login',
-    component:() => import('../views/login.vue')
-  },
-  {
     path: '/Signup',
     name: 'Signup',
     component: () => import('../views/Signup.vue')
@@ -59,6 +59,12 @@ const routes = [
     path: '/viewOrder',
     name: 'viewOrder',
     component:() => import('../views/viewOrder.vue')
+  }
+  ,
+  {
+    path: '/NewProductPage',
+    name: 'NewProductPage',
+    component:() => import('../views/NewProductPage.vue')
   }
 ]
 

@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col col-auto">
-        <h1 class="text-primary">Add Customer</h1>
+        <h1 class="text-primary">New Product</h1>
       </div>
     </div>
 
@@ -11,28 +11,25 @@
       <div class="col-sm-8 mx-auto">
         <form class="g-0" @submit.prevent="onFormSubmit">
           <div class="row g-5">
+
             <div class="mb-3 col">
               <label for="Name" class="form-label">Name <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
                 v-model="formData.Name"
                 type="text"
-                :class="['form-control', formWarning.Name ? '' : 'is-invalid']"
+                :class="['form-control']"
                 id="Name"
               />
               <!-- <div class="invalid-feedback">* Name</div> -->
             </div>
 
             <div class="form-group col">
-              <label for="Work" class="form-label">Work phone <h5 class="dokjun" style="display: inline">*</h5></label>
+              <label for="PN" class="form-label">P/N <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
-                v-model="formData.WorkPhone"
-                type="tel"
-                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                :class="[
-                  'form-control',
-                  formWarning.WorkPhone ? '' : 'is-invalid',
-                ]"
-                id="Work"
+                v-model="formData.PN"
+                type="text"
+                :class="['form-control',]"
+                id="PN"
               />
               <!-- <div class="invalid-feedback">* WorkPhone</div> -->
             </div>
@@ -40,50 +37,31 @@
 
           <div class="row g-5">
             <div class="mb-3 col">
-              <label for="email" class="form-label">Email <h5 class="dokjun" style="display: inline">*</h5></label>
+              <label for="C" class="form-label">C <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
-                v-model="formData.Email"
-                type="email"
-                :class="['form-control', formWarning.Email ? '' : 'is-invalid']"
-                id="email"
+                v-model="formData.C"
+                type="text"
+                :class="['form-control']"
+                id="C"
               />
               <!-- <div class="invalid-feedback">* Email</div> -->
             </div>
 
             <div class="form-group col">
-              <label for="pic" class="form-label">Hospital Logo <h5 class="dokjun" style="display: inline">*</h5></label>
+              <label for="Price" class="form-label">Price (บาท) <h5 class="dokjun" style="display: inline">*</h5></label>
 
               <input
-                @click="getFile"
-                v-model="formData.Picture"
-                type="text"
-                :class="[
-                  'form-control',
-                  formWarning.Picture ? '' : 'is-invalid',
-                ]"
-                id="pic"
+                v-model="formData.Price"
+                type="number"
+                :class="['form-control']"
+                id="Price"
               />
+              <small id="employeeID" class="form-text text-muted ">เป็นตัวเลขเท่านั้น</small>
               <!-- <div class="invalid-feedback">* Picture</div> -->
             </div>
           </div>
 
-          <div class="row g-5">
-            <div class="mb-3 col">
-              <label for="Address" class="form-label">Address <h5 class="dokjun" style="display: inline">*</h5></label>
-              <textarea
-                v-model="formData.Address"
-                :class="[
-                  'form-control',
-                  formWarning.Address ? '' : 'is-invalid',
-                ]"
-                id="Address"
-                rows="3"
-              ></textarea>
-              <!-- <div class="invalid-feedback">* Address</div> -->
-            </div>
-
-            <div class="form-group col"></div>
-          </div>
+        
 
           <div class="row justify-content-end mt-5">
             <div class="col col-2 d-grid">
@@ -97,27 +75,21 @@
 </template>
 
 <script>
-import Navbar from "../components/Navbar.vue";
-import CustomerService from "../services/CustomerService";
 export default {
-  components: {
-    Navbar,
-  },
+    name:"NewProduct",
   data() {
     return {
       formData: {
         Name: null,
-        WorkPhone: null,
-        Email: null,
-        Picture: null,
-        Address: null,
+        PN: null,
+        C: null,
+        Price: null,
       },
       formWarning: {
         Name: true,
-        WorkPhone: true,
-        Email: true,
-        Picture: true,
-        Address: true,
+        PN: true,
+        C: true,
+        Price: true,
       },
       imgBase64: null,
     };
@@ -181,26 +153,26 @@ export default {
         reader.readAsDataURL(file);
       });
     },
-    onFormSubmit() {
-      this.validate();
-      if (!this.valid) return;
-      CustomerService.add({
-        ...this.formData,
-        Picture: this.imgBase64,
-      },)
-        .then(() => {
-          this.$swal.fire(
-            "success!",
-            "Created new item successfully!",
-            "success"
-          );
+    // onFormSubmit() {
+    //   this.validate();
+    //   if (!this.valid) return;
+    //   CustomerService.add({
+    //     ...this.formData,
+    //     Picture: this.imgBase64,
+    //   },)
+    //     .then(() => {
+    //       this.$swal.fire(
+    //         "success!",
+    //         "Created new item successfully!",
+    //         "success"
+    //       );
 
-          this.$router.push('/customer')
-        })
-        .catch((e) => {
-          this.$swal.fire("Oops...", e, "error");
-        });
-    },
+    //       this.$router.push('/customer')
+    //     })
+    //     .catch((e) => {
+    //       this.$swal.fire("Oops...", e, "error");
+    //     });
+    // },
   },
 };
 </script>

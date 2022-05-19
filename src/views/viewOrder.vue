@@ -3,7 +3,7 @@
   <div>
     <div class="row justify-content-center">
       <div class="col col-auto">
-        <h1 class="text-primary">ORDER FORM</h1>
+        <h1 class="text-primary">View More</h1>
       </div>
     </div>
     <OrderForm :orderId="orderId" flag="viewOrder"/>

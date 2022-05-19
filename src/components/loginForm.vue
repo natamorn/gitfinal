@@ -5,29 +5,35 @@
       <div class="card">
         <div class="card-body">
           <form @submit.prevent="onFormSubmit">
+
             <div class="mb-3">
-              <label htmlFor="username" class="form-label">Username</label>
+              <label htmlFor="username" class="fw-bold">Email</label>
               <input
-                type="text"
+                class="form-control"
+                type="email"
                 :class="getInputClass('username')"
                 id="username"
                 name="username"
                 v-model="formElements.username.value"
                 @keyup="onFormChange($event)"
+                
+                placeholder="Email"
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("username") }}
               </div>
             </div>
             <div class="mb-3">
-              <label htmlFor="password" class="form-label">Password</label>
+              <label htmlFor="password" class="fw-bold">Password</label>
               <input
+                class="form-control"
                 type="password"
                 :class="getInputClass('password')"
                 id="password"
                 name="password"
                 v-model="formElements.password.value"
                 @keyup="onFormChange($event)"
+                placeholder="Password"
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("password") }}
@@ -36,16 +42,16 @@
 
             <div class="row">
               <div class="col-lg-6 mb-2">
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <button type="submit" class="btn btn-primary w-100" style="border: 0px gray solid">Login</button>
               </div>
               <div class="col-lg-6 mb-2">
                 <button type="button" class="btn btn-outline w-100" @click="onSignUp">Sign up</button>
               </div>
             </div>
 
-            <div class="text-center">
+            <!-- <div class="text-center">
               <router-link class="nav-item nav-link" to="/ForgotPassword">Forgot password?</router-link>
-            </div>
+            </div> -->
 
           </form>
         </div>
@@ -65,11 +71,12 @@ export default {
     return {
       formElements: {
         username: {
-          type: "text",
+          type: "email",
           value: null,
           validator: {
-            minLength: 5,
-            maxLength: 64,
+             pattern: "email",
+            // minLength: 5,
+            // maxLength: 64,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -78,7 +85,7 @@ export default {
           type: "password",
           value: null,
           validator: {
-            minLength: 8,
+            // minLength: 8,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -140,7 +147,12 @@ export default {
         valid = false;
         message = `มากกว่า ${rule.maxLength} ตัวอักษร`;
       }
-
+      if (rule.pattern === "email" && valid) {
+        if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) === false) {
+          valid = false;
+          message = "กรอกอีเมล์ไม่ถูกต้อง";
+        }
+      }
       return { status: !valid, message: message };
     },
     getInputClass(name) {
@@ -157,21 +169,26 @@ export default {
       return this.formElements[name].error.message;
     },
     onFormSubmit() {
+    
       const formData = {};
       for (let name in this.formElements) {
         formData[name] = this.formElements[name].value;
       }
       console.log(formData);
+    
+
       firebase
         .auth()
         .signInWithEmailAndPassword(formData.username, formData.password)
         .then(() => {
-          this.$router.replace("/");
+          this.$router.replace("/Home");
         })
         .catch(() => {
           alert("Username or password is incorrect")
         });
       //this.$router.replace("/Home");
+      
+
     },
     onSignUp() {
       this.$router.replace("/Signup");
@@ -198,12 +215,31 @@ export default {
  },
 };
 </script>
-<style>
-/* 
+
+<style scoped>
+
 .card {
-  max-width: 450px;
-} */
+  padding-top: 2em;
+  padding-bottom: 4em;
+}
 .buttonn {
   text-align: center;
+}
+.form-control{
+  border-radius:8px;
+  /* border: 1px ; */
+  /* border-block-color: rgb(192, 188, 188); */
+  border-color: rgb(228, 227, 227);
+}
+.mb-3{
+  /* margin-top: 2em; */
+  padding-top: 1em;
+}
+.row{
+  padding-top: 1em;
+}
+.btn:hover{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 }
 </style>

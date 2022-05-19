@@ -22,9 +22,11 @@
               />
             </div>
           </div>
+
+
           <div class="mb-3 row">
             <div
-              class="card py-2 border-success"
+              class="card py-2 border"
               v-for="(it, index) in listOrder"
               :key="index"
             >
@@ -122,4 +124,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style  scoped>
+.form-control{
+  border-radius:8px;
+  /* border: 1px ; */
+  /* border-block-color: rgb(192, 188, 188); */
+  border-color: rgb(228, 227, 227);
+}
+.card{
+  margin-top: 0.5rem;
+  border-color: black;
+}
+.card:hover{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+</style>
