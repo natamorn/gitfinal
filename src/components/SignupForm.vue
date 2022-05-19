@@ -199,7 +199,7 @@ export default {
             })
             .then(() => {
               alert("Registered Successful")
-              this.$router.replace("/login");
+              this.$router.replace("/");
             });
         })
         .catch(err => {

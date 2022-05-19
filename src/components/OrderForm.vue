@@ -143,7 +143,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="HospitalID" class="fw-bold">Hospital ID </label>
+              <label htmlFor="HospitalID" class="fw-bold">Hospital Phone </label>
               <br>
               <label>{{ formElements.HospitalID.value }}</label>
               <!-- <input
