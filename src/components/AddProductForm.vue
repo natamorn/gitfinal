@@ -4,11 +4,11 @@
       <div class="card-body">
         <form @submit.prevent="onFormSubmit">
           <div class="row mt-4">
-            <div class="form-group col">
-              <label htmlFor="RequestInventoryNO"
-                >Request Inventory NO. *</label
-              >
-              <input
+            <!-- <div class="form-group col">
+              <label htmlFor="RequestInventoryNO" class="fw-bold">Request Inventory NO. </label>
+              <br>
+              <label>{{ formElements.RequestInventoryNO.value }}</label> -->
+              <!-- <input
                 type="text"
                 :class="getInputClass('RequestInventoryNO')"
                 id="RequestInventoryNO"
@@ -20,12 +20,13 @@
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("RequestInventoryNO") }}
-              </div>
-            </div>
+              </div> -->
+            <!-- </div> -->
 
-            <div class="form-group col">
+            <!-- <div class="form-group col"> -->
               <!-- <div class="col"> -->
-              <label for="Date">Date</label>
+              <!-- <label for="Date" class="fw-bold">Date <h5 class="dokjun" style="display: inline">*</h5></label>
+              <br>
               <input
                 class="form-control"
                 type="Date"
@@ -33,14 +34,16 @@
                 v-model="formElements.date.value"
                 name="Date"
                 required
-              />
+                
+              /> -->
               <!-- </div> -->
-            </div>
-          </div>
+            <!-- </div>
+          </div> -->
 
-          <div class="row mt-4">
+          <!-- <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="division">แผนก *</label>
+              <label htmlFor="division" class="fw-bold">แผนก <h5 class="dokjun" style="display: inline">*</h5></label>
+              <br>
               <input
                 type="text"
                 :class="getInputClass('division')"
@@ -49,14 +52,15 @@
                 v-model="formElements.division.value"
                 @keyup="onFormChange($event)"
                 required
+                
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("division") }}
               </div>
-            </div>
+            </div> -->
 
-            <div class="form-group col">
-              <label htmlFor="name">ผู้ขอเบิก *</label>
+            <!-- <div class="form-group col">
+              <label htmlFor="name" class="fw-bold">ผู้ขอเบิก <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
                 type="text"
                 :class="getInputClass('name')"
@@ -65,16 +69,17 @@
                 v-model="formElements.name.value"
                 @keyup="onFormChange($event)"
                 required
+                
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("name") }}
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <div class="row mt-4">
+          <!-- <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="note">หมายเหตุ </label>
+              <label htmlFor="note" class="fw-bold">หมายเหตุ </label>
               <input
                 type="text"
                 :class="getInputClass('note')"
@@ -82,14 +87,15 @@
                 name="note"
                 v-model="formElements.note.value"
                 @keyup="onFormChange($event)"
+                
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("note") }}
               </div>
-            </div>
+            </div> -->
 
-            <div class="form-group col">
-              <label htmlFor="ReferTo">อ้างถึง *</label>
+            <!-- <div class="form-group col">
+              <label htmlFor="ReferTo" class="fw-bold">อ้างถึง <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
                 type="text"
                 :class="getInputClass('ReferTo')"
@@ -98,22 +104,23 @@
                 v-model="formElements.ReferTo.value"
                 @keyup="onFormChange($event)"
                 required
+                
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("ReferTo") }}
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="row m-4 text-center">
             <table class="table table-hover">
               <thead>
-                <tr class="table-active">
+                <tr class="table-danger fw-bold ">
                   <td>ลำดับ</td>
                   <td>P/N</td>
-                  <td>ชื่อสินค้า</td>
-                  <td>PRICE</td>
+                  <td>Name</td>
+                  <td>Price</td>
                   <td>จำนวนเบิก</td>
-                  <td>TOTAL</td>
+                  <td>Total</td>
                   <td>หมายเหตุ</td>
                 </tr>
               </thead>
@@ -121,11 +128,11 @@
                 <tr v-for="(it, index) in productHistory" :key="index">
                   <td>{{ index + 1 }}</td>
                   <td>{{ it["Insert_Product_P/N"] }}</td>
-                  <td>{{ it.Insert_Product_Name }}</td>
+                  <td >{{ it.Insert_Product_Name }}</td>
                   <td>{{ it.Insert_Product_Price }}</td>
                   <td>{{ it.payCount.toLocaleString("en-US") }}</td>
                   <td>{{ it.Total_RI.toLocaleString("en-US") }}</td>
-                  <td>{{ it.remark }}</td>
+                  <td >{{ it.remark }}</td>
                 </tr>
                 <tr v-for="(it, index) in formProducts" :key="index">
                   <td>
@@ -185,14 +192,15 @@
               </tbody>
             </table>
           </div>
-
+<!-- 
           <div class="text-center">
             <button
               type="button"
               @click="addFieldProduct()"
               class="btn btn-primary"
+              style="border: 0px gray solid"
             >
-              เพิ่ม
+              Add
             </button>
 
             &nbsp;
@@ -202,13 +210,13 @@
               value="reset"
               @click="removeFieldProduct()"
             >
-              ลบ
+              Delete
             </button>
-          </div>
+          </div> -->
 
           <div class="row justify-content-end">
             <div class="col col-2 d-grid gap-2">
-              <button type="submit" class="btn btn-primary">บันทึก</button>
+              <button type="submit" class="btn btn-primary" style="border: 0px gray solid">Submit</button>
             </div>
           </div>
         </form>
@@ -229,8 +237,8 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
-            maxLength: 15,
+            // minLength: 5,
+            // maxLength: 15,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -239,8 +247,8 @@ export default {
           type: "date",
           value: null,
           validator: {
-            minLength: 5,
-            maxLength: 15,
+            // minLength: 5,
+            // maxLength: 15,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -249,8 +257,8 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
-            maxLength: 15,
+            // minLength: 5,
+            // maxLength: 15,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -259,8 +267,8 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
-            maxLength: 15,
+            // minLength: 5,
+            // maxLength: 15,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -269,7 +277,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -278,8 +286,8 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
-            maxLength: 15,
+            // minLength: 5,
+            // maxLength: 15,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -522,4 +530,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style  scoped>
+.form-control{
+  border-radius:8px;
+  /* border: 1px ; */
+  /* border-block-color: rgb(192, 188, 188); */
+  border-color: rgb(228, 227, 227);
+}
+.dokjun{
+    color: red;
+  }
+</style>>
+

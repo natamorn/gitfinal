@@ -1,25 +1,26 @@
 <template>
   <div class="container text-center">
-    <table class="table table-hover">
+    
+    <table class="table table-hover" :fields="fields">
       <thead>
         <tr class="table-danger">
-          <td>NO.</td>
-          <td>NAME</td>
-          <td>EMAIL</td>
-          <td>DATE</td>
-          <td>AMOUNT</td>
+          <td  class="fw-bold" >NO.</td>
+          <td class="fw-bold" style="text-align: left">Name</td>
+          <td class="fw-bold" style="text-align: left">Email</td>
+          <td class="fw-bold">Date</td>
+          <td class="fw-bold" style="text-align:right">Amount</td>
           <td></td>
         </tr>
       </thead>
 
       <tbody>
-        <tr v-for="(it, index) in listOrder" :key="index">
-          <td>{{ index + 1 }}</td>
-          <td>{{ it.HospitalName }}</td>
-          <td>{{ it.HospitalEmail }}</td>
+        <tr v-for="(it, index) in listOrder" :key="index" >
+          <td> {{ index + 1 }}</td>
+          <td style="text-align: left">{{ it.HospitalName }}</td>
+          <td style="text-align: left">{{ it.HospitalEmail }}</td>
           <td>{{ it.HospitalDate }}</td>
-          <td>{{ it.products ? it.products[it.products.length -1].total.toLocaleString('en-US') : '' }} บาท</td>
-          <td><a :href="`/viewOrder?key=${it.key}`"> viewmore</a></td>
+          <td style="text-align:right" >{{ it.products ? it.products[it.products.length -1].total.toLocaleString('en-US') : '' }} บาท</td>
+          <td ><a :href="`/viewOrder?key=${it.key}`"> View More</a></td>
         </tr>
       </tbody>
     </table>
@@ -34,6 +35,11 @@ export default {
    data() {
     return {
       listOrder: [],
+      fields: [
+          {
+            key: 'Name',
+            sortable: true
+          },]
     };
   },
   mounted() {
@@ -51,4 +57,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style  scoped>
+
+</style>

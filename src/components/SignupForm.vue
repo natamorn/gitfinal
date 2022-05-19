@@ -4,10 +4,10 @@
     <div class="col-lg-4">
       <div class="card">
         <div class="card-body">
-          <h4 class="mb-4">Sign Up</h4>
+          <h4 class="mb-4 ">Sign Up</h4>
           <form @submit.prevent="onSubmit">
             <div class="mb-3">
-              <label class="mb-2" htmlFor="email">Email Address</label>
+              <label class="mb-2 fw-bold" htmlFor="email">Email</label>
               <input
                 type="email"
                 :class="getInputClass('email')"
@@ -15,13 +15,14 @@
                 name="email"
                 v-model="formElements.email.value"
                 @keyup="onFormChange($event)"
+                placeholder="Email"
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("email") }}
               </div>
             </div>
             <div class="mb-3">
-              <label class="mb-2" htmlFor="password">Password</label>
+              <label class="mb-2 fw-bold" htmlFor="password">Password</label>
               <input
                 type="password"
                 :class="getInputClass('password')"
@@ -29,6 +30,7 @@
                 name="password"
                 v-model="formElements.password.value"
                 @keyup="onFormChange($event)"
+                placeholder="Password"
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("password") }}
@@ -36,7 +38,7 @@
             </div>
 
             <div class="mb-3">
-              <label class="mb-2" htmlFor="EmployeeID">Employee ID</label>
+              <label class="mb-2 fw-bold" htmlFor="EmployeeID">Employee ID</label>
               <input
                 type="text"
                 :class="getInputClass('EmployeeID')"
@@ -44,8 +46,10 @@
                 name="EmployeeID"
                 v-model="formElements.EmployeeID.value"
                 @keyup="onFormChange($event)"
+                placeholder="Employee ID"
                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
               />
+              <small id="employeeID" class="form-text text-muted ">เป็นตัวเลขเท่านั้น</small>
               <div class="invalid-feedback">
                 {{ getErrorMessage("EmployeeID") }}
               </div>
@@ -61,7 +65,7 @@
             <div class="row mt-4">
               <div class="col-lg-12 mb-2">
                 <div class="text-center">
-                  Already registered? <router-link to="/Login">Log In</router-link>
+                  Already registered? <router-link to="/">Log In</router-link>
                 </div>
               </div>
             </div>
@@ -88,8 +92,9 @@ export default {
           value: null,
           validator: {
             required: true,
-            minLength: 5,
-            maxLength: 15,
+            // pattern: "emloyeeID",
+            // minLength: 5,
+            // maxLength: 15,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -109,7 +114,7 @@ export default {
           value: null,
           validator: {
             required: true,
-            minLength: 8,
+            // minLength: 8,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -161,6 +166,7 @@ export default {
           message = "กรอกอีเมล์ไม่ถูกต้อง";
         }
       }
+      
       return { status: !valid, message: message };
     },
     getInputClass(name) {
@@ -203,3 +209,23 @@ export default {
   },
 };
 </script>
+<style scoped>
+
+.buttonn {
+  text-align: center;
+}
+.form-control{
+  border-radius:8px;
+  /* border: 1px ; */
+  /* border-block-color: rgb(192, 188, 188); */
+  border-color: rgb(228, 227, 227);
+}
+
+#employeeID{
+  font-size: 0.7rem ;
+}
+.btn:hover{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+</style>

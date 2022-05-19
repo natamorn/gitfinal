@@ -1,22 +1,23 @@
+
 <template>
   <div class="container text-center">
     <table class="table  table-hover">
       <thead>
         <tr class="table-danger">
-          <td>NO</td>
-          <td>RI_NO</td>
-          <td>NAME</td>
-          <td>จำนวนสินค้าที่เหลือ</td>
+          <td class="fw-bold">NO</td>
+          <td class="fw-bold">P/N</td>
+          <td class="fw-bold" style="text-align: left">Name</td>
+          <td class="fw-bold" style="text-align: right  " >สินค้าคงเหลือ</td>
           <td></td>
         </tr>
       </thead>
       <tbody>
         <tr  v-for="(it, index) in listProduct" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>{{ it.RequestInventoryNO }}</td>
-          <td>{{ it.Insert_Product_Name }}</td>
-          <td>{{ it.Total_RI.toLocaleString('en-US') }}</td>
-          <td><a :href="`/AddProduct?key=${it.key}`"> viewmore</a></td>
+          <td style="text-align: left">{{ it.RequestInventoryNO }}</td>
+          <td style="text-align: left">{{ it.Insert_Product_Name }}</td>
+          <td style="text-align: right  " >{{ it.Total_RI.toLocaleString('en-US') }}</td>
+          <td><a :href="`/AddProduct?key=${it.key}`">Request</a></td>
         </tr>
       </tbody>
     </table>

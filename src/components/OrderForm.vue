@@ -5,8 +5,11 @@
         <form @submit.prevent="onFormSubmit">
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="OrderFormNo">Order Form NO. *</label>
-              <input
+             
+              <label htmlFor="OrderFormNo" class="fw-bold">Order Form NO.</label>
+              <br>
+              <label>{{ formElements.OrderFormNo.value }}</label>
+              <!-- <input
                 type="text"
                 :class="getInputClass('OrderFormNo')"
                 id="OrderFormNo"
@@ -16,14 +19,15 @@
                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 required
                 :readonly="orderId"
+                style="border: 0px black solid"
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("OrderFormNo") }}
-              </div>
+              </div> -->
             </div>
 
             <div class="form-group col">
-              <label htmlFor="Sale">Sale *</label>
+              <label htmlFor="Sale" class="fw-bold" >Sale <h5 class="dokjun" style="display: inline">*</h5></label>
               <!-- <input
                 type="text"
                 :class="getInputClass('Sale')"
@@ -41,10 +45,14 @@
                 id="Sale"
                 :readonly="orderId"
                 name="Sale"
+                required
+                
+                
               >
                 <template v-for="(it, index) in listEmployee" :key="index">
                   <option :value="it.Emp_ID">{{ it.Email }}</option>
                 </template>
+
               </select>
               <div class="invalid-feedback">
                 {{ getErrorMessage("Sale") }}
@@ -87,7 +95,7 @@
           </div> -->
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="HospitalName">Hospital Name *</label>
+              <label htmlFor="HospitalName" class="fw-bold">Hospital Name <h5 class="dokjun" style="display: inline">*</h5></label>
               <div class="form-group col">
                 <select
                   :readonly="orderId"
@@ -96,6 +104,8 @@
                   aria-label="Default select example"
                   id="HospitalName"
                   name="HospitalName"
+                  required
+                  
                 >
                   <template v-for="(it, index) in customerList" :key="index">
                     <option>{{ it.Name }}</option>
@@ -116,8 +126,8 @@
               </div>
             </div>
 
-            <div class="form-group col">
-              <label for="HospitalDate">Date</label>
+            <div class="form-group col" >
+              <label for="HospitalDate" class="fw-bold">Date <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
                 :readonly="orderId"
                 class="form-control"
@@ -126,14 +136,17 @@
                 id="HospitalDate"
                 name="HospitalDate"
                 required
+              
               />
             </div>
           </div>
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="HospitalID">Hospital ID *</label>
-              <input
+              <label htmlFor="HospitalID" class="fw-bold">Hospital ID </label>
+              <br>
+              <label>{{ formElements.HospitalID.value }}</label>
+              <!-- <input
                 :readonly="orderId"
                 type="text"
                 :class="getInputClass('HospitalID')"
@@ -142,14 +155,16 @@
                 v-model="formElements.HospitalID.value"
                 @keyup="onFormChange($event)"
                 required
+                style="border: 0px black solid"
               />
+              
               <div class="invalid-feedback">
                 {{ getErrorMessage("HospitalID") }}
-              </div>
+              </div> -->
             </div>
 
             <div class="form-group col">
-              <label htmlFor="Department">Department *</label>
+              <label htmlFor="Department" class="fw-bold">Department <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
                 :readonly="orderId"
                 type="text"
@@ -159,6 +174,7 @@
                 v-model="formElements.Department.value"
                 @keyup="onFormChange($event)"
                 required
+                
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("Department") }}
@@ -168,8 +184,10 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="Address">Address *</label>
-              <input
+              <label htmlFor="Address" class="fw-bold">Address</label>
+              <br>
+              <label>{{ formElements.Address.value }}</label>
+              <!-- <input
                 :readonly="orderId"
                 type="text"
                 :class="getInputClass('Address')"
@@ -178,16 +196,18 @@
                 v-model="formElements.Address.value"
                 @keyup="onFormChange($event)"
                 required
+                style="border: 0px black solid"
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("Address") }}
-              </div>
+              </div> -->
             </div>
           </div>
 
+          <div class="B">
           <div class="row mt-4">
             <div class="form-group col">
-              <label for="DateOpen">วันที่เปิดซอง/สรุป : *</label>
+              <label for="DateOpen" class="fw-bold">วันที่เปิดซอง/สรุป : <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
                 :readonly="orderId"
                 class="form-control"
@@ -196,11 +216,12 @@
                 id="DateOpen"
                 name="DateOpen"
                 required
+          
               />
             </div>
 
             <div class="form-group col">
-              <label htmlFor="WarrantyY">Warranty(Y) *</label>
+              <label htmlFor="WarrantyY" class="fw-bold">Warranty(Y) <h5 class="dokjun" style="display: inline">*</h5></label>
               <!-- <input
                 type="text"
                 :class="getInputClass('WarrantyY')"
@@ -215,6 +236,8 @@
                 v-model="formElements.WarrantyY.value"
                 :class="`form-select ${getInputClass('WarrantyY')}`"
                 aria-label="Default select example"
+               
+                
               >
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -228,7 +251,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="OutNo">เลขที่หมดสัญญา/ใบสั่งซื้อ *</label>
+              <label htmlFor="OutNo" class="fw-bold">เลขที่หมดสัญญา/ใบสั่งซื้อ <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
                 :readonly="orderId"
                 type="text"
@@ -238,6 +261,7 @@
                 v-model="formElements.OutNo.value"
                 @keyup="onFormChange($event)"
                 required
+                
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("OutNo") }}
@@ -245,7 +269,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="MaintenanceM">Maintenance(M) *</label>
+              <label htmlFor="MaintenanceM" class="fw-bold">Maintenance(M) <h5 class="dokjun" style="display: inline">*</h5></label>
               <!-- <input
                 type="text"
                 :class="getInputClass('MaintenanceM')"
@@ -260,6 +284,8 @@
                 v-model="formElements.MaintenanceM.value"
                 :class="`form-select ${getInputClass('MaintenanceM')}`"
                 aria-label="Default select example"
+                
+                
               >
                 <option value="3">3</option>
                 <option value="4">4</option>
@@ -273,7 +299,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="InOrder">ใบสั่งซื้อในประเทศ *</label>
+              <label htmlFor="InOrder" class="fw-bold">ใบสั่งซื้อในประเทศ <h5 class="dokjun" style="display: inline">*</h5></label>
               <!-- <input
                 type="text"
                 :class="getInputClass('InOrder')"
@@ -288,6 +314,8 @@
                 v-model="formElements.InOrder.value"
                 :class="`form-select ${getInputClass('InOrder')}`"
                 aria-label="Default select example"
+                
+                
               >
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -298,7 +326,7 @@
             </div>
 
             <div class="form-group col">
-              <label htmlFor="Installation">Installation *</label>
+              <label htmlFor="Installation" class="fw-bold">Installation <h5 class="dokjun" style="display: inline">*</h5></label>
               <!-- <input
                 type="text"
                 :class="getInputClass('Installation')"
@@ -313,6 +341,8 @@
                 v-model="formElements.Installation.value"
                 :class="`form-select ${getInputClass('Installation')}`"
                 aria-label="Default select example"
+                
+                
               >
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -325,7 +355,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="DateDeliver">กำหนดส่งมอบ *</label>
+              <label htmlFor="DateDeliver" class="fw-bold">กำหนดส่งมอบ <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
                 :readonly="orderId"
                 class="form-control"
@@ -334,11 +364,12 @@
                 id="DateDeliver"
                 name="DateDeliver"
                 required
+                
               />
             </div>
 
             <div class="form-group col">
-              <label for="DateExpire">วันที่หมดสัญญา *</label>
+              <label for="DateExpire" class="fw-bold">วันที่หมดสัญญา <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
                 :readonly="orderId"
                 class="form-control"
@@ -347,6 +378,7 @@
                 id="DateExpire"
                 name="DateExpire"
                 required
+                
               />
             </div>
             <!-- <div class="form-group col">
@@ -368,7 +400,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="Refer">อ้างอิงใบเสนอราคา *</label>
+              <label htmlFor="Refer" class="fw-bold">อ้างอิงใบเสนอราคา <h5 class="dokjun" style="display: inline">*</h5></label>
               <input
                 :readonly="orderId"
                 type="text"
@@ -378,6 +410,7 @@
                 v-model="formElements.Refer.value"
                 @keyup="onFormChange($event)"
                 required
+                
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("Refer") }}
@@ -387,7 +420,7 @@
 
           <div class="row mt-4">
             <div class="form-group col">
-              <label htmlFor="Agreement">ข้อตกลงเพิ่มเติม</label>
+              <label htmlFor="Agreement" class="fw-bold">ข้อตกลงเพิ่มเติม</label>
               <input
                 :readonly="orderId"
                 type="text"
@@ -396,32 +429,33 @@
                 name="Agreement"
                 v-model="formElements.Agreement.value"
                 @keyup="onFormChange($event)"
+                
               />
               <div class="invalid-feedback">
                 {{ getErrorMessage("Agreement") }}
               </div>
             </div>
-          </div>
+          </div></div>
 
           <div class="row text-center mt-4">
             <table class="table table-hover">
               <thead>
-                <tr class="table-active">
-                  <td>Items</td>
-                  <td>P/N</td>
-                  <td>C</td>
-                  <td>QTY</td>
-                  <td>Price</td>
-                  <td>Total</td>
-                  <td>Description</td>
-                  <td>Remark</td>
+                <tr class="table-danger">
+                  <td class="fw-bold">Items</td>
+                  <td class="fw-bold">P/N</td>
+                  <td class="fw-bold">C</td>
+                  <td class="fw-bold">QTY</td>
+                  <td class="fw-bold">Price</td>
+                  <td class="fw-bold">Total</td>
+                  <td class="fw-bold">Description</td>
+                  <td class="fw-bold">Remark</td>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(it, index) in productHistory" :key="index">
                   <td>{{ index + 1 }}</td>
                   <td>{{ it["P/N"] }}</td>
-                  <td>{{ it.c }}</td>
+                  <td >{{ it.c }}</td>
                   <td>{{ it.qty }}</td>
                   <td>{{ it.price.toLocaleString("en-US") }}</td>
                   <td>{{ it.total.toLocaleString("en-US") }}</td>
@@ -465,7 +499,7 @@
                   <td>
                     <input
                       v-model="it.qty"
-                      type="text"
+                      type="number"
                       class="form-control"
                       id="Option"
                       name="Option"
@@ -512,28 +546,30 @@
               type="button"
               @click="addFieldProduct()"
               class="btn btn-primary"
+              style="border: 0px gray solid "
             >
-              เพิ่ม
+              Add
             </button>
 
             &nbsp;
             <button
               type="reset"
-              class="btn btn-outline-danger"
+              class="btn btn-outline"
               value="reset"
               @click="removeFieldProduct()"
             >
-              ลบ
+              Delete
             </button>
           </div>
 
           <div class="row justify-content-end">
             <div class="col col-2 d-grid gap-2">
-              <button @click="printDiv" type="button" class="btn btn-primary">พิมพ์</button>
+              <button type="submit" class="btn btn-primary" style="border: 0px gray solid">Submit</button>
             </div>
             <div class="col col-2 d-grid gap-2">
-              <button type="submit" class="btn btn-primary">บันทึก</button>
+              <button @click="printDiv" type="button" class="btn btn-outline">Print</button>
             </div>
+            
           </div>
         </form>
       </div>
@@ -566,8 +602,8 @@ export default {
           type: "text",
           value: 1,
           validator: {
-            minLength: 1,
-            maxLength: 15,
+            // minLength: 1,
+            // maxLength: 15,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -576,8 +612,8 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
-            maxLength: 15,
+            // minLength: 5,
+            // maxLength: 15,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -606,7 +642,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -615,7 +651,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -624,7 +660,7 @@ export default {
           type: "date",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -634,8 +670,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
-            maxLength: 15,
+            // minLengh: 15,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -644,8 +679,8 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
-            maxLength: 15,
+          //   minLength: 5,
+          //   maxLength: 15,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -654,7 +689,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -663,7 +698,7 @@ export default {
           type: "date",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -672,7 +707,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -681,7 +716,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -690,7 +725,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -699,7 +734,7 @@ export default {
           type: "date",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -708,7 +743,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -717,7 +752,7 @@ export default {
           type: "date",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -726,7 +761,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -735,7 +770,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -744,7 +779,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -753,7 +788,7 @@ export default {
           type: "text",
           value: null,
           validator: {
-            minLength: 5,
+            // minLength: 5,
           },
           touched: false,
           error: { status: true, message: "" },
@@ -994,7 +1029,7 @@ export default {
               "Created new item successfully!",
               "success"
             );
-            this.$router.push("/");
+            this.$router.push("/Home");
           })
           .catch((e) => {
             this.$swal.fire("Oops...", e, "error");
@@ -1076,4 +1111,25 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+  .dokjun{
+    color: red;
+  }
+  .form-control{
+  border-radius:8px;
+  /* border: 1px ; */
+  /* border-block-color: rgb(192, 188, 188); */
+  border-color: rgb(228, 227, 227);
+}
+.table {
+  /* padding-top: 5rem; */
+  margin-top: 2rem;
+}
+.B{
+  margin-top: 5rem;
+}
+.btn:hover{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+</style>>

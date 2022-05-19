@@ -14,36 +14,40 @@
         <label>{{ formData.Name }}</label>
       </div>
     </div>
+    
     <div class="row g-0">
       <div class="mb-3 d-flex flex-column">
         <label class="fw-bold">Email</label>
         <label>{{ formData.Email }}</label>
       </div>
     </div>
+
     <div class="row g-0">
       <div class="mb-3 d-flex flex-column">
         <label for="Address" class="fw-bold">Address</label>
-        <div class="col-8">
+         <label>{{ formData.Address }}</label>
+        <!-- <div class="col-8">
           <input
             type="text"
             class="form-control"
             id="Address"
             :value="formData.Address"
           />
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="row g-0">
       <div class="mb-3 d-flex flex-column">
         <label for="Address" class="fw-bold">Phone</label>
-        <div class="col-6">
+        <label>{{ formData.WorkPhone }}</label>
+        <!-- <div class="col-6">
           <input
             type="text"
             class="form-control"
             id="Address"
             :value="formData.WorkPhone"
           />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

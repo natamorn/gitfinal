@@ -3,7 +3,7 @@
 
   <div class="container">
     <div class="row justify-content-between">
-      <div class="col col-auto">
+      <div class="col col-4">
         <div>
           <input
             type="text"
@@ -18,6 +18,7 @@
           type="button"
           class="btn btn-primary"
           @click="$router.push('/AddCustomer')"
+          style="border: 0px gray solid"
         >
           Add Customer
         </button>
@@ -27,7 +28,7 @@
     <div class="row mt-4">
       <div class="col">
         <template v-for="(it, index) in listCustomer" :key="index">
-          <div class="card py-2" @click="selectCustomer(it)">
+          <div class="card py-2 " @click="selectCustomer(it)">
             <div class="row g-0">
               <div class="col-3">
                 <div class="align-items-center justify-content-center">
@@ -111,4 +112,26 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.form-control{
+  border-radius:8px;
+  /* border: 1px ; */
+  /* border-block-color: rgb(192, 188, 188); */
+  border-color: rgb(228, 227, 227);
+}
+.container{
+  margin-bottom: 5rem;
+}
+.card{
+  margin-top: 0.5rem;
+  /* border-color: black; */
+}
+.card:hover{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+.btn:hover{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+</style>
