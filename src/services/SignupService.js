@@ -1,6 +1,6 @@
-import firebase from "../database/firebase";
-const database = firebase.firestore();
+import firebase from '../database/firebase'
+const database = firebase.firestore()
 
-const db = database.collection("Signup");
+const db = database.collection('Signup')
 
-export default db;
+export default db

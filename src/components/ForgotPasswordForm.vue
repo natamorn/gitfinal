@@ -53,106 +53,105 @@
   </div>
 </template>
 
-
 <script>
 export default {
-  name: "ForgotPasswordForm",
-  data() {
+  name: 'ForgotPasswordForm',
+  data () {
     return {
       formElements: {
         EmployeeID: {
-          type: "text",
+          type: 'text',
           value: null,
           validator: {
             required: true,
             minLength: 5,
-            maxLength: 15,
+            maxLength: 15
           },
           touched: false,
-          error: { status: true, message: "" },
+          error: { status: true, message: '' }
         },
         email: {
-          type: "email",
+          type: 'email',
           value: null,
           validator: {
             required: true,
-            pattern: "email",
+            pattern: 'email'
           },
           touched: false,
-          error: { status: true, message: "" },
-        },
+          error: { status: true, message: '' }
+        }
       },
-      formValid: false,
-    };
+      formValid: false
+    }
   },
   methods: {
-    onFormChange(event) {
-      const name = event.target.name;
-      const value = event.target.value;
-      let updatedForm = { ...this.formElements };
-      updatedForm[name].value = value;
-      updatedForm[name].touched = true;
+    onFormChange (event) {
+      const name = event.target.name
+      const value = event.target.value
+      const updatedForm = { ...this.formElements }
+      updatedForm[name].value = value
+      updatedForm[name].touched = true
       const validatorObject = this.checkValidator(
         value,
         updatedForm[name].validator
-      );
+      )
       updatedForm[name].error = {
         status: validatorObject.status,
-        message: validatorObject.message,
-      };
-      let formStatus = true;
-      for (let name in updatedForm) {
+        message: validatorObject.message
+      }
+      let formStatus = true
+      for (const name in updatedForm) {
         if (updatedForm[name].validator.required === true) {
-          formStatus = !updatedForm[name].error.status && formStatus;
+          formStatus = !updatedForm[name].error.status && formStatus
         }
       }
-      this.formElements = updatedForm;
-      this.formValid = formStatus;
+      this.formElements = updatedForm
+      this.formValid = formStatus
     },
-    checkValidator(value, rule) {
-      let valid = true;
-      let message = "";
+    checkValidator (value, rule) {
+      let valid = true
+      let message = ''
 
       if (value.length < rule.minLength && valid) {
-        valid = false;
-        message = `น้อยกว่า ${rule.minLength} ตัวอักษร`;
+        valid = false
+        message = `น้อยกว่า ${rule.minLength} ตัวอักษร`
       }
       if (value.length > rule.maxLength && valid) {
-        valid = false;
-        message = `มากกว่า ${rule.maxLength} ตัวอักษร`;
+        valid = false
+        message = `มากกว่า ${rule.maxLength} ตัวอักษร`
       }
-      if (rule.pattern === "email" && valid) {
+      if (rule.pattern === 'email' && valid) {
         if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) === false) {
-          valid = false;
-          message = "กรอกอีเมล์ไม่ถูกต้อง";
+          valid = false
+          message = 'กรอกอีเมล์ไม่ถูกต้อง'
         }
       }
 
-      return { status: !valid, message: message };
+      return { status: !valid, message: message }
     },
-    getInputClass(name) {
-      const elementErrorStatus = this.formElements[name].error.status;
+    getInputClass (name) {
+      const elementErrorStatus = this.formElements[name].error.status
       if (!this.formElements[name].touched) {
-        return ["form-control"];
+        return ['form-control']
       } else {
         return elementErrorStatus && this.formElements[name].touched
-          ? ["form-control", "is-invalid"]
-          : ["form-control", ""];
+          ? ['form-control', 'is-invalid']
+          : ['form-control', '']
       }
     },
-    getErrorMessage(name) {
-      return this.formElements[name].error.message;
+    getErrorMessage (name) {
+      return this.formElements[name].error.message
     },
-    onFormSubmit() {
-      const formData = {};
-      for (let name in this.formElements) {
-        formData[name] = this.formElements[name].value;
+    onFormSubmit () {
+      const formData = {}
+      for (const name in this.formElements) {
+        formData[name] = this.formElements[name].value
       }
-      console.log(formData);
-      this.$router.push("/login");
-    },
-  },
-};
+      console.log(formData)
+      this.$router.push('/login')
+    }
+  }
+}
 </script>
 
 <style>

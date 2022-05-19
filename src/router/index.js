@@ -1,10 +1,13 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import Router from 'vue-router'
+import Vue from 'vue'
+
+Vue.use(Router)
 
 const routes = [
   {
     path: '/',
     name: 'login',
-    component:() => import('../views/login.vue')
+    component: () => import('../views/login.vue')
   },
   {
     path: '/Home',
@@ -22,27 +25,27 @@ const routes = [
   {
     path: '/OrderPage',
     name: 'OrderPage',
-    component:() => import('../views/OrderPage.vue')
+    component: () => import('../views/OrderPage.vue')
   },
   {
     path: '/AddProduct',
     name: 'AddProduct',
-    component:() => import('../views/AddProduct.vue')
+    component: () => import('../views/AddProduct.vue')
   },
   {
     path: '/customer',
     name: 'customer',
-    component:() => import('../views/customer.vue')
+    component: () => import('../views/customer.vue')
   },
   {
     path: '/AddCustomer',
     name: 'AddCustomer',
-    component:() => import('../views/AddCustomer.vue')
+    component: () => import('../views/AddCustomer.vue')
   },
   {
     path: '/customerHistory',
     name: 'customerHistory',
-    component:() => import('../views/customerHistory.vue')
+    component: () => import('../views/customerHistory.vue')
   },
   {
     path: '/Signup',
@@ -52,25 +55,18 @@ const routes = [
   {
     path: '/ForgotPassword',
     name: 'ForgotPassword',
-    component:() => import('../views/ForgotPassword.vue')
-  }
-  ,
+    component: () => import('../views/ForgotPassword.vue')
+  },
   {
     path: '/viewOrder',
     name: 'viewOrder',
-    component:() => import('../views/viewOrder.vue')
-  }
-  ,
+    component: () => import('../views/viewOrder.vue')
+  },
   {
     path: '/NewProductPage',
     name: 'NewProductPage',
-    component:() => import('../views/NewProductPage.vue')
+    component: () => import('../views/NewProductPage.vue')
   }
 ]
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
-
-export default router
+export default new Router({ base: process.env.BASE_URL, routes })

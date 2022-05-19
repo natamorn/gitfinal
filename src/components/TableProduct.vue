@@ -25,63 +25,62 @@
 </template>
 
 <script>
-import RequestInventoryService from "../services/RequestInventoryService";
-
+import RequestInventoryService from '../services/RequestInventoryService'
 
 export default {
-  name: "TableProduct",
-  setup() {},
+  name: 'TableProduct',
+  setup () {},
 
-  data() {
+  data () {
     return {
-      listProduct: [],
-    };
+      listProduct: []
+    }
   },
-  created() {
-   
+  created () {
+
   },
-  mounted() {
+  mounted () {
     //  RequestInventoryService.get().then((snapshotChange) => {
 
     //   snapshotChange.forEach((doc) => {
     //     RequestInventoryService.doc(doc.id).delete()
     //   });
     // });
-    
-     RequestInventoryService.get().then((snapshotChange) => {
-      this.listProduct = [];
+
+    RequestInventoryService.get().then((snapshotChange) => {
+      this.listProduct = []
       snapshotChange.forEach((doc) => {
-        let res = doc.data().products.map(it => ({
+        const res = doc.data().products.map(it => ({
           key: doc.id,
           ...it,
           RequestInventoryNO: doc.data().RequestInventoryNO
         }))
         this.listProduct.push(...res)
-        console.log("🚀 ~ file: TableProduct.vue ~ line 59 ~ snapshotChange.forEach ~ this.listProduct", this.listProduct)
+        console.log('🚀 ~ file: TableProduct.vue ~ line 59 ~ snapshotChange.forEach ~ this.listProduct', this.listProduct)
         // this.listProduct.push({
         //   key: doc.id,
         //   ...doc.data()
         // });
-      });
-    });
+      })
+    })
   },
   methods: {
-      onDataChange(items) {
-      let _tutorials = [];
+    onDataChange (items) {
+      const _tutorials = []
       items.forEach((item) => {
-        let key = item.key;
-        let data = item.val();
+        const key = item.key
+        const data = item.val()
         _tutorials.push({
           key: key,
           title: data.title,
           description: data.description,
-          published: data.published,
-        });
-      });
-      this.tutorials = _tutorials;
-    },
-  },
-};
+          published: data.published
+        })
+      })
+      this.tutorials = _tutorials
+    }
+  }
+}
 </script>
 
 <style></style>

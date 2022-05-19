@@ -1,14 +1,16 @@
-import { createApp } from 'vue'
+import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import './database/firebase'
+import vuetify from '@/plugins/vuetify'
+import VueSweetalert2 from 'vue-sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
+import store from './store'
 
-import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
-
-const app = createApp(App)
-
-app.use(router)
-app.use(VueSweetalert2)
-
-app.mount('#app')
+Vue.use(VueSweetalert2)
+new Vue({
+  vuetify,
+  router,
+  store,
+  render: (h) => h(App)
+}).$mount('#app')

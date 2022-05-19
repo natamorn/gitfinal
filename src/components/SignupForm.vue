@@ -83,111 +83,111 @@
 import firebase from '../database/firebase'
 
 export default {
-  name: "SignupForm",
-  data() {
+  name: 'SignupForm',
+  data () {
     return {
       formElements: {
         EmployeeID: {
-          type: "text",
+          type: 'text',
           value: null,
           validator: {
-            required: true,
+            required: true
             // pattern: "emloyeeID",
             // minLength: 5,
             // maxLength: 15,
           },
           touched: false,
-          error: { status: true, message: "" },
+          error: { status: true, message: '' }
         },
         email: {
-          type: "email",
+          type: 'email',
           value: null,
           validator: {
             required: true,
-            pattern: "email",
+            pattern: 'email'
           },
           touched: false,
-          error: { status: true, message: "" },
+          error: { status: true, message: '' }
         },
         password: {
-          type: "password",
+          type: 'password',
           value: null,
           validator: {
-            required: true,
+            required: true
             // minLength: 8,
           },
           touched: false,
-          error: { status: true, message: "" },
-        },
+          error: { status: true, message: '' }
+        }
       },
-      formValid: false,
-    };
+      formValid: false
+    }
   },
 
   methods: {
-    onFormChange(event) {
-      const name = event.target.name;
-      const value = event.target.value;
-      let updatedForm = { ...this.formElements };
-      updatedForm[name].value = value;
-      updatedForm[name].touched = true;
+    onFormChange (event) {
+      const name = event.target.name
+      const value = event.target.value
+      const updatedForm = { ...this.formElements }
+      updatedForm[name].value = value
+      updatedForm[name].touched = true
       const validatorObject = this.checkValidator(
         value,
         updatedForm[name].validator
-      );
+      )
       updatedForm[name].error = {
         status: validatorObject.status,
-        message: validatorObject.message,
-      };
-      let formStatus = true;
-      for (let name in updatedForm) {
+        message: validatorObject.message
+      }
+      let formStatus = true
+      for (const name in updatedForm) {
         if (updatedForm[name].validator.required === true) {
-          formStatus = !updatedForm[name].error.status && formStatus;
+          formStatus = !updatedForm[name].error.status && formStatus
         }
       }
-      this.formElements = updatedForm;
-      this.formValid = formStatus;
+      this.formElements = updatedForm
+      this.formValid = formStatus
     },
-    checkValidator(value, rule) {
-      let valid = true;
-      let message = "";
+    checkValidator (value, rule) {
+      let valid = true
+      let message = ''
 
       if (value.length < rule.minLength && valid) {
-        valid = false;
-        message = `น้อยกว่า ${rule.minLength} ตัวอักษร`;
+        valid = false
+        message = `น้อยกว่า ${rule.minLength} ตัวอักษร`
       }
       if (value.length > rule.maxLength && valid) {
-        valid = false;
-        message = `มากกว่า ${rule.maxLength} ตัวอักษร`;
+        valid = false
+        message = `มากกว่า ${rule.maxLength} ตัวอักษร`
       }
-      if (rule.pattern === "email" && valid) {
+      if (rule.pattern === 'email' && valid) {
         if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) === false) {
-          valid = false;
-          message = "กรอกอีเมล์ไม่ถูกต้อง";
+          valid = false
+          message = 'กรอกอีเมล์ไม่ถูกต้อง'
         }
       }
-      
-      return { status: !valid, message: message };
+
+      return { status: !valid, message: message }
     },
-    getInputClass(name) {
-      const elementErrorStatus = this.formElements[name].error.status;
+    getInputClass (name) {
+      const elementErrorStatus = this.formElements[name].error.status
       if (!this.formElements[name].touched) {
-        return ["form-control"];
+        return ['form-control']
       } else {
         return elementErrorStatus && this.formElements[name].touched
-          ? ["form-control", "is-invalid"]
-          : ["form-control", ""];
+          ? ['form-control', 'is-invalid']
+          : ['form-control', '']
       }
     },
-    getErrorMessage(name) {
-      return this.formElements[name].error.message;
+    getErrorMessage (name) {
+      return this.formElements[name].error.message
     },
-    onSubmit() {
-      const formData = {};
-      for (let name in this.formElements) {
-        formData[name] = this.formElements[name].value;
+    onSubmit () {
+      const formData = {}
+      for (const name in this.formElements) {
+        formData[name] = this.formElements[name].value
       }
-      console.log(formData);
+      console.log(formData)
 
       firebase
         .auth()
@@ -198,16 +198,16 @@ export default {
               employeeId: formData.EmployeeID
             })
             .then(() => {
-              alert("Registered Successful")
-              this.$router.replace("/");
-            });
+              alert('Registered Successful')
+              this.$router.replace('/')
+            })
         })
         .catch(err => {
-          this.error = err.message;
-        });
-    },
-  },
-};
+          this.error = err.message
+        })
+    }
+  }
+}
 </script>
 <style scoped>
 

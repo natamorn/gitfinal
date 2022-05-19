@@ -30,74 +30,72 @@
   </div>
 </template>
 
-
 <script>
 export default {
-  name: "Customer",
-  data() {
+  name: 'Customer',
+  data () {
     return {
       currentId: 0,
       customers: [
         {
-          name: "Jeerawuth Varin",
-          address: "123/321 Moo 1 Kanom Nakornsritammaraj",
-          image: "https://picsum.photos/id/1/200/100",
+          name: 'Jeerawuth Varin',
+          address: '123/321 Moo 1 Kanom Nakornsritammaraj',
+          image: 'https://picsum.photos/id/1/200/100',
           status: false
         },
         {
-          name: "Sombat Suntareewong",
-          address: "77/75 Moo 3 Pradubdown Nonthaburi",
-          image: "https://picsum.photos/id/290/200/100",
+          name: 'Sombat Suntareewong',
+          address: '77/75 Moo 3 Pradubdown Nonthaburi',
+          image: 'https://picsum.photos/id/290/200/100',
           status: false
         },
         {
-          name: "Manee Pimjan",
-          address: "3 Klongchagpra Talinchan Bangkok",
-          image: "https://picsum.photos/id/12/200/100",
+          name: 'Manee Pimjan',
+          address: '3 Klongchagpra Talinchan Bangkok',
+          image: 'https://picsum.photos/id/12/200/100',
           status: false
         },
         {
-          name: "Supaporn Neamsiri",
-          address: "5 Moo 1 Moung Suphanburi",
-          image: "https://picsum.photos/id/78/200/100",
+          name: 'Supaporn Neamsiri',
+          address: '5 Moo 1 Moung Suphanburi',
+          image: 'https://picsum.photos/id/78/200/100',
           status: false
         },
         {
-          name: "Aumporn Waenpej",
-          image: "https://picsum.photos/id/7/200/100",
+          name: 'Aumporn Waenpej',
+          image: 'https://picsum.photos/id/7/200/100',
           status: false
         },
         {
-          name: "Domrong Sugaseam",
-          image: "https://picsum.photos/id/32/200/100",
+          name: 'Domrong Sugaseam',
+          image: 'https://picsum.photos/id/32/200/100',
           status: false
         }
       ]
-    };
+    }
   },
   computed: {
-    currentCustomer() {
-      return this.customers[this.currentId];
+    currentCustomer () {
+      return this.customers[this.currentId]
     },
-    buttonName() {
+    buttonName () {
       if (this.currentCustomer.address) {
-        return this.currentCustomer.status ? "Show" : "Hide";
+        return this.currentCustomer.status ? 'Show' : 'Hide'
       } else {
-        return "";
+        return ''
       }
     }
   },
   methods: {
-    onUserClick() {
-      this.currentCustomer.status = !this.currentCustomer.status;
+    onUserClick () {
+      this.currentCustomer.status = !this.currentCustomer.status
     },
-    randomIndex() {
-      this.currentId = Math.floor(Math.random() * 6);
+    randomIndex () {
+      this.currentId = Math.floor(Math.random() * 6)
     }
   }
-};
+}
 </script>
-
 
 <style>
 </style>

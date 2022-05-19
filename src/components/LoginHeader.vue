@@ -8,11 +8,10 @@
   </nav>
 </template>
 
-
 <script>
 export default {
-  name: "LoginHeader",
-};
+  name: 'LoginHeader'
+}
 </script>
 
 <style  scoped>
