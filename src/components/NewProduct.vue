@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Navbar />
     <div class="container">
       <div class="row justify-content-center">
         <div class="col col-auto">
@@ -20,7 +19,10 @@
                 <input
                   v-model="formData.Name"
                   type="text"
-                  :class="['form-control']"
+                  :class="[
+                    'form-control',
+                    formWarning.Name ? '' : 'is-invalid',
+                  ]"
                   id="Name"
                 />
                 <!-- <div class="invalid-feedback">* Name</div> -->
@@ -34,7 +36,7 @@
                 <input
                   v-model="formData.PN"
                   type="text"
-                  :class="['form-control']"
+                  :class="['form-control', formWarning.PN ? '' : 'is-invalid']"
                   id="PN"
                 />
                 <!-- <div class="invalid-feedback">* WorkPhone</div> -->
@@ -50,7 +52,7 @@
                 <input
                   v-model="formData.C"
                   type="text"
-                  :class="['form-control']"
+                  :class="['form-control', formWarning.C ? '' : 'is-invalid']"
                   id="C"
                 />
                 <!-- <div class="invalid-feedback">* Email</div> -->
@@ -63,9 +65,12 @@
                 >
 
                 <input
-                  v-model="formData.Price"
+                  v-model.number="formData.Price"
                   type="number"
-                  :class="['form-control']"
+                  :class="[
+                    'form-control',
+                    formWarning.Price ? '' : 'is-invalid',
+                  ]"
                   id="Price"
                 />
                 <small id="employeeID" class="form-text text-muted"
@@ -94,6 +99,7 @@
 </template>
 
 <script>
+import ProductService from '@/services/ProductService'
 export default {
   name: 'NewProduct',
   data () {
@@ -130,68 +136,28 @@ export default {
       }
       this.valid = Object.values(this.formWarning).every((it) => it === true)
     },
-    async getFile () {
-      const file = await this.selectFile({
-        accept: 'image/*',
-        multiple: true,
-        limit: 1
-      })
-      if (file) {
-        this.formData.Picture = file[0].name
 
-        this.imgBase64 = await this.readFile(file[0])
-      }
-    },
-    selectFile ({ multiple, accept, limit }) {
-      return new Promise((resolve) => {
-        const input = document.createElement('input')
-        input.type = 'file'
-        input.multiple = multiple
-        input.accept = accept
-        input.addEventListener('change', () => {
-          if (limit) {
-            return resolve(Array.from(input.files).slice(0, limit))
-          }
-          return resolve(input.files)
+    onFormSubmit () {
+      console.log('1 :>> ', 1)
+      this.validate()
+      if (!this.valid) return 0
+      ProductService.add({
+        ...this.formData,
+        history: []
+      })
+        .then(() => {
+          this.$swal.fire(
+            'success!',
+            'Created new item successfully!',
+            'success'
+          )
+
+          this.$router.push('/Product')
         })
-        input.click()
-      })
-    },
-    readFile (file) {
-      return new Promise((resolve) => {
-        const reader = new FileReader()
-
-        reader.addEventListener(
-          'load',
-          function () {
-            resolve(this.result)
-          },
-          false
-        )
-
-        reader.readAsDataURL(file)
-      })
+        .catch((e) => {
+          this.$swal.fire('Oops...', e, 'error')
+        })
     }
-    // onFormSubmit() {
-    //   this.validate();
-    //   if (!this.valid) return;
-    //   CustomerService.add({
-    //     ...this.formData,
-    //     Picture: this.imgBase64,
-    //   },)
-    //     .then(() => {
-    //       this.$swal.fire(
-    //         "success!",
-    //         "Created new item successfully!",
-    //         "success"
-    //       );
-
-    //       this.$router.push('/customer')
-    //     })
-    //     .catch((e) => {
-    //       this.$swal.fire("Oops...", e, "error");
-    //     });
-    // },
   }
 }
 </script>

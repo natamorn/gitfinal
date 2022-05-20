@@ -1,31 +1,44 @@
 
 <template>
   <div class="container text-center">
-    <table class="table  table-hover">
+    <!-- <table class="table table-hover">
       <thead>
         <tr class="table-danger">
           <td class="fw-bold">NO</td>
           <td class="fw-bold">P/N</td>
           <td class="fw-bold" style="text-align: left">Name</td>
-          <td class="fw-bold" style="text-align: right  " >สินค้าคงเหลือ</td>
+          <td class="fw-bold" style="text-align: right">สินค้าคงเหลือ</td>
           <td></td>
         </tr>
       </thead>
       <tbody>
-        <tr  v-for="(it, index) in listProduct" :key="index">
+        <tr v-for="(it, index) in listProduct" :key="index">
           <td>{{ index + 1 }}</td>
           <td style="text-align: left">{{ it.RequestInventoryNO }}</td>
           <td style="text-align: left">{{ it.Insert_Product_Name }}</td>
-          <td style="text-align: right  " >{{ it.Total_RI.toLocaleString('en-US') }}</td>
+          <td style="text-align: right">
+            {{ it.Total_RI.toLocaleString("en-US") }}
+          </td>
           <td><a :href="`/AddProduct?key=${it.key}`">Request</a></td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
+
+    <v-data-table
+      :headers="headers"
+      :items="listProduct"
+      :items-per-page="5"
+      class="elevation-1"
+    >
+      <template v-slot:item.actions="{ item }">
+        <router-link :to="`/AddProduct?key=${item.key}`">View More</router-link>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
 <script>
-import RequestInventoryService from '../services/RequestInventoryService'
+import ProductService from '../services/ProductService'
 
 export default {
   name: 'TableProduct',
@@ -33,30 +46,62 @@ export default {
 
   data () {
     return {
-      listProduct: []
+      listProduct: [],
+      headers: [
+        {
+          text: 'NO.',
+          align: 'start',
+          sortable: false,
+          value: 'no',
+          class: 'tableHeader text-h6'
+        },
+        {
+          text: 'P/N',
+          align: 'center',
+          value: 'PN',
+          class: 'tableHeader text-h6'
+        },
+        {
+          text: 'ProductName',
+          align: 'center',
+          value: 'Name',
+          class: 'tableHeader text-h6'
+        },
+        {
+          text: 'สินค้าคงเหลือ',
+          align: 'center',
+          value: 'Total_RI',
+          class: 'tableHeader text-h6'
+        },
+        { text: '', align: 'center', value: 'actions', class: 'tableHeader text-h6' }
+      ]
     }
   },
-  created () {
-
-  },
+  created () {},
   mounted () {
-    //  RequestInventoryService.get().then((snapshotChange) => {
-
+    // ProductService.get().then((snapshotChange) => {
     //   snapshotChange.forEach((doc) => {
-    //     RequestInventoryService.doc(doc.id).delete()
-    //   });
-    // });
+    //     ProductService.doc(doc.id).delete()
+    //   })
+    // })
 
-    RequestInventoryService.get().then((snapshotChange) => {
+    ProductService.get().then((snapshotChange) => {
       this.listProduct = []
+      let index = 1
       snapshotChange.forEach((doc) => {
-        const res = doc.data().products.map(it => ({
+        // const res = doc.data().products.map((it) => ({
+        //   key: doc.id,
+        //   ...it
+        // }))
+        this.listProduct.push({
+          no: index++,
           key: doc.id,
-          ...it,
-          RequestInventoryNO: doc.data().RequestInventoryNO
-        }))
-        this.listProduct.push(...res)
-        console.log('🚀 ~ file: TableProduct.vue ~ line 59 ~ snapshotChange.forEach ~ this.listProduct', this.listProduct)
+          ...doc.data()
+        })
+        console.log(
+          '🚀 ~ file: TableProduct.vue ~ line 59 ~ snapshotChange.forEach ~ this.listProduct',
+          this.listProduct
+        )
         // this.listProduct.push({
         //   key: doc.id,
         //   ...doc.data()
