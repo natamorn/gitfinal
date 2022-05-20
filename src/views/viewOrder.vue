@@ -1,42 +1,44 @@
 <template>
-  <Navbar />
   <div>
-    <div class="row justify-content-center">
-      <div class="col col-auto">
-        <h1 class="text-primary">View More</h1>
+    <Navbar />
+    <div>
+      <div class="row justify-content-center">
+        <div class="col col-auto">
+          <h1 class="text-primary">View More</h1>
+        </div>
       </div>
-    </div>
-    <OrderForm :orderId="orderId" flag="viewOrder"/>
+      <OrderForm :orderId="orderId" flag="viewOrder" />
 
-    <!-- <Footer /> -->
+      <!-- <Footer /> -->
+    </div>
   </div>
 </template>
 
 <script>
 // import Footer from "../components/Footer.vue";
-import OrderForm from "../components/OrderForm.vue";
-import Navbar from "../components/Navbar.vue";
+import OrderForm from '../components/OrderForm.vue'
+import Navbar from '../components/Navbar.vue'
 
 export default {
-  name: "Viewmore",
+  name: 'Viewmore',
   components: {
     OrderForm,
-    Navbar,
+    Navbar
     // Footer,
   },
-  data() {
+  data () {
     return {
       orderId: null
     }
   },
   mounted () {
-    this.$nextTick(()=> {
-      if( this.$route.query.key) {
+    this.$nextTick(() => {
+      if (this.$route.query.key) {
         this.orderId = this.$route.query.key
       }
-    });
-  },
-};
+    })
+  }
+}
 </script>
 
 <style>

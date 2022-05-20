@@ -1,7 +1,9 @@
 <template>
-    <Navbar/>
-  <div class="container">
-      <customerTable/>
+  <div>
+    <Navbar />
+    <div class="container">
+      <customerTable />
+    </div>
   </div>
 </template>
 
@@ -10,14 +12,13 @@ import customerTable from '../components/customerTable.vue'
 import Navbar from '../components/Navbar.vue'
 
 export default {
-    name:"customer",
-    components:{
-        customerTable,
-        Navbar
-    },
+  name: 'customer',
+  components: {
+    customerTable,
+    Navbar
+  }
 }
 </script>
 
 <style>
-
 </style>

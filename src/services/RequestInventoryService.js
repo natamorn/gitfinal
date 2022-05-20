@@ -1,9 +1,9 @@
-import firebase from "../database/firebase";
-const database = firebase.firestore();
+import firebase from '../database/firebase'
+const database = firebase.firestore()
 
-const db = database.collection("RequestInventory");
+const db = database.collection('RequestInventory')
 
-export default db;
+export default db
 // db.collection("users").doc(id).delete().then(() => {
 //     console.log("Document deleted!");
 // })

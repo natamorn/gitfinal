@@ -1,7 +1,10 @@
 <template>
-    
+  <v-app id="app">
     <!-- <login/> -->
-    <router-view/>
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -16,6 +19,5 @@
 </script>
 
 <style>
-  @import './assets/css/main.css';
-
+@import "./assets/css/main.css";
 </style>

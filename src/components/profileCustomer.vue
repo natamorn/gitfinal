@@ -14,7 +14,7 @@
         <label>{{ formData.Name }}</label>
       </div>
     </div>
-    
+
     <div class="row g-0">
       <div class="mb-3 d-flex flex-column">
         <label class="fw-bold">Email</label>
@@ -54,48 +54,48 @@
 </template>
 
 <script>
-import CustomerService from "../services/CustomerService";
+import CustomerService from '../services/CustomerService'
 export default {
-  name: "profileCustomer",
+  name: 'profileCustomer',
   props: {
     customerData: {
       type: Object,
-      default: () => {},
+      default: () => {}
     },
     keyCustomer: {
       type: String,
-      default: null,
-    },
+      default: null
+    }
   },
-  data() {
+  data () {
     return {
       formData: {
         Name: null,
         WorkPhone: null,
         Email: null,
         Picture: null,
-        Address: null,
-      },
-    };
-  },
-  watch: {
-    customerData(v) {
-      if (v) {
-        this.formData = v;
-      }
-    },
-    keyCustomer(v) {
-      if(v) {
-           let dbRef = CustomerService.doc(v);
-            dbRef.get().then((doc) => {
-                this.formData = doc.data();
-            }).catch((error) => {
-                console.log(error)
-            })
+        Address: null
       }
     }
   },
-};
+  watch: {
+    customerData (v) {
+      if (v) {
+        this.formData = v
+      }
+    },
+    keyCustomer (v) {
+      if (v) {
+        const dbRef = CustomerService.doc(v)
+        dbRef.get().then((doc) => {
+          this.formData = doc.data()
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>
