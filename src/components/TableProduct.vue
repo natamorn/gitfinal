@@ -31,7 +31,7 @@
       class="elevation-1"
     >
       <template v-slot:item.actions="{ item }">
-        <router-link :to="`/AddProduct?key=${item.key}`">View More</router-link>
+        <router-link :to="`/AddProduct?key=${item.key}`">Request</router-link>
       </template>
     </v-data-table>
   </div>

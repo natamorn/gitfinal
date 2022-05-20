@@ -114,7 +114,7 @@ export default {
             ...doc.data(),
             Amount: doc.data().products.reduce((total, it) => total + it.total, 0)
           })
-        // OrderService.doc(doc.id).delete()
+          // OrderService.doc(doc.id).delete()
         })
         console.log(' this.listOrder :>> ', this.listOrder)
       })
