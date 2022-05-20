@@ -176,30 +176,36 @@ export default {
     getErrorMessage (name) {
       return this.formElements[name].error.message
     },
-    onFormSubmit () {
+    async onFormSubmit () {
       const formData = {}
       for (const name in this.formElements) {
         formData[name] = this.formElements[name].value
       }
       console.log(formData)
 
-      SignupService.where('email', '==', formData.username).where('password', '==', formData.password).get()
-        .then((snapshotChange) => {
-          console.log('🚀 ~ file: loginForm.vue ~ line 188 ~ .then ~ snapshotChange', snapshotChange)
-          // snapshotChange.forEach((doc) => {
-          //   console.log('doc.data() :>> ', doc.data())
-          // })
-          store.state.user.loggedIn = true
-          this.$router.push('/Home')
-        })
-        .catch((e) => {
-          console.log('🚀 ~ file: loginForm.vue ~ line 196 ~ onFormSubmit ~ e', e)
-          this.$swal.fire(
-            'warning!',
-            'Username or password is incorrect!',
-            'warning'
-          )
-        })
+      const chkUser = await SignupService.where('email', '==', formData.username).where('password', '==', formData.password).get()
+      if (chkUser.empty) {
+        this.$swal.fire('Oops...', 'Username or password is incorrect!', 'warning')
+        return 0
+      }
+      store.state.user.loggedIn = true
+      this.$router.push('/Home')
+      // .then((snapshotChange) => {
+      //   console.log('🚀 ~ file: loginForm.vue ~ line 188 ~ .then ~ snapshotChange', snapshotChange)
+      //   // snapshotChange.forEach((doc) => {
+      //   //   console.log('doc.data() :>> ', doc.data())
+      //   // })
+      //   store.state.user.loggedIn = true
+      //   this.$router.push('/Home')
+      // })
+      // .catch((e) => {
+      //   console.log('🚀 ~ file: loginForm.vue ~ line 196 ~ onFormSubmit ~ e', e)
+      //   this.$swal.fire(
+      //     'warning!',
+      //     'Username or password is incorrect!',
+      //     'warning'
+      //   )
+      // })
       // this.$router.replace("/Home");
     },
     onSignUp () {
