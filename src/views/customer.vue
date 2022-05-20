@@ -7,6 +7,7 @@
         <div class="col col-4">
           <div>
             <input
+            v-model="txtSearch"
               type="text"
               class="form-control"
               id="exampleFormControlInput1"
@@ -85,8 +86,25 @@ export default {
   },
   data () {
     return {
+      txtSearch: '',
       listCustomer: [],
+      originList: [],
       selectedCustomer: null
+    }
+  },
+  watch: {
+    txtSearch (v) {
+      if (v) {
+        console.log(
+          '🚀 ~ file: customerHistory.vue ~ line 70 ~ txtSearch ~ v',
+          v
+        )
+        this.listCustomer = this.originList.filter(
+          (it) => `${it.Name}`.indexOf(v) > -1
+        )
+      } else {
+        this.listCustomer = this.originList
+      }
     }
   },
   mounted () {
@@ -105,6 +123,7 @@ export default {
           ...doc.data()
         })
       })
+      this.originList = this.listCustomer
     })
   },
   methods: {
