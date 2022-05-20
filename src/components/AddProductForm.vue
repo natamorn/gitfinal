@@ -137,7 +137,7 @@
                     }}
                   </td>
                   <td>{{ it.payCount.toLocaleString("en-US") }}</td>
-                  <td>{{ productDetail.Total_RI.toLocaleString("en-US") }}</td>
+                  <td>{{ (index === productHistory.length -1 ) ? productDetail.Total_RI.toLocaleString("en-US") : '' }}</td>
                   <td>{{ it.remark }}</td>
                 </tr>
                 <tr>
