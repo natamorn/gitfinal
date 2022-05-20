@@ -490,6 +490,7 @@
                   <td>{{ it.total.toLocaleString("en-US") }}</td>
                   <td>{{ it.desription }}</td>
                   <td>{{ it.remark }}</td>
+                  <td></td>
                 </tr>
 
                 <tr
@@ -564,6 +565,11 @@
                       name="Remark"
                     />
                   </td>
+                  <td>
+                    <v-btn @click="removeFieldProduct(index)" class="mt-2" icon color="red">
+                      <v-icon>mdi-window-close</v-icon>
+                    </v-btn>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -580,19 +586,20 @@
             </button>
 
             &nbsp;
-            <button
+            <!-- <button
               type="reset"
               class="btn btn-outline"
               value="reset"
               @click="removeFieldProduct()"
             >
               Delete
-            </button>
+            </button> -->
           </div>
 
           <div class="row justify-content-end">
             <div class="col col-2 d-grid gap-2">
               <button
+                v-show="flag === 'addOrder'"
                 type="submit"
                 class="btn btn-primary"
                 style="border: 0px gray solid"
@@ -600,8 +607,13 @@
                 Submit
               </button>
             </div>
-            <div class="col col-2 d-grid gap-2">
-              <button @click="printDiv" type="button" class="btn btn-outline">
+            <div :class="'col col-2 '+ flag === 'viewOrder' ? 'd-grid gap-2' : ''" v-show="flag === 'viewOrder'">
+              <button
+                v-show="flag === 'viewOrder'"
+                @click="printDiv"
+                type="button"
+                class="btn btn-outline"
+              >
                 Print
               </button>
             </div>
@@ -1129,8 +1141,8 @@ export default {
         JSON.parse(JSON.stringify(this.defaultFormProducts))
       )
     },
-    removeFieldProduct () {
-      this.formProducts.splice(this.formProducts.length - 1, 1)
+    removeFieldProduct (index) {
+      this.formProducts.splice(index, 1)
     },
     printDiv () {
       var printContents = document.getElementById('printableArea').innerHTML

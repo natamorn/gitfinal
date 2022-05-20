@@ -9,13 +9,12 @@ import 'firebase/compat/firestore'
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: 'AIzaSyAItWg0RwzYhQYb8hpyAYLHPuve80upaAI',
-  authDomain: 'medical-stock-d115c.firebaseapp.com',
-  projectId: 'medical-stock-d115c',
-  storageBucket: 'medical-stock-d115c.appspot.com',
-  messagingSenderId: '553622257649',
-  appId: '1:553622257649:web:962560f889e63ce0534e50',
-  measurementId: 'G-JTSBGQH86V'
+  apiKey: 'AIzaSyB-rotebhxqSd71961FNM0RN9TLMzmxl4Y',
+  authDomain: 'medical-system-c125e.firebaseapp.com',
+  projectId: 'medical-system-c125e',
+  storageBucket: 'medical-system-c125e.appspot.com',
+  messagingSenderId: '1041823010079',
+  appId: '1:1041823010079:web:fb86d5d012037cbf14742a'
 }
 
 // Initialize Firebase
