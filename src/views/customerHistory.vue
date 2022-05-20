@@ -106,8 +106,9 @@ export default {
         .then((snapshotChange) => {
           snapshotChange.forEach((doc) => {
             this.listOrder.push({ key: doc.id, ...doc.data() })
-            this.originList.push({ key: doc.id, ...doc.data() })
           })
+          this.listOrder.sort((itA, itB) => itA.OrderFormNo - itB.OrderFormNo)
+          this.originList = this.listOrder
         })
     }
   },

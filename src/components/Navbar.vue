@@ -1,12 +1,6 @@
 <template>
   <nav
-    class="
-      navbar navbar-expand-lg
-      fixed-top
-      bg-white
-      navbar-light
-      shadow-navbar
-    "
+    class="navbar navbar-expand-lg fixed-top bg-white navbar-light shadow-navbar"
   >
     <div class="container">
       <a class="navbar-brand" href="/Home">ENP</a>
@@ -40,7 +34,7 @@
         </div>
       </div>
       <div class="d-none d-lg-block">
-        <router-link class="nav-item nav-link" to="/">
+        <!-- <router-link class="nav-item nav-link"  @click="logout()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -58,19 +52,55 @@
               d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
             />
           </svg>
-        </router-link>
+        </router-link> -->
+        <v-btn icon color="black" @click="dialog = true">
+          <v-icon>mdi-logout</v-icon>
+        </v-btn>
+
+        <v-dialog v-model="dialog" max-width="450">
+          <v-card>
+            <v-card-title class="headline"
+              >คุณต้องการออกจากระบบใช่หรือไม่?</v-card-title
+            >
+
+            <!-- <v-card-text class="headline">
+            คุณต้องการออกจากระบบใช่หรือไม่?
+            </v-card-text> -->
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <v-btn text color="warning"  @click="logout()">
+                ออกจากระบบ
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
+import store from '@/store'
 export default {
-  name: 'LoginHeader'
+  name: 'LoginHeader',
+  data () {
+    return {
+
+      dialog: false
+    }
+  },
+  methods: {
+    logout () {
+      store.state.user.loggedIn = false
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 
-<style >
+<style>
 a.router-link-exact-active {
   /* background-color: lightblue; */
   /* text-decoration: underline 5px brown;  */

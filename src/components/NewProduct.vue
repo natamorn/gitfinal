@@ -82,13 +82,14 @@
 
             <div class="row justify-content-end mt-5">
               <div class="col col-2 d-grid">
-                <button
+                <v-btn
+                  dark
                   type="submit"
                   class="btn btn-primary"
                   style="border: 0px gray solid"
                 >
                   Submit
-                </button>
+                </v-btn>
               </div>
             </div>
           </form>
@@ -162,7 +163,7 @@ export default {
 }
 </script>
 
-<style  scoped>
+<style scoped>
 .form-control {
   border-radius: 8px;
   /* border: 1px ; */

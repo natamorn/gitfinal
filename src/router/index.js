@@ -1,5 +1,4 @@
 import Router from 'vue-router'
-import auth from '@/middleware/auth'
 import Vue from 'vue'
 import store from '../store'
 
@@ -17,7 +16,7 @@ const router = new Router({
       name: 'Home',
       component: () => import('../views/Home.vue'),
       meta: {
-        middleware: auth
+        requiresAuth: true
       }
     },
     {
@@ -28,7 +27,7 @@ const router = new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/Product.vue'),
       meta: {
-        middleware: auth
+        requiresAuth: true
       }
     },
     {
@@ -36,7 +35,7 @@ const router = new Router({
       name: 'OrderPage',
       component: () => import('../views/OrderPage.vue'),
       meta: {
-        middleware: auth
+        requiresAuth: true
       }
     },
     {
@@ -44,7 +43,7 @@ const router = new Router({
       name: 'AddProduct',
       component: () => import('../views/AddProduct.vue'),
       meta: {
-        middleware: auth
+        requiresAuth: true
       }
     },
     {
@@ -52,7 +51,7 @@ const router = new Router({
       name: 'customer',
       component: () => import('../views/customer.vue'),
       meta: {
-        middleware: auth
+        requiresAuth: true
       }
     },
     {
@@ -60,7 +59,7 @@ const router = new Router({
       name: 'AddCustomer',
       component: () => import('../views/AddCustomer.vue'),
       meta: {
-        middleware: auth
+        requiresAuth: true
       }
     },
     {
@@ -68,7 +67,7 @@ const router = new Router({
       name: 'customerHistory',
       component: () => import('../views/customerHistory.vue'),
       meta: {
-        middleware: auth
+        requiresAuth: true
       }
     },
     {
@@ -86,7 +85,7 @@ const router = new Router({
       name: 'viewOrder',
       component: () => import('../views/viewOrder.vue'),
       meta: {
-        middleware: auth
+        requiresAuth: true
       }
     },
     {
@@ -94,7 +93,7 @@ const router = new Router({
       name: 'NewProductPage',
       component: () => import('../views/NewProductPage.vue'),
       meta: {
-        middleware: auth
+        requiresAuth: true
       }
     }
   ]
@@ -103,41 +102,52 @@ const router = new Router({
 // Creates a `nextMiddleware()` function which not only
 // runs the default `next()` callback but also triggers
 // the subsequent Middleware function.
-function nextFactory (context, middleware, index) {
-  const subsequentMiddleware = middleware[index]
-  // If no subsequent Middleware exists,
-  // the default `next()` callback is returned.
-  if (!subsequentMiddleware) return context.next
+// function nextFactory (context, middleware, index) {
+//   const subsequentMiddleware = middleware[index]
+//   // If no subsequent Middleware exists,
+//   // the default `next()` callback is returned.
+//   if (!subsequentMiddleware) return context.next
 
-  return (...parameters) => {
-    // Run the default Vue Router `next()` callback first.
-    context.next(...parameters)
-    // Then run the subsequent Middleware with a new
-    // `nextMiddleware()` callback.
-    const nextMiddleware = nextFactory(context, middleware, index + 1)
-    subsequentMiddleware({ ...context, next: nextMiddleware })
-  }
-}
+//   return (...parameters) => {
+//     // Run the default Vue Router `next()` callback first.
+//     context.next(...parameters)
+//     // Then run the subsequent Middleware with a new
+//     // `nextMiddleware()` callback.
+//     const nextMiddleware = nextFactory(context, middleware, index + 1)
+//     subsequentMiddleware({ ...context, next: nextMiddleware })
+//   }
+// }
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.middleware) {
-    const middleware = Array.isArray(to.meta.middleware)
-      ? to.meta.middleware
-      : [to.meta.middleware]
-
-    const context = {
-      from,
-      next,
-      router,
-      to,
-      store
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.auth.loggedIn) {
+      next({
+        name: 'login'
+      })
+    } else {
+      next()
     }
-    const nextMiddleware = nextFactory(context, middleware, 1)
-
-    return middleware[0]({ ...context, next: nextMiddleware })
+  } else {
+    next()
   }
+  // if (to.meta.middleware) {
+  //   const middleware = Array.isArray(to.meta.middleware)
+  //     ? to.meta.middleware
+  //     : [to.meta.middleware]
 
-  return next()
+  //   const context = {
+  //     from,
+  //     next,
+  //     router,
+  //     to,
+  //     store
+  //   }
+  //   const nextMiddleware = nextFactory(context, middleware, 1)
+
+  //   return middleware[0]({ ...context, next: nextMiddleware })
+  // }
+
+  // return next()
 })
 
 export default router

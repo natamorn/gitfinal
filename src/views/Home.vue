@@ -5,14 +5,15 @@
     <div class="container">
       <div class="row justify-content-end">
         <div class="col col-2 d-grid gap-2">
-          <button
+          <v-btn
+            dark
             style="border: 0px gray solid"
             type="button"
             class="btn btn-primary"
             @click="$router.push('/OrderPage')"
           >
             Add Order
-          </button>
+          </v-btn>
         </div>
       </div>
       <div class="row mt-4">

@@ -1,4 +1,3 @@
-
 <template>
   <div class="row">
     <div class="col-sm-10 mx-auto">
@@ -137,7 +136,13 @@
                     }}
                   </td>
                   <td>{{ it.payCount.toLocaleString("en-US") }}</td>
-                  <td>{{ (index === productHistory.length -1 ) ? productDetail.Total_RI.toLocaleString("en-US") : '' }}</td>
+                  <td>
+                    {{
+                      index === productHistory.length - 1
+                        ? productDetail.Total_RI.toLocaleString("en-US")
+                        : ""
+                    }}
+                  </td>
                   <td>{{ it.remark }}</td>
                 </tr>
                 <tr>
@@ -211,13 +216,14 @@
 
           <div class="row justify-content-end">
             <div class="col col-2 d-grid gap-2">
-              <button
+              <v-btn
+                dark
                 type="submit"
                 class="btn btn-primary"
                 style="border: 0px gray solid"
               >
                 Submit
-              </button>
+              </v-btn>
             </div>
           </div>
         </form>
@@ -577,7 +583,7 @@ export default {
 }
 </script>
 
-<style  scoped>
+<style scoped>
 .form-control {
   border-radius: 8px;
   /* border: 1px ; */
@@ -587,4 +593,5 @@ export default {
 .dokjun {
   color: red;
 }
-</style>>
+</style>
+>

@@ -4,14 +4,15 @@
     <div class="container">
       <div class="row justify-content-end">
         <div class="col col-2 d-grid gap-2">
-          <button
+          <v-btn
+            dark
             type="button"
             style="border: 0px gray solid"
             class="btn btn-primary"
             @click="$router.push('/NewProductPage')"
           >
             New Product
-          </button>
+          </v-btn>
         </div>
       </div>
       <div class="row mt-4">

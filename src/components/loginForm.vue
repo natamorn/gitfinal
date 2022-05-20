@@ -71,8 +71,9 @@
 </template>
 
 <script>
-import firebase from '../database/firebase'
-
+// import firebase from '../database/firebase'
+import store from '@/store'
+import SignupService from '../services/SignupService'
 export default {
   name: 'loginForm',
   data () {
@@ -182,14 +183,22 @@ export default {
       }
       console.log(formData)
 
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(formData.username, formData.password)
-        .then(() => {
-          this.$router.replace('/Home')
+      SignupService.where('email', '==', formData.username).where('password', '==', formData.password).get()
+        .then((snapshotChange) => {
+          console.log('🚀 ~ file: loginForm.vue ~ line 188 ~ .then ~ snapshotChange', snapshotChange)
+          // snapshotChange.forEach((doc) => {
+          //   console.log('doc.data() :>> ', doc.data())
+          // })
+          store.state.user.loggedIn = true
+          this.$router.push('/Home')
         })
-        .catch(() => {
-          alert('Username or password is incorrect')
+        .catch((e) => {
+          console.log('🚀 ~ file: loginForm.vue ~ line 196 ~ onFormSubmit ~ e', e)
+          this.$swal.fire(
+            'warning!',
+            'Username or password is incorrect!',
+            'warning'
+          )
         })
       // this.$router.replace("/Home");
     },

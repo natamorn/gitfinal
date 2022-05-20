@@ -7,7 +7,7 @@
         <div class="col col-4">
           <div>
             <input
-            v-model="txtSearch"
+              v-model="txtSearch"
               type="text"
               class="form-control"
               id="exampleFormControlInput1"
@@ -16,14 +16,15 @@
           </div>
         </div>
         <div class="col col-2 d-grid gap-2">
-          <button
+          <v-btn
+            dark
             type="button"
             class="btn btn-primary"
             @click="$router.push('/AddCustomer')"
             style="border: 0px gray solid"
           >
             Add Customer
-          </button>
+          </v-btn>
         </div>
       </div>
 
