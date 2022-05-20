@@ -3,7 +3,7 @@
     class="navbar navbar-expand-lg fixed-top bg-white navbar-light shadow-navbar"
   >
     <div class="container">
-      <a class="navbar-brand" href="/Home">ENP</a>
+      <a class="navbar-brand" href="/Home">NEP</a>
       <button
         class="navbar-toggler"
         type="button"
