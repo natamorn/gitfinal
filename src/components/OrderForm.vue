@@ -54,9 +54,9 @@
                 <option
                   v-for="(it, index) in listEmployee"
                   :key="index"
-                  :value="it.Emp_ID"
+                  :value="it.EmployeeID"
                 >
-                  {{ it.Email }}
+                  {{ it.email }}
                 </option>
               </select>
               <div class="invalid-feedback">
@@ -467,7 +467,7 @@
           </div>
 
           <div class="row text-center mt-4">
-            <table class="table table-hover">
+            <table :class="`table table-hover ${flag === 'addOrder' ?'table-hover': 'table-borderless'}`">
               <thead>
                 <tr class="table-danger">
                   <td class="fw-bold">Items</td>
@@ -929,7 +929,6 @@ export default {
       if (v) {
         const found = this.customerList.find((it) => it.Name === v)
         if (found) {
-          console.log('🚀 ~ file: OrderForm.vue ~ line 930 ~ found', found)
           this.tempHospital = found
           this.formElements.HospitalID.value = found.key
           this.formElements.HospitalPhone.value = found.WorkPhone
@@ -940,16 +939,14 @@ export default {
     },
     'formElements.DateExpire.value' (v) {
       if (v) {
-        console.log('v :>> ', v)
         if (this.formElements.InOrder.value === 'No') {
           this.formElements.DateDeliver.value = this.addDays(v, 90)
         }
       }
     },
     'formElements.Sale.value' (v) {
-      const found = this.listEmployee.find((it) => it.Emp_ID === v)
+      const found = this.listEmployee.find((it) => it.EmployeeID === v)
       if (found) {
-        console.log('🚀 ~ file: OrderForm.vue ~ line 930 ~ found', found)
         this.tempSale = found
       }
     },
@@ -1005,11 +1002,11 @@ export default {
 
       // SignupService.add({ Emp_ID: 'ME1111', Email: 'Employee@text.com', Pass: '123456'})
 
-      SignupService.get().then((snapshotChange) => {
-        snapshotChange.forEach((doc) => {
-          this.listEmployee.push(doc.data())
-        })
-      })
+      // SignupService.get().then((snapshotChange) => {
+      //   snapshotChange.forEach((doc) => {
+      //     this.listEmployee.push(doc.data())
+      //   })
+      // })
 
       OrderService.get().then((snapshotChange) => {
         this.formElements.OrderFormNo.value = snapshotChange.docs.length + 1
@@ -1020,6 +1017,7 @@ export default {
         this.listEmployee.push(doc.data())
       })
     })
+    console.log('🚀 ~ file: OrderForm.vue ~ line 1019 ~ snapshotChange.forEach ~ this.listEmployee', this.listEmployee)
     CustomerService.get().then((snapshotChange) => {
       this.customerList = []
       snapshotChange.forEach((doc) => {
@@ -1038,8 +1036,6 @@ export default {
         })
       })
     })
-
-    console.log('this.listProduct :>> ', this.listProduct)
   },
   methods: {
     onFormChange (event) {
@@ -1214,7 +1210,7 @@ export default {
                   {
                     text: [
                       { text: 'Sale : \t', style: 'title' },
-                      { text: this.tempSale.Email, style: 'paragraph' }
+                      { text: this.tempSale.email, style: 'paragraph' }
                     ]
                   }
                 ],
