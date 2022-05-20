@@ -94,7 +94,13 @@ export default {
       formValid: false
     }
   },
-
+  mounted () {
+    // SignupService.get().then((snapshotChange) => {
+    //   snapshotChange.forEach((doc) => {
+    //     SignupService.doc(doc.id).delete()
+    //   })
+    // })
+  },
   methods: {
     validate () {
       for (const key in this.formWarning) {
@@ -104,15 +110,25 @@ export default {
       }
       this.formValid = Object.values(this.formWarning).every((it) => it === true)
     },
-    onSubmit () {
+    async onSubmit () {
       this.validate()
-      console.log('this.valid :>> ', this.formValid)
       if (!this.formValid) return
+      const chkuser = await SignupService.where('email', '==', this.formData.email).where('password', '==', this.formData.password).get()
+      if (!chkuser.empty) {
+        this.$swal.fire('Oops...', 'ชื่อผู้งานนี้มีอยู่แล้ว', 'warning')
+        return 0
+      }
+
+      const chkEmpId = await SignupService.where('EmployeeID', '==', this.formData.EmployeeID).get()
+      if (!chkEmpId.empty) {
+        this.$swal.fire('Oops...', 'Employee ID นี้มีอยู่แล้ว', 'warning')
+        return 0
+      }
       SignupService.add(this.formData)
         .then(() => {
           this.$swal.fire(
             'success!',
-            'Created new item successfully!',
+            'Sign Up successfully!',
             'success'
           )
 
@@ -121,22 +137,6 @@ export default {
         .catch((e) => {
           this.$swal.fire('Oops...', e, 'error')
         })
-      // firebase
-      //   .auth()
-      //   .createUserWithEmailAndPassword(formData.email, formData.password)
-      //   .then(data => {
-      //     data.user
-      //       .updateProfile({
-      //         employeeId: formData.EmployeeID
-      //       })
-      //       .then(() => {
-      //         alert('Registered Successful')
-      //         this.$router.replace('/')
-      //       })
-      //   })
-      //   .catch(err => {
-      //     this.error = err.message
-      //   })
     }
   }
 }
