@@ -39,6 +39,11 @@
       :items-per-page="5"
       class="elevation-1"
     >
+    <template v-slot:item.Amount="{ item }">
+       {{ item.Amount.toLocaleString(
+                    "en-US"
+                  )}}
+      </template>
       <template v-slot:item.actions="{ item }">
          <router-link :to="`/viewOrder?key=${item.key}`">View More</router-link>
       </template>
@@ -98,18 +103,21 @@ export default {
     }
   },
   mounted () {
-    OrderService.get().then((snapshotChange) => {
-      this.listOrder = []
-      let index = 1
-      snapshotChange.forEach((doc) => {
-        this.listOrder.push({
-          no: index++,
-          key: doc.id,
-          ...doc.data()
-        })
+    OrderService.orderBy('HospitalDate', 'desc').get()
+      .then((snapshotChange) => {
+        this.listOrder = []
+        let index = 1
+        snapshotChange.forEach((doc) => {
+          this.listOrder.push({
+            no: index++,
+            key: doc.id,
+            ...doc.data(),
+            Amount: doc.data().products.reduce((total, it) => total + it.total, 0)
+          })
         // OrderService.doc(doc.id).delete()
+        })
+        console.log(' this.listOrder :>> ', this.listOrder)
       })
-    })
   }
 }
 </script>

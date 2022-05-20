@@ -11,6 +11,7 @@
     "axios": "^0.26.1",
     "core-js": "^3.6.5",
     "firebase": "^9.6.4",
+    "pdfmake": "^0.2.5",
     "vue": "^2.6.11",
     "vue-router": "3.2.0",
     "vue-sweetalert2": "^5.0.5",
@@ -46,7 +47,7 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "vue/no-v-for-template-key" : "off"
+      "vue/no-v-for-template-key": "off"
     }
   },
   "browserslist": [

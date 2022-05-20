@@ -19,7 +19,7 @@
                 @keyup="onFormChange($event)"
                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 required
-                :readonly="orderId"
+                :disabled="orderId"
                 style="border: 0px black solid"
               />
               <div class="invalid-feedback">
@@ -47,7 +47,7 @@
                 :class="`form-select ${getInputClass('Sale')}`"
                 aria-label="Default select example"
                 id="Sale"
-                :readonly="orderId"
+                :disabled="orderId"
                 name="Sale"
                 required
               >
@@ -106,7 +106,7 @@
               >
               <div class="form-group col">
                 <select
-                  :readonly="orderId"
+                  :disabled="orderId"
                   v-model="formElements.HospitalName.value"
                   :class="`form-select ${getInputClass('HospitalName')}`"
                   aria-label="Default select example"
@@ -139,7 +139,7 @@
                 <h5 class="dokjun" style="display: inline">*</h5></label
               >
               <input
-                :readonly="orderId"
+                :disabled="orderId"
                 class="form-control"
                 type="Date"
                 v-model="formElements.HospitalDate.value"
@@ -156,9 +156,9 @@
                 >Hospital Phone
               </label>
               <br />
-              <label>{{ formElements.HospitalID.value }}</label>
+              <label>{{ formElements.HospitalPhone.value }}</label>
               <!-- <input
-                :readonly="orderId"
+                :disabled="orderId"
                 type="text"
                 :class="getInputClass('HospitalID')"
                 id="HospitalID"
@@ -180,7 +180,7 @@
                 <h5 class="dokjun" style="display: inline">*</h5></label
               >
               <input
-                :readonly="orderId"
+                :disabled="orderId"
                 type="text"
                 :class="getInputClass('Department')"
                 id="Department"
@@ -201,7 +201,7 @@
               <br />
               <label>{{ formElements.Address.value }}</label>
               <!-- <input
-                :readonly="orderId"
+                :disabled="orderId"
                 type="text"
                 :class="getInputClass('Address')"
                 id="Address"
@@ -225,7 +225,7 @@
                   <h5 class="dokjun" style="display: inline">*</h5></label
                 >
                 <input
-                  :readonly="orderId"
+                  :disabled="orderId"
                   class="form-control"
                   type="Date"
                   v-model="formElements.DateOpen.value"
@@ -250,7 +250,7 @@
                 required
               /> -->
                 <select
-                  :readonly="orderId"
+                  :disabled="orderId"
                   v-model="formElements.WarrantyY.value"
                   :class="`form-select ${getInputClass('WarrantyY')}`"
                   aria-label="Default select example"
@@ -272,7 +272,7 @@
                   <h5 class="dokjun" style="display: inline">*</h5></label
                 >
                 <input
-                  :readonly="orderId"
+                  :disabled="orderId"
                   type="text"
                   :class="getInputClass('OutNo')"
                   id="OutNo"
@@ -301,7 +301,7 @@
                 required
               /> -->
                 <select
-                  :readonly="orderId"
+                  :disabled="orderId"
                   v-model="formElements.MaintenanceM.value"
                   :class="`form-select ${getInputClass('MaintenanceM')}`"
                   aria-label="Default select example"
@@ -332,7 +332,7 @@
                 required
               /> -->
                 <select
-                  :readonly="orderId"
+                  :disabled="orderId"
                   v-model="formElements.InOrder.value"
                   :class="`form-select ${getInputClass('InOrder')}`"
                   aria-label="Default select example"
@@ -360,7 +360,7 @@
                 required
               /> -->
                 <select
-                  :readonly="orderId"
+                  :disabled="orderId"
                   v-model="formElements.Installation.value"
                   :class="`form-select ${getInputClass('Installation')}`"
                   aria-label="Default select example"
@@ -381,7 +381,7 @@
                   <h5 class="dokjun" style="display: inline">*</h5></label
                 >
                 <input
-                  :readonly="orderId"
+                  :disabled="orderId"
                   class="form-control"
                   type="date"
                   v-model="formElements.DateDeliver.value"
@@ -397,7 +397,7 @@
                   <h5 class="dokjun" style="display: inline">*</h5></label
                 >
                 <input
-                  :readonly="orderId"
+                  :disabled="orderId"
                   class="form-control"
                   type="Date"
                   v-model="formElements.DateExpire.value"
@@ -430,7 +430,7 @@
                   <h5 class="dokjun" style="display: inline">*</h5></label
                 >
                 <input
-                  :readonly="orderId"
+                  :disabled="orderId"
                   type="text"
                   :class="getInputClass('Refer')"
                   id="Refer"
@@ -451,7 +451,7 @@
                   >ข้อตกลงเพิ่มเติม</label
                 >
                 <input
-                  :readonly="orderId"
+                  :disabled="orderId"
                   type="text"
                   :class="getInputClass('Agreement')"
                   id="Agreement"
@@ -478,12 +478,13 @@
                   <td class="fw-bold">Total</td>
                   <td class="fw-bold">Description</td>
                   <td class="fw-bold">Remark</td>
+                  <td class="fw-bold"></td>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(it, index) in productHistory" :key="index">
                   <td>{{ index + 1 }}</td>
-                  <td>{{ it["P/N"] }}</td>
+                  <td>{{ it.PN }}</td>
                   <td>{{ it.c }}</td>
                   <td>{{ it.qty }}</td>
                   <td>{{ it.price.toLocaleString("en-US") }}</td>
@@ -500,21 +501,19 @@
                 >
                   <td>{{ productHistory.length + index + 1 }}</td>
                   <td>
-                    <div class="col-12">
-                      <select
-                        v-model="it.selectedProduct"
-                        class="form-select"
-                        aria-label="Default select example"
+                    <select
+                      v-model="it.selectedProduct"
+                      class="form-select"
+                      aria-label="Default select example"
+                    >
+                      <option
+                        v-for="(itA, indexA) in listProduct"
+                        :key="indexA"
+                        :value="itA"
                       >
-                        <option
-                          v-for="(itA, indexA) in listProduct"
-                          :key="indexA"
-                          :value="itA"
-                        >
-                          {{ itA["Insert_Product_P/N"] }}
-                        </option>
-                      </select>
-                    </div>
+                        {{ itA.PN }}
+                      </option>
+                    </select>
                   </td>
                   <td>
                     <input
@@ -537,9 +536,7 @@
                   <td>
                     <label for="">{{
                       it.selectedProduct &&
-                      it.selectedProduct.Insert_Product_Price.toLocaleString(
-                        "en-US"
-                      )
+                      it.selectedProduct.Price.toLocaleString("en-US")
                     }}</label>
                   </td>
                   <td>
@@ -566,37 +563,42 @@
                     />
                   </td>
                   <td>
-                    <v-btn @click="removeFieldProduct(index)" class="mt-2" icon color="red">
+                    <v-btn
+                      @click="removeFieldProduct(index)"
+                      class="mt-2"
+                      icon
+                      color="red"
+                    >
                       <v-icon>mdi-window-close</v-icon>
                     </v-btn>
                   </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="5" class="fw-bold">รวมทั้งสิ้น</td>
+                  <td class="fw-bold">{{ sumTotal() }}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tfoot>
             </table>
           </div>
 
           <div class="text-center" v-show="flag === 'addOrder'">
-            <button
+            <v-btn
+              dark
               type="button"
               @click="addFieldProduct()"
               class="btn btn-primary"
               style="border: 0px gray solid"
             >
               Add
-            </button>
-
-            &nbsp;
-            <!-- <button
-              type="reset"
-              class="btn btn-outline"
-              value="reset"
-              @click="removeFieldProduct()"
-            >
-              Delete
-            </button> -->
+            </v-btn>
           </div>
 
-          <div class="row justify-content-end">
+          <!-- <div class="row justify-content-end">
             <div class="col col-2 d-grid gap-2">
               <button
                 v-show="flag === 'addOrder'"
@@ -607,7 +609,7 @@
                 Submit
               </button>
             </div>
-            <div :class="'col col-2 '+ flag === 'viewOrder' ? 'd-grid gap-2' : ''" v-show="flag === 'viewOrder'">
+            <div class="col col-2 d-grid gap-2" v-show="flag === 'viewOrder'">
               <button
                 v-show="flag === 'viewOrder'"
                 @click="printDiv"
@@ -617,7 +619,35 @@
                 Print
               </button>
             </div>
-          </div>
+          </div> -->
+          <v-row class="d-flex justify-end mb-6">
+            <v-col cols="2" v-show="flag === 'addOrder'">
+              <v-btn
+                dark
+                block
+                type="submit"
+                class="btn btn-primary"
+                style="border: 0px gray solid"
+              >
+                Submit
+              </v-btn>
+
+              <!-- <v-btn
+                dark
+                block
+               @click="reduceStock()"
+                class="btn btn-primary"
+                style="border: 0px gray solid"
+              >
+                Submittest
+              </v-btn> -->
+            </v-col>
+            <v-col cols="1" v-show="flag === 'viewOrder'">
+              <v-btn block @click="printDiv" type="button" class="btn white">
+                Print
+              </v-btn>
+            </v-col>
+          </v-row>
         </form>
       </div>
     </div>
@@ -628,8 +658,10 @@
 // import firebase from "../database/firebase";
 import OrderService from '../services/OrderService'
 import CustomerService from '../services/CustomerService'
-import RequestInventoryService from '../services/RequestInventoryService'
+import ProductService from '../services/ProductService'
 import SignupService from '../services/SignupService'
+import pdfMake from 'pdfmake'
+import pdfFonts from '@/assets/font/custom-fonts'
 export default {
   name: 'OrderForm',
   props: {
@@ -712,7 +744,15 @@ export default {
           touched: false,
           error: { status: true, message: '' }
         },
-
+        HospitalPhone: {
+          type: 'text',
+          value: null,
+          validator: {
+            // minLengh: 15,
+          },
+          touched: false,
+          error: { status: true, message: '' }
+        },
         HospitalID: {
           type: 'text',
           value: null,
@@ -868,7 +908,9 @@ export default {
         remark: null,
         selectedProduct: null
       },
-      listEmployee: []
+      listEmployee: [],
+      tempHospital: null,
+      tempSale: null
     }
   },
   watch: {
@@ -876,8 +918,8 @@ export default {
       handler (item) {
         item.forEach((it) => {
           if (it.selectedProduct) {
-            it.total = +it.qty * it.selectedProduct.Insert_Product_Price
-            it.price = it.selectedProduct.Insert_Product_Price
+            it.total = +it.qty * it.selectedProduct.Price
+            it.price = it.selectedProduct.Price
           }
         })
       },
@@ -887,8 +929,10 @@ export default {
       if (v) {
         const found = this.customerList.find((it) => it.Name === v)
         if (found) {
-          console.log('🚀 ~ file: OrderForm.vue ~ line 731 ~ found', found)
+          console.log('🚀 ~ file: OrderForm.vue ~ line 930 ~ found', found)
+          this.tempHospital = found
           this.formElements.HospitalID.value = found.key
+          this.formElements.HospitalPhone.value = found.WorkPhone
           this.formElements.Address.value = found.Address
           this.formElements.HospitalEmail.value = found.Email
         }
@@ -900,6 +944,13 @@ export default {
         if (this.formElements.InOrder.value === 'No') {
           this.formElements.DateDeliver.value = this.addDays(v, 90)
         }
+      }
+    },
+    'formElements.Sale.value' (v) {
+      const found = this.listEmployee.find((it) => it.Emp_ID === v)
+      if (found) {
+        console.log('🚀 ~ file: OrderForm.vue ~ line 930 ~ found', found)
+        this.tempSale = found
       }
     },
     price (v) {
@@ -978,18 +1029,17 @@ export default {
         })
       })
     })
-    RequestInventoryService.get().then((snapshotChange) => {
+
+    ProductService.get().then((snapshotChange) => {
       snapshotChange.forEach((doc) => {
-        if (doc.data().products) {
-          this.listProduct.push(
-            ...doc.data().products.map((it) => ({
-              ...it,
-              RequestInventoryNO: doc.data().RequestInventoryNO
-            }))
-          )
-        }
+        this.listProduct.push({
+          key: doc.id,
+          ...doc.data()
+        })
       })
     })
+
+    console.log('this.listProduct :>> ', this.listProduct)
   },
   methods: {
     onFormChange (event) {
@@ -1019,7 +1069,7 @@ export default {
       let valid = true
       let message = ''
 
-      if (value.length < rule.minLength && valid) {
+      if (value.length <= rule.minLength && valid) {
         valid = false
         message = `น้อยกว่า ${rule.minLength} ตัวอักษร`
       }
@@ -1053,10 +1103,11 @@ export default {
         ...this.productHistory,
 
         ...this.formProducts.map((it) => ({
-          'P/N': it.selectedProduct['Insert_Product_P/N'],
+          key: it.selectedProduct.key,
+          PN: it.selectedProduct.PN,
           c: it.c,
           qty: it.qty,
-          price: it.selectedProduct.Insert_Product_Price,
+          price: it.selectedProduct.Price,
           total: it.total,
           desription: it.desription,
           remark: it.remark
@@ -1066,7 +1117,6 @@ export default {
       console.log('formData :>> ', formData)
 
       if (this.flag === 'addOrder') {
-        console.log('1 :>> ', 1)
         OrderService.add(formData)
           .then(() => {
             this.reduceStock()
@@ -1095,35 +1145,17 @@ export default {
           })
       }
     },
-    reduceStock () {
-      this.formProducts.forEach((it) => {
-        RequestInventoryService.where(
-          'RequestInventoryNO',
-          '==',
-          it.selectedProduct.RequestInventoryNO
-        )
-          .get()
-          .then((snapshotChange) => {
-            let tempData = null
-            snapshotChange.forEach((doc) => {
-              tempData = doc.data()
-
-              const found = tempData.products.findIndex(
-                (itF) =>
-                  itF['Insert_Product_P/N'] ===
-                  it.selectedProduct['Insert_Product_P/N']
-              )
-              console.log('found :>> ', found)
-              if (found > -1) {
-                tempData.products[found].Total_RI =
-                  tempData.products[found].Total_RI - it.qty
-                RequestInventoryService.doc(doc.id)
-                  .update(tempData)
-                  .then(() => {})
-              }
-            })
-          })
-      })
+    async reduceStock () {
+      for (const key in this.formProducts) {
+        const doc = await ProductService.doc(
+          this.formProducts[key].selectedProduct.key
+        ).get()
+        const tempData = doc.data()
+        tempData.Total_RI = tempData.Total_RI - +this.formProducts[key].qty
+        await ProductService.doc(
+          this.formProducts[key].selectedProduct.key
+        ).update(tempData)
+      }
     },
     onReset () {
       this.formElements = ''
@@ -1145,14 +1177,307 @@ export default {
       this.formProducts.splice(index, 1)
     },
     printDiv () {
-      var printContents = document.getElementById('printableArea').innerHTML
-      var originalContents = document.body.innerHTML
+      pdfMake.vfs = pdfFonts.pdfMake.vfs // 2. set vfs pdf font
+      pdfMake.fonts = {
+        // download default Roboto font from cdnjs.com
 
-      document.body.innerHTML = printContents
+        Sarabun: {
+          // 3. set Kanit font
+          normal: 'Sarabun-Regular.ttf',
+          bold: 'Sarabun-Medium.ttf',
+          italics: 'Sarabun-Italic.ttf',
+          bolditalics: 'Sarabun-MediumItalic.ttf'
+        }
+      }
 
-      window.print()
+      const docDefinition = {
+        defaultStyle: {
+          // 4. default style 'KANIT' font to test
+          font: 'Sarabun'
+        },
+        content: [
+          { text: 'ENP', style: 'header', alignment: 'center' },
+          {
+            table: {
+              widths: ['*', '*'],
+              body: [
+                [
+                  {
+                    text: [
+                      { text: 'Order NO : \t', style: 'title' },
+                      {
+                        text: this.formElements.OrderFormNo.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  },
+                  {
+                    text: [
+                      { text: 'Sale : \t', style: 'title' },
+                      { text: this.tempSale.Email, style: 'paragraph' }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    text: [
+                      { text: 'Hospital Name : \t', style: 'title' },
+                      { text: this.tempHospital.Name, style: 'paragraph' }
+                    ]
+                  },
+                  {
+                    text: [
+                      { text: 'Date : \t', style: 'title' },
+                      {
+                        text: this.formElements.HospitalDate.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    text: [
+                      { text: 'Hospital Phone : \t', style: 'title' },
+                      {
+                        text: this.formElements.HospitalPhone.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  },
+                  {
+                    text: [
+                      { text: 'Department  : \t', style: 'title' },
+                      {
+                        text: this.formElements.Department.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    text: [
+                      { text: 'Address : \t', style: 'title' },
+                      {
+                        text: this.formElements.Address.value,
+                        style: 'paragraph'
+                      }
+                    ],
+                    colSpan: 2
+                  },
+                  {}
+                ],
+                [
+                  {
+                    text: [
+                      { text: 'วันที่เปิดซอง/สรุป : \t', style: 'title' },
+                      {
+                        text: this.formElements.DateOpen.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  },
+                  {
+                    text: [
+                      { text: 'Warranty(Y) : \t', style: 'title' },
+                      {
+                        text: this.formElements.WarrantyY.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    text: [
+                      {
+                        text: 'เลขที่หมดสัญญา/ใบสั่งซื้อ : \t',
+                        style: 'title'
+                      },
+                      {
+                        text: this.formElements.OutNo.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  },
+                  {
+                    text: [
+                      { text: 'Maintenance(M) : \t', style: 'title' },
+                      {
+                        text: this.formElements.MaintenanceM.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    text: [
+                      { text: 'ใบสั่งซื้อในประเทศ : \t', style: 'title' },
+                      {
+                        text: this.formElements.InOrder.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  },
+                  {
+                    text: [
+                      { text: 'Installation : \t', style: 'title' },
+                      {
+                        text: this.formElements.Installation.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    text: [
+                      { text: 'กำหนดส่งมอบ : \t', style: 'title' },
+                      {
+                        text: this.formElements.DateDeliver.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  },
+                  {
+                    text: [
+                      { text: 'วันที่หมดสัญญา : \t', style: 'title' },
+                      {
+                        text: this.formElements.DateExpire.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  }
+                ],
+                [
+                  {
+                    text: [
+                      { text: 'อ้างอิงใบเสนอราคา : \t', style: 'title' },
+                      {
+                        text: this.formElements.Refer.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  },
+                  {
+                    text: [
+                      { text: 'ข้อตกลงเพิ่มเติม : \t', style: 'title' },
+                      {
+                        text: this.formElements.Agreement.value,
+                        style: 'paragraph'
+                      }
+                    ]
+                  }
+                ]
+              ]
+            },
+            layout: 'noBorders',
+            style: 'paragraph'
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths: [15, '*', '*', 30, 50, 50, '*', '*'],
+              body: [
+                [
+                  { text: 'No', style: 'tableHeader' },
+                  { text: 'P/N', style: 'tableHeader' },
+                  { text: 'C', style: 'tableHeader' },
+                  { text: 'QTY', style: 'tableHeader' },
+                  { text: 'Price', style: 'tableHeader' },
+                  { text: 'Total', style: 'tableHeader' },
+                  { text: 'Description', style: 'tableHeader' },
+                  { text: 'Remark', style: 'tableHeader' }
+                ],
+                ...this.mapPdf(),
+                [
+                  {
+                    text: 'รวมทั้งสิ้น',
+                    alignment: 'center',
+                    colSpan: 5
+                  }, {}, {}, {}, {},
+                  {
+                    text: this.sumTotal()
+                  }, { text: '', colSpan: 2, border: [false, false, true, true] }, {}
 
-      document.body.innerHTML = originalContents
+                ]
+              ]
+
+            }
+          }
+        ],
+        styles: {
+          header: {
+            fontSize: 20,
+            bold: true,
+            alignment: 'justify'
+          },
+          title: {
+            fontSize: 12,
+            bold: true
+          },
+          paragraph: {
+            fontSize: 12,
+            bold: false
+          }
+        }
+      }
+      pdfMake.createPdf(docDefinition).open()
+    },
+    mapPdf () {
+      const result = []
+      this.productHistory.forEach((it, index) => {
+        result.push([
+          {
+            text: index + 1
+          },
+          {
+            text: it.PN
+          },
+          {
+            text: it.c
+          },
+          {
+            text: it.qty
+          },
+          {
+            text: it.price.toLocaleString('en-US')
+          },
+          {
+            text: it.total.toLocaleString('en-US')
+          },
+          {
+            text: it.desription
+          },
+          {
+            text: it.remark
+          }
+        ])
+      })
+      return result
+    },
+    sumTotal () {
+      if (this.flag === 'viewOrder') {
+        if (this.productHistory.length) {
+          const sum = this.productHistory.reduce(
+            (total, num) => total + num.total,
+            0
+          )
+          return sum.toLocaleString('en-US')
+        }
+        return 0
+      } else {
+        if (this.formProducts.length) {
+          const sum = this.formProducts.reduce(
+            (total, num) => total + num.total,
+            0
+          )
+          return sum.toLocaleString('en-US')
+        }
+        return 0
+      }
     }
   }
 }
@@ -1179,4 +1504,5 @@ export default {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
 }
-</style>>
+</style>
+>
