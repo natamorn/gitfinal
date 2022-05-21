@@ -39,11 +39,13 @@
       :items-per-page="5"
       class="elevation-1"
     >
+
     <template v-slot:[`item.Amount`]="{ item }">
        {{ item.Amount.toLocaleString(
                     "en-US"
                   )}}
       </template>
+
       <template v-slot:[`item.actions`]="{ item }">
          <router-link :to="`/viewOrder?key=${item.key}`">View More</router-link>
       </template>
@@ -64,17 +66,17 @@ export default {
           align: 'start',
           sortable: false,
           value: 'no',
-          class: 'tableHeader text-h6'
+          class: 'tableHeader  text-h6'
         },
         {
           text: 'Name',
-          align: 'center',
+          align: 'left',
           value: 'HospitalName',
           class: 'tableHeader text-h6'
         },
         {
           text: 'Email',
-          align: 'center',
+          align: 'left',
           value: 'HospitalEmail',
           class: 'tableHeader text-h6'
         },
@@ -86,9 +88,9 @@ export default {
         },
         {
           text: 'Amount',
-          align: 'center',
+          align: 'right',
           value: 'Amount',
-          class: 'tableHeader text-h6'
+          class: 'tableHeader  text-h6'
         },
         { text: '', align: 'center', value: 'actions', class: 'tableHeader text-h6' }
       ],
@@ -123,4 +125,5 @@ export default {
 </script>
 
 <style  scoped>
+
 </style>

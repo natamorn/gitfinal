@@ -57,19 +57,19 @@ export default {
         },
         {
           text: 'P/N',
-          align: 'center',
+          align: 'left',
           value: 'PN',
           class: 'tableHeader text-h6'
         },
         {
           text: 'ProductName',
-          align: 'center',
+          align: 'left',
           value: 'Name',
           class: 'tableHeader text-h6'
         },
         {
           text: 'สินค้าคงเหลือ',
-          align: 'center',
+          align: 'right',
           value: 'Total_RI',
           class: 'tableHeader text-h6'
         },

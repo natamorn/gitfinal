@@ -3,8 +3,8 @@
     class="navbar navbar-expand-lg fixed-top bg-white navbar-light shadow-navbar"
   >
     <div class="container">
-      <a class="navbar-brand" href="/Home">NEP</a>
-      <button
+      <a class="navbar-brand" >NEP</a>
+      <!-- <button
         class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
@@ -14,7 +14,7 @@
         aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
-      </button>
+      </button> -->
 
       <div
         class="collapse navbar-collapse justify-content-center"

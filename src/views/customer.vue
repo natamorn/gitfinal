@@ -21,7 +21,7 @@
             type="button"
             class="btn btn-primary"
             @click="$router.push('/AddCustomer')"
-            style="border: 0px gray solid"
+            style="border: 0px gray "
           >
             Add Customer
           </v-btn>
@@ -46,8 +46,8 @@
                   </div>
                   <div class="col align-items-center justify-content-center">
                     <div class="d-flex flex-column justify-content-center">
-                      <span> {{ it.Name }}</span>
-                      <span class="f-20 font-weight-bold">{{
+                      <span class="f-20 font-weight-bold"> {{ it.Name }}</span>
+                      <span>{{
                         it.Address
                       }}</span>
                     </div>

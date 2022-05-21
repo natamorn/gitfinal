@@ -43,7 +43,7 @@
                 <button
                   type="submit"
                   class="btn btn-primary w-100"
-                  style="border: 0px gray solid"
+                  style="border: 0px gray solid "
                 >
                   Login
                 </button>
