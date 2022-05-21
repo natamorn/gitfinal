@@ -531,7 +531,8 @@
                       id="C"
                       name="C"
                     /> -->
-                    <label class="mt-2" for="">{{ it.c }}</label>
+                    <label class="mt-2" for="">{{   it.selectedProduct &&
+                      it.selectedProduct.C }}</label>
                   </td>
                   <td>
                     <input
