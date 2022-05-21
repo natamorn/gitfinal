@@ -30,30 +30,34 @@
 
       <div class="row mt-4">
         <div class="col">
-          <div v-for="(it, index) in listCustomer" :key="index">
-            <div class="card py-2" @click="selectCustomer(it)">
-              <div class="row g-0">
-                <div class="col-3">
-                  <div class="align-items-center justify-content-center">
-                    <img
-                      :src="it.Picture"
-                      alt="Image"
-                      class="rounded-circle"
-                      height="60"
-                    />
+          <div style="height: 500px; width: 100%;" class="overflow-auto">
+            <div class="pa-2" v-for="(it, index) in listCustomer" :key="index">
+              <div class="card py-2" @click="selectCustomer(it)">
+                <div class="row g-0">
+                  <div class="col-3">
+                    <div class="align-items-start justify-content-center">
+                      <img
+                        :src="it.Picture"
+                        alt="Image"
+                        class="rounded-circle"
+                        height="60"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div class="col align-items-center justify-content-center">
-                  <div class="d-flex flex-column justify-content-center">
-                    <span> {{ it.Name }}</span>
-                    <span class="f-20 font-weight-bold">{{ it.Address }}</span>
+                  <div class="col align-items-center justify-content-center">
+                    <div class="d-flex flex-column justify-content-center">
+                      <span> {{ it.Name }}</span>
+                      <span class="f-20 font-weight-bold">{{
+                        it.Address
+                      }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-8 d-flex align-items-center justify-content-center">
+        <div class="col-8 d-flex align-items-start justify-content-center">
           <div class="col-10" v-show="selectedCustomer">
             <ProfileCustomer :customerData="selectedCustomer" />
             <div class="row justify-content-end">
