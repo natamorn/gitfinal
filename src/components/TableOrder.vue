@@ -39,12 +39,12 @@
       :items-per-page="5"
       class="elevation-1"
     >
-    <template v-slot:item.Amount="{ item }">
+    <template v-slot:[`item.Amount`]="{ item }">
        {{ item.Amount.toLocaleString(
                     "en-US"
                   )}}
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:[`item.actions`]="{ item }">
          <router-link :to="`/viewOrder?key=${item.key}`">View More</router-link>
       </template>
     </v-data-table>

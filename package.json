@@ -47,7 +47,10 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "vue/no-v-for-template-key": "off"
+      "vue/no-v-for-template-key": "off",
+      "vue/valid-v-slot": ["off", {
+        "allowModifiers": true
+      }]
     }
   },
   "browserslist": [

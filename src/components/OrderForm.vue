@@ -467,7 +467,11 @@
           </div>
 
           <div class="row text-center mt-4">
-            <table :class="`table table-hover ${flag === 'addOrder' ?'table-hover': 'table-borderless'}`">
+            <table
+              :class="`table table-hover ${
+                flag === 'addOrder' ? 'table-hover' : 'table-borderless'
+              }`"
+            >
               <thead>
                 <tr class="table-danger">
                   <td class="fw-bold">Items</td>
@@ -499,7 +503,11 @@
                   v-for="(it, index) in formProducts"
                   :key="index"
                 >
-                  <td>{{ productHistory.length + index + 1 }}</td>
+                  <td>
+                    <label class="mt-2" for="">{{
+                      productHistory.length + index + 1
+                    }}</label>
+                  </td>
                   <td>
                     <select
                       v-model="it.selectedProduct"
@@ -516,13 +524,14 @@
                     </select>
                   </td>
                   <td>
-                    <input
+                    <!-- <input
                       v-model="it.c"
                       type="text"
                       class="form-control"
                       id="C"
                       name="C"
-                    />
+                    /> -->
+                    <label class="mt-2" for="">{{ it.c }}</label>
                   </td>
                   <td>
                     <input
@@ -534,13 +543,13 @@
                     />
                   </td>
                   <td>
-                    <label for="">{{
+                    <label class="mt-2" for="">{{
                       it.selectedProduct &&
                       it.selectedProduct.Price.toLocaleString("en-US")
                     }}</label>
                   </td>
                   <td>
-                    <label for="">{{
+                    <label class="mt-2" for="">{{
                       it.total && it.total.toLocaleString("en-US")
                     }}</label>
                   </td>
@@ -1017,7 +1026,10 @@ export default {
         this.listEmployee.push(doc.data())
       })
     })
-    console.log('🚀 ~ file: OrderForm.vue ~ line 1019 ~ snapshotChange.forEach ~ this.listEmployee', this.listEmployee)
+    console.log(
+      '🚀 ~ file: OrderForm.vue ~ line 1019 ~ snapshotChange.forEach ~ this.listEmployee',
+      this.listEmployee
+    )
     CustomerService.get().then((snapshotChange) => {
       this.customerList = []
       snapshotChange.forEach((doc) => {
@@ -1393,14 +1405,18 @@ export default {
                     text: 'รวมทั้งสิ้น',
                     alignment: 'center',
                     colSpan: 5
-                  }, {}, {}, {}, {},
+                  },
+                  {},
+                  {},
+                  {},
+                  {},
                   {
                     text: this.sumTotal()
-                  }, { text: '', colSpan: 2, border: [false, false, true, true] }, {}
-
+                  },
+                  { text: '', colSpan: 2, border: [false, false, true, true] },
+                  {}
                 ]
               ]
-
             }
           }
         ],
