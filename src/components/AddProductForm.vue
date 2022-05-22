@@ -120,7 +120,7 @@
                   <td>Name</td>
                   <td>Price</td>
                   <td>จำนวนเบิก</td>
-                  <td>Total</td>
+                  <!-- <td>Total</td> -->
                   <td>หมายเหตุ</td>
                 </tr>
               </thead>
@@ -174,11 +174,11 @@
                       class="form-control"
                     />
                   </td>
-                  <td>
+                  <!-- <td>
                     <label class="mt-3" for=""
                       >{{ formProducts.Total_RI.toLocaleString("en-US") }}
                     </label>
-                  </td>
+                  </td> -->
                   <td>
                     <input
                       v-model="formProducts.remark"
