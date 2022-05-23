@@ -30,7 +30,8 @@
                 v-for="(it, index) in listOrder"
                 :key="index"
               >
-                <a :href="`/viewOrder?key=${it.key}`">
+               <router-link :to="`/viewOrder?key=${it.key}`">
+
                   <div class="d-flex justify-content-between">
                     <div class="p-2">
                       <h5>หมายเลข {{ it.OrderFormNo }}</h5>
@@ -54,7 +55,7 @@
                       </div>
                     </div>
                   </div>
-                </a>
+                </router-link>
               </div>
             </div>
           </div>

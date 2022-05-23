@@ -138,10 +138,16 @@ export default {
       this.valid = Object.values(this.formWarning).every((it) => it === true)
     },
 
-    onFormSubmit () {
-      console.log('1 :>> ', 1)
+    async onFormSubmit () {
       this.validate()
       if (!this.valid) return 0
+
+      const chkProduct = await ProductService.where('Name', '==', this.formData.Name).where('PN', '==', this.formData.PN).get()
+      if (!chkProduct.empty) {
+        this.$swal.fire('Oops...', 'Name and PN is duplicate!', 'warning')
+        return 0
+      }
+
       ProductService.add({
         ...this.formData,
         history: []
