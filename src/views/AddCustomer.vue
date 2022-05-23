@@ -216,7 +216,7 @@ export default {
       this.validate()
       if (!this.valid) return
 
-      const chkCustomer = await CustomerService.where('Name', '==', this.formData.Name).where('WorkPhone', '==', this.formData.WorkPhone).where('Email', '==', this.formData.Address).where('Email', '==', this.formData.Address).get()
+      const chkCustomer = await CustomerService.where('Name', '==', this.formData.Name).where('WorkPhone', '==', this.formData.WorkPhone).where('Email', '==', this.formData.Email).where('Address', '==', this.formData.Address).get()
       if (!chkCustomer.empty) {
         this.$swal.fire('Oops...', 'Customer is duplicate!', 'warning')
         return 0
