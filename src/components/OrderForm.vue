@@ -531,8 +531,9 @@
                       id="C"
                       name="C"
                     /> -->
-                    <label class="mt-2" for="">{{   it.selectedProduct &&
-                      it.selectedProduct.C }}</label>
+                    <label class="mt-2" for="">{{
+                      it.selectedProduct && it.selectedProduct.C
+                    }}</label>
                   </td>
                   <td>
                     <input
@@ -1102,7 +1103,7 @@ export default {
     getErrorMessage (name) {
       return this.formElements[name].error.message
     },
-    onFormSubmit () {
+    async  onFormSubmit () {
       const formData = {}
       for (const name in this.formElements) {
         formData[name] = this.formElements[name].value
@@ -1124,6 +1125,12 @@ export default {
       ]
 
       console.log('formData :>> ', formData)
+
+      const chkOrder = await OrderService.where('OrderFormNo', '==', formData.OrderFormNo).get()
+      if (!chkOrder.empty) {
+        this.$swal.fire('Oops...', 'OrderFormNo have a duplicate!', 'warning')
+        return 0
+      }
 
       if (this.flag === 'addOrder') {
         OrderService.add(formData)
@@ -1200,6 +1207,9 @@ export default {
       }
 
       const docDefinition = {
+        pageSize: 'A4',
+        pageMargins: [20, 20, 20, 20],
+        pageOrientation: 'portrait',
         defaultStyle: {
           // 4. default style 'KANIT' font to test
           font: 'Sarabun'
@@ -1208,7 +1218,7 @@ export default {
           { text: 'ENP', style: 'header', alignment: 'center' },
           {
             table: {
-              widths: ['*', '*'],
+              widths: ['50%', '50%'],
               body: [
                 [
                   {
@@ -1388,7 +1398,7 @@ export default {
           {
             table: {
               headerRows: 1,
-              widths: [15, '*', '*', 30, 50, 50, '*', '*'],
+              widths: ['4%', '25%', 'auto', 'auto', 'auto', 'auto', '20%', '20%'],
               body: [
                 [
                   { text: 'No', style: 'tableHeader' },
@@ -1412,7 +1422,8 @@ export default {
                   {},
                   {},
                   {
-                    text: this.sumTotal()
+                    text: this.sumTotal(),
+                    alignment: 'right'
                   },
                   { text: '', colSpan: 2, border: [false, false, true, true] },
                   {}
@@ -1444,7 +1455,8 @@ export default {
       this.productHistory.forEach((it, index) => {
         result.push([
           {
-            text: index + 1
+            text: index + 1,
+            alignment: 'center'
           },
           {
             text: it.PN
@@ -1453,13 +1465,16 @@ export default {
             text: it.c
           },
           {
-            text: it.qty
+            text: it.qty,
+            alignment: 'right'
           },
           {
-            text: it.price.toLocaleString('en-US')
+            text: it.price.toLocaleString('en-US'),
+            alignment: 'right'
           },
           {
-            text: it.total.toLocaleString('en-US')
+            text: it.total.toLocaleString('en-US'),
+            alignment: 'right'
           },
           {
             text: it.desription
