@@ -46,7 +46,7 @@
             <div class="row g-5">
               <div class="mb-3 col">
                 <label for="C" class="form-label"
-                  >C
+                  >PG
                   <h5 class="dokjun" style="display: inline">*</h5></label
                 >
                 <input

@@ -476,7 +476,7 @@
                 <tr class="table-danger">
                   <td class="fw-bold">Items</td>
                   <td class="fw-bold">P/N</td>
-                  <td class="fw-bold">C</td>
+                  <td class="fw-bold">PG</td>
                   <td class="fw-bold">QTY</td>
                   <td class="fw-bold">Price</td>
                   <td class="fw-bold">Total</td>
