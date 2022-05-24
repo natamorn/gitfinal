@@ -98,10 +98,6 @@ export default {
           key: doc.id,
           ...doc.data()
         })
-        console.log(
-          '🚀 ~ file: TableProduct.vue ~ line 59 ~ snapshotChange.forEach ~ this.listProduct',
-          this.listProduct
-        )
         // this.listProduct.push({
         //   key: doc.id,
         //   ...doc.data()
