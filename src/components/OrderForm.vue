@@ -1213,7 +1213,7 @@ export default {
           font: 'Sarabun'
         },
         content: [
-          { text: 'ENP', style: 'header', alignment: 'center' },
+          { text: 'NEP', style: 'header', alignment: 'center' },
           {
             table: {
               widths: ['50%', '50%'],
