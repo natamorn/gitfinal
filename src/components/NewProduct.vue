@@ -150,22 +150,22 @@ export default {
       }
       console.log('1 :>> ', 1)
 
-      // ProductService.add({
-      //   ...this.formData,
-      //   history: []
-      // })
-      //   .then(() => {
-      //     this.$swal.fire(
-      //       'success!',
-      //       'Created new item successfully!',
-      //       'success'
-      //     )
+      ProductService.add({
+        ...this.formData,
+        history: []
+      })
+        .then(() => {
+          this.$swal.fire(
+            'success!',
+            'Created new item successfully!',
+            'success'
+          )
 
-      //     this.$router.push('/Product')
-      //   })
-      //   .catch((e) => {
-      //     this.$swal.fire('Oops...', e, 'error')
-      //   })
+          this.$router.push('/Product')
+        })
+        .catch((e) => {
+          this.$swal.fire('Oops...', e, 'error')
+        })
     }
   }
 }

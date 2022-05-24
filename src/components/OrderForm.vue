@@ -145,7 +145,6 @@
                 v-model="formElements.HospitalDate.value"
                 id="HospitalDate"
                 name="HospitalDate"
-                required
               />
             </div>
           </div>
@@ -231,7 +230,6 @@
                   v-model="formElements.DateOpen.value"
                   id="DateOpen"
                   name="DateOpen"
-                  required
                 />
               </div>
 
@@ -1126,7 +1124,7 @@ export default {
 
       console.log('formData :>> ', formData)
 
-      const chkOrder = await OrderService.where('OrderFormNo', '==', formData.OrderFormNo).get()
+      const chkOrder = await OrderService.where('OutNo', '==', formData.OutNo).get()
       if (!chkOrder.empty) {
         this.$swal.fire('Oops...', 'OrderFormNo have a duplicate!', 'warning')
         return 0
