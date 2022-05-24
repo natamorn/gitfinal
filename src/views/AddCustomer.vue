@@ -216,8 +216,11 @@ export default {
       this.validate()
       if (!this.valid) return
 
-      const chkCustomer = await CustomerService.where('Name', '==', this.formData.Name).where('WorkPhone', '==', this.formData.WorkPhone).where('Email', '==', this.formData.Email).where('Address', '==', this.formData.Address).get()
-      if (!chkCustomer.empty) {
+      const chkCustomerName = await CustomerService.where('Name', '==', this.formData.Name).get()
+      const chkCustomerWorkPhone = await CustomerService.where('WorkPhone', '==', this.formData.WorkPhone).get()
+      const chkCustomerEmail = await CustomerService.where('Email', '==', this.formData.Email).get()
+      const chkCustomerAddress = await CustomerService.where('Address', '==', this.formData.Address).get()
+      if (!chkCustomerName.empty || !chkCustomerWorkPhone.empty || !chkCustomerEmail.empty || !chkCustomerAddress.empty) {
         this.$swal.fire('Oops...', 'Customer is duplicate!', 'warning')
         return 0
       }

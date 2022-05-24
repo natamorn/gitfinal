@@ -142,28 +142,30 @@ export default {
       this.validate()
       if (!this.valid) return 0
 
-      const chkProduct = await ProductService.where('Name', '==', this.formData.Name).where('PN', '==', this.formData.PN).get()
-      if (!chkProduct.empty) {
-        this.$swal.fire('Oops...', 'Name and PN is duplicate!', 'warning')
+      const chkProductName = await ProductService.where('Name', '==', this.formData.Name).get()
+      const chkProductPN = await ProductService.where('PN', '==', this.formData.PN).get()
+      if (!chkProductName.empty || !chkProductPN.empty) {
+        this.$swal.fire('Oops...', 'Name or PN is duplicate!', 'warning')
         return 0
       }
+      console.log('1 :>> ', 1)
 
-      ProductService.add({
-        ...this.formData,
-        history: []
-      })
-        .then(() => {
-          this.$swal.fire(
-            'success!',
-            'Created new item successfully!',
-            'success'
-          )
+      // ProductService.add({
+      //   ...this.formData,
+      //   history: []
+      // })
+      //   .then(() => {
+      //     this.$swal.fire(
+      //       'success!',
+      //       'Created new item successfully!',
+      //       'success'
+      //     )
 
-          this.$router.push('/Product')
-        })
-        .catch((e) => {
-          this.$swal.fire('Oops...', e, 'error')
-        })
+      //     this.$router.push('/Product')
+      //   })
+      //   .catch((e) => {
+      //     this.$swal.fire('Oops...', e, 'error')
+      //   })
     }
   }
 }
