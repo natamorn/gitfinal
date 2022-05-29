@@ -38,7 +38,7 @@
                     </div>
                     <div class="p-2">
                       <div class="d-flex justify-content-between">
-                        <div>วันที่สั่งซืื้อ</div>
+                        <div>วันที่สั่งซื้อ</div>
                         &nbsp;&nbsp;&nbsp;
                         <div>{{ dataFormat(it.HospitalDate) }}</div>
                       </div>

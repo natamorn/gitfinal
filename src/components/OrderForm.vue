@@ -1206,7 +1206,7 @@ export default {
 
       const docDefinition = {
         pageSize: 'A4',
-        pageMargins: [20, 20, 20, 20],
+        pageMargins: [20, 35, 20, 20],
         pageOrientation: 'portrait',
         defaultStyle: {
           // 4. default style 'KANIT' font to test
@@ -1396,7 +1396,7 @@ export default {
           {
             table: {
               headerRows: 1,
-              widths: ['4%', '25%', 'auto', 'auto', 'auto', 'auto', '20%', '20%'],
+              widths: ['4%', '10%', 'auto', 'auto', 'auto', 'auto', '28%', '28%'],
               body: [
                 [
                   { text: 'No', style: 'tableHeader' },

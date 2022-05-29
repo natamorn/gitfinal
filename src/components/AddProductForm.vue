@@ -122,30 +122,11 @@
                   <td>จำนวนเบิก</td>
                   <!-- <td>Total</td> -->
                   <td>หมายเหตุ</td>
+                  <td></td>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(it, index) in productHistory" :key="index">
-                  <td>{{ index + 1 }}</td>
-                  <td>{{ productDetail && productDetail.PN }}</td>
-                  <td>{{ productDetail && productDetail.Name }}</td>
-                  <td>
-                    {{
-                      productDetail &&
-                      Number(productDetail.Price).toLocaleString("en-US")
-                    }}
-                  </td>
-                  <td>{{ it.payCount.toLocaleString("en-US") }}</td>
-                  <!-- <td>
-                    {{
-                      index === productHistory.length - 1
-                        ? productDetail.Total_RI.toLocaleString("en-US")
-                        : ""
-                    }}
-                  </td> -->
-                  <td>{{ it.remark }}</td>
-                </tr>
-                <tr>
+<tr>
                   <td>
                     <label class="mt-3" for="">{{
                       productHistory.length + 1
@@ -188,7 +169,41 @@
                       name="NoteTable"
                     />
                   </td>
+
+           <td>
+              <v-btn
+                dark
+                type="submit"
+                class="btn btn-primary"
+                style="border: 0px gray solid"
+              >
+                Submit
+              </v-btn>
+
+          </td>
                 </tr>
+                <tr v-for="(it, index) in productHistory" :key="index">
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ productDetail && productDetail.PN }}</td>
+                  <td>{{ productDetail && productDetail.Name }}</td>
+                  <td>
+                    {{
+                      productDetail &&
+                      Number(productDetail.Price).toLocaleString("en-US")
+                    }}
+                  </td>
+                  <td>{{ it.payCount.toLocaleString("en-US") }}</td>
+                  <!-- <td>
+                    {{
+                      index === productHistory.length - 1
+                        ? productDetail.Total_RI.toLocaleString("en-US")
+                        : ""
+                    }}
+                  </td> -->
+                  <td>{{ it.remark }}</td>
+                  <td></td>
+                </tr>
+
               </tbody>
             </table>
           </div>
@@ -214,7 +229,7 @@
             </button>
           </div> -->
 
-          <div class="row justify-content-end">
+          <!-- <div class="row justify-content-end">
             <div class="col col-2 d-grid gap-2">
               <v-btn
                 dark
@@ -225,7 +240,7 @@
                 Submit
               </v-btn>
             </div>
-          </div>
+          </div> -->
         </form>
       </div>
     </div>
