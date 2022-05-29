@@ -1401,7 +1401,7 @@ export default {
                 [
                   { text: 'No', style: 'tableHeader' },
                   { text: 'P/N', style: 'tableHeader' },
-                  { text: 'C', style: 'tableHeader' },
+                  { text: 'PG', style: 'tableHeader' },
                   { text: 'QTY', style: 'tableHeader' },
                   { text: 'Price', style: 'tableHeader' },
                   { text: 'Total', style: 'tableHeader' },
