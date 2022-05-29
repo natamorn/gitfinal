@@ -47,9 +47,9 @@
                 ]"
                 placeholder="Employee ID"
               />
-              <small id="employeeID" class="form-text text-muted"
+              <!-- <small id="employeeID" class="form-text text-muted"
                 >เป็นตัวเลขเท่านั้น</small
-              >
+              > -->
             </div>
 
             <div class="row mt-4">
