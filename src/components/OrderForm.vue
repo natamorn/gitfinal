@@ -1400,13 +1400,13 @@ export default {
               body: [
                 [
                   { text: 'No', style: 'tableHeader' },
-                  { text: 'P/N', style: 'tableHeader' },
-                  { text: 'PG', style: 'tableHeader' },
+                  { text: 'P/N', style: 'tableHeader', align: 'left' },
+                  { text: 'PG', style: 'tableHeader', align: 'left' },
                   { text: 'QTY', style: 'tableHeader' },
                   { text: 'Price', style: 'tableHeader' },
                   { text: 'Total', style: 'tableHeader' },
-                  { text: 'Description', style: 'tableHeader' },
-                  { text: 'Remark', style: 'tableHeader' }
+                  { text: 'Description', style: 'tableHeader', align: 'left' },
+                  { text: 'Remark', style: 'tableHeader', align: 'left' }
                 ],
                 ...this.mapPdf(),
                 [
