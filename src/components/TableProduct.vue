@@ -68,6 +68,12 @@ export default {
           class: 'tableHeader text-h6'
         },
         {
+          text: 'Disription',
+          align: 'left',
+          value: 'Name',
+          class: 'tableHeader text-h6'
+        },
+        {
           text: 'สินค้าคงเหลือ',
           align: 'right',
           value: 'Total_RI',

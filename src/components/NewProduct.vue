@@ -78,6 +78,22 @@
                 >
                 <!-- <div class="invalid-feedback">* Picture</div> -->
               </div>
+
+              <div class="form-group">
+                <label for="Price" class="form-label"
+                  >Disciption
+                  <h5 class="dokjun" style="display: inline">*</h5></label
+                >
+
+                <input
+                  type="text"
+                  :class="[
+                    'form-control',
+                    formWarning.Price ? '' : 'is-invalid'
+                  ]"
+                />
+                <!-- <div class="invalid-feedback">* Picture</div> -->
+              </div>
             </div>
 
             <div class="row justify-content-end mt-5">
@@ -177,6 +193,9 @@ export default {
   /* border: 1px ; */
   /* border-block-color: rgb(192, 188, 188); */
   border-color: rgb(228, 227, 227);
+  /* padding: 0 5px 0 0; */
+  margin-top: 0px;
+  padding-top: 0;
 }
 .dokjun {
   color: red;

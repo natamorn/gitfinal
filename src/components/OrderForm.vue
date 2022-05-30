@@ -474,24 +474,26 @@
                 <tr class="table-danger">
                   <td class="fw-bold">Items</td>
                   <td class="fw-bold">P/N</td>
+                  <td class="fw-bold">Name</td>
                   <td class="fw-bold">PG</td>
                   <td class="fw-bold">QTY</td>
                   <td class="fw-bold">Price</td>
                   <td class="fw-bold">Total</td>
-                  <td class="fw-bold">Description</td>
+                  <!-- <td class="fw-bold">Description</td> -->
                   <td class="fw-bold">Remark</td>
                   <td class="fw-bold"></td>
+                  <td></td>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(it, index) in productHistory" :key="index">
                   <td>{{ index + 1 }}</td>
                   <td>{{ it.PN }}</td>
+                  <td>IntelliVue MX40</td>
                   <td>{{ it.c }}</td>
                   <td>{{ it.qty }}</td>
                   <td>{{ it.price.toLocaleString("en-US") }}</td>
                   <td>{{ it.total.toLocaleString("en-US") }}</td>
-                  <td>{{ it.desription }}</td>
                   <td>{{ it.remark }}</td>
                   <td></td>
                 </tr>
@@ -521,6 +523,7 @@
                       </option>
                     </select>
                   </td>
+                  <td></td>
                   <td>
                     <!-- <input
                       v-model="it.c"
@@ -553,7 +556,7 @@
                       it.total && it.total.toLocaleString("en-US")
                     }}</label>
                   </td>
-                  <td>
+                  <!-- <td>
                     <input
                       v-model="it.desription"
                       type="text"
@@ -561,7 +564,7 @@
                       id="Desription"
                       name="Desription"
                     />
-                  </td>
+                  </td> -->
                   <td>
                     <input
                       v-model="it.remark"
@@ -1396,16 +1399,16 @@ export default {
           {
             table: {
               headerRows: 1,
-              widths: ['4%', '10%', 'auto', 'auto', 'auto', 'auto', '28%', '28%'],
+              widths: ['4%', '10%', 'auto', 'auto', 'auto', 'auto', 'auto', '30%'],
               body: [
                 [
                   { text: 'No', style: 'tableHeader' },
                   { text: 'P/N', style: 'tableHeader' },
+                  { text: 'Name', style: 'tableHeader' },
                   { text: 'PG', style: 'tableHeader' },
                   { text: 'QTY', style: 'tableHeader' },
                   { text: 'Price', style: 'tableHeader' },
                   { text: 'Total', style: 'tableHeader' },
-                  { text: 'Description', style: 'tableHeader' },
                   { text: 'Remark', style: 'tableHeader' }
                 ],
                 ...this.mapPdf(),
