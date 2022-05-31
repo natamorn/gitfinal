@@ -1424,17 +1424,19 @@ export default {
                   {
                     text: 'รวมทั้งสิ้น',
                     alignment: 'center',
-                    colSpan: 5
+                    colSpan: 6
                   },
+                  {},
                   {},
                   {},
                   {},
                   {},
                   {
                     text: this.sumTotal(),
-                    alignment: 'right'
+                    alignment: 'left',
+                    colSpan: 2
                   },
-                  { text: '', colSpan: 2, border: [false, false, true, true] },
+                  // { text: '', colSpan: 2, border: [false, false, true, true] },
                   {}
                 ]
               ]
