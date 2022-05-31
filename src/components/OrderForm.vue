@@ -1123,7 +1123,7 @@ export default {
           key: it.selectedProduct.key,
           PN: it.selectedProduct.PN,
           Name: it.selectedProduct.Name,
-          c: it.c,
+          c: it.selectedProduct.C,
           qty: it.qty,
           price: it.selectedProduct.Price,
           total: it.total,
