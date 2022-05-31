@@ -1122,7 +1122,7 @@ export default {
         ...this.formProducts.map((it) => ({
           key: it.selectedProduct.key,
           PN: it.selectedProduct.PN,
-          Name: it.Name,
+          Name: it.selectedProduct.Name,
           c: it.c,
           qty: it.qty,
           price: it.selectedProduct.Price,
