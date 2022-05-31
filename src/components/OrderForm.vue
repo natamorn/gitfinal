@@ -489,7 +489,7 @@
                 <tr v-for="(it, index) in productHistory" :key="index">
                   <td>{{ index + 1 }}</td>
                   <td>{{ it.PN }}</td>
-                  <td>IntelliVue MX40</td>
+                  <!-- <td>IntelliVue MX40</td> -->
                   <td>{{ it.Name}}</td>
                   <td>{{ it.c }}</td>
                   <td>{{ it.qty }}</td>
@@ -594,7 +594,7 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="5" class="fw-bold">รวมทั้งสิ้น</td>
+                  <td colspan="6" class="fw-bold">รวมทั้งสิ้น</td>
                   <td class="fw-bold">{{ sumTotal() }}</td>
                   <td></td>
                   <td></td>
@@ -908,7 +908,7 @@ export default {
 
       formProducts: [
         {
-          c: 'PND',
+          c: 'PMD',
           qty: 1,
           price: null,
           total: null,
@@ -918,7 +918,7 @@ export default {
         }
       ],
       defaultFormProducts: {
-        c: 'PND',
+        c: 'PMD',
         qty: 1,
         price: null,
         total: null,
@@ -1488,9 +1488,9 @@ export default {
             text: it.total.toLocaleString('en-US'),
             alignment: 'right'
           },
-          {
-            text: it.desription
-          },
+          // {
+          //   text: it.desription
+          // },
           {
             text: it.remark
           }

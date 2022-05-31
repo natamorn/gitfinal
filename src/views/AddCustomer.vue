@@ -37,7 +37,7 @@
                 <input
                   v-model="formData.WorkPhone"
                   type="tel"
-                  pattern="[0-9]{10}"
+                  pattern="[0-9]{9}"
                   :class="[
                     'form-control',
                     formWarning.WorkPhone ? '' : 'is-invalid',
