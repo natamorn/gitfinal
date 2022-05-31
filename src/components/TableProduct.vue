@@ -68,7 +68,7 @@ export default {
           class: 'tableHeader text-h6'
         },
         {
-          text: 'Disription',
+          text: 'Description',
           align: 'left',
           value: 'Name',
           class: 'tableHeader text-h6'
@@ -120,7 +120,7 @@ export default {
         _tutorials.push({
           key: key,
           title: data.title,
-          description: data.description,
+          Description: data.Description,
           published: data.published
         })
       })

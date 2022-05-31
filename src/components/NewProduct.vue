@@ -80,19 +80,20 @@
               </div>
 
               <div class="form-group">
-                <label for="Price" class="form-label"
-                  >Disciption
+                <label for="Description" class="form-label"
+                  >Description
                   <h5 class="dokjun" style="display: inline">*</h5></label
                 >
-
                 <input
+                  v-model="formData.Description"
                   type="text"
                   :class="[
                     'form-control',
-                    formWarning.Price ? '' : 'is-invalid'
+                    formWarning.Description ? '' : 'is-invalid',
                   ]"
+                  id="Description"
                 />
-                <!-- <div class="invalid-feedback">* Picture</div> -->
+                <!-- <div class="invalid-feedback">* Name</div> -->
               </div>
             </div>
 
@@ -125,13 +126,15 @@ export default {
         Name: null,
         PN: null,
         C: null,
-        Price: null
+        Price: null,
+        Description: null
       },
       formWarning: {
         Name: true,
         PN: true,
         C: true,
-        Price: true
+        Price: true,
+        Description: true
       },
       imgBase64: null
     }
