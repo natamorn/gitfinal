@@ -490,6 +490,7 @@
                   <td>{{ index + 1 }}</td>
                   <td>{{ it.PN }}</td>
                   <td>IntelliVue MX40</td>
+                  <td>{{ it.Name}}</td>
                   <td>{{ it.c }}</td>
                   <td>{{ it.qty }}</td>
                   <td>{{ it.price.toLocaleString("en-US") }}</td>
@@ -523,7 +524,12 @@
                       </option>
                     </select>
                   </td>
-                  <td></td>
+                  <td>
+                    <label class="mt-2" for="">{{
+                      it.selectedProduct && it.selectedProduct.Name
+                    }}</label>
+
+                  </td>
                   <td>
                     <!-- <input
                       v-model="it.c"
@@ -1116,6 +1122,7 @@ export default {
         ...this.formProducts.map((it) => ({
           key: it.selectedProduct.key,
           PN: it.selectedProduct.PN,
+          Name: it.Name,
           c: it.c,
           qty: it.qty,
           price: it.selectedProduct.Price,
@@ -1414,7 +1421,7 @@ export default {
                 ],
                 ...this.mapPdf(),
                 [
-                  { 
+                  {
                     text: 'รวมทั้งสิ้น',
                     alignment: 'center',
                     colSpan: 5
@@ -1462,6 +1469,9 @@ export default {
           },
           {
             text: it.PN
+          },
+          {
+            text: it.Name
           },
           {
             text: it.c
