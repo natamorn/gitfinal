@@ -70,7 +70,7 @@ export default {
         {
           text: 'Description',
           align: 'left',
-          value: 'Name',
+          value: 'Description',
           class: 'tableHeader text-h6'
         },
         {
